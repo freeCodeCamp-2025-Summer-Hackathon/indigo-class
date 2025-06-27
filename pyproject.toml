@@ -1,0 +1,10 @@
+[project]
+name = "indigo-class"
+version = "0.1.0"
+description = "A Flask web application for the Indigo-Class hackathon project"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "flask>=2.3.0",
+    "python-dotenv>=1.0.0",
+]
