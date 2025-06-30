@@ -1,6 +1,7 @@
-from flask import Flask, jsonify
 import os
 from datetime import datetime
+
+from flask import Flask, jsonify
 
 
 def create_app():
