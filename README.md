@@ -34,7 +34,7 @@ powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | ie
 ### Configure environment variables
 
 ```bash
-cp .env.example .envw
+cp .env.example .env
 ```
  
 ### Install dependencies
