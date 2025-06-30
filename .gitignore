@@ -18,9 +18,7 @@ htmlcov/
 ## Mac OS system metadata
 .DS_Store
 ## Windows thumbnail cache
-
-# IDE/editor specific files
-.vscode/
+Thumbs.db
 
 # distribution/packaging
 dist/
