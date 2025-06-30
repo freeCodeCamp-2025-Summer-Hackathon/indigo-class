@@ -36,7 +36,7 @@ powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | ie
 ```bash
 cp .env.example .envw
 ```
-
+ 
 ### Install dependencies
 
 > **uv** will automatically manage the required Python version for this project, so you don't have to worry about installing the correct Python version yourself.
