@@ -18,7 +18,7 @@ D. With email and account, she can:
 E. She feels better about her abilities day by day, collecting affirmations gradually :)
 # User Interface
 ## 1.0 Before Login
-- View Quote of the Day (Could generate random quote/ no limit)
+- View Quote of the Day
 - View all quotes from the last 7 days (up to 7 total)
 - Search bar 
 - Simple login form (email + password)
@@ -26,6 +26,7 @@ E. She feels better about her abilities day by day, collecting affirmations grad
 
 ## 1.1 After Login
 - Show Quote of the Day
+- Search bar 
 - View and manage Favorites
 - Pin/unpin quotes (maximum of 3)
 - Show message for empty favorites
@@ -33,18 +34,49 @@ E. She feels better about her abilities day by day, collecting affirmations grad
 
 # Admin Journey
 (TBC)
+
 # Admin Interface
-## 2.0. Member List
-- View registered user emails
-- See if users are subscribed to daily quote emails
+## 2.0 User Management
+- View users (username, email, date joined)
+- Enable/disable/ban user accounts
+- Delete users
+- Reset user passwords
+- Create/ View/ Update/ Delete roles and access
+- Toggle email subscriptions
+- Search and filter users (name, email, daiy email opt-in)
+- View activity log
 
-## 2.1. Quote Management (Admin Input)/ use auto-generator
-- Create new quotes
-- Read/view existing quotes
-- Update/edit quotes
-- Delete quotes
+## 2.1 Affirmation Management
+- Create/ View/ Update/ Delete affirmations
+- Adding affirmations to categories
+- Set affirmation visibility public/private/featured
+- Bulk upload of affirmations
+- Search and filter affirmations (created by, category, keyword)
 
-## 1.2. User-Submitted Quotes
-- Read quotes submitted by users
-- Update/edit user-submitted quotes
-- Delete inappropriate or duplicate user quotes
+## 1.2 Category and Collections
+- Create/ View/ Update/ Delete categories
+- View collections made by users
+- Approve/ reject category and collection name
+- Search and filter categories and collection
+
+## 1.3 Email Managment
+- Trigger emails
+- Monitor email logs (sent, bounced)
+- Resend email if failed to send
+- Create/ Read/ Update/ Delete email content template (dynamic)
+- Set email content template
+- Schedule daily email affirmation
+- Enable/disable daily emails per user and global (maintenance)
+
+## Pin and Favorite Affirmations
+- View pinned and favorite lists
+- Set max pin and favorite affirmations (3 pinned)
+
+## 7-days affirmation tracking
+- Set randomly generated affirmations for each day in the week
+- Admins can assign 7-day packages for a user
+- Toggle 7-day display for users and global
+
+## Security and Logs
+- Admin audit trail
+- Backup database
