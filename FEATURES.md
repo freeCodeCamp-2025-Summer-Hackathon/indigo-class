@@ -72,11 +72,9 @@ E. She feels better about her abilities day by day, collecting affirmations grad
 - View pinned and favorite lists
 - Set max pin and favorite affirmations (3 pinned)
 
-## 7-days affirmation tracking
-- Set randomly generated affirmations for each day in the week
-- Admins can assign 7-day packages for a user
-- Toggle 7-day display for users and global
-
 ## Security and Logs
 - Admin audit trail
 - Backup database
+
+# User Stories Board
+https://www.notion.so/FEATURES-2243d1f4a99a8009b287d5c4be5dce07?source=copy_link
