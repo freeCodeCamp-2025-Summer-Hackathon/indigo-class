@@ -1,6 +1,5 @@
-
-*.html  @helenclx
-*.css   @helenclx
-*.js    @helenclx
+**/*.html  @helenclx
+**/*.css   @helenclx
+**/*.js    @helenclx
 
 *       @himonshuuu
