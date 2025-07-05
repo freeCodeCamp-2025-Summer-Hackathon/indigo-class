@@ -1,5 +1,6 @@
 CREATE TABLE users (
     user_id SERIAL PRIMARY KEY,
+    name VARCHAR NOT NULL,
     username VARCHAR NOT NULL UNIQUE,
     email VARCHAR NOT NULL UNIQUE,
     password_hash VARCHAR NOT NULL,
@@ -48,8 +49,8 @@ CREATE TABLE affirmations_categories (
     PRIMARY KEY (affirmation_id, category_id)
 );
 
-CREATE TABLE daily_affirmation_history (
-    daily_affirmation_history_id SERIAL PRIMARY KEY,
+CREATE TABLE daily_mail_history (
+    daily_mail_history_id SERIAL PRIMARY KEY,
     user_id INT NOT NULL REFERENCES users(user_id) ON DELETE CASCADE,
     affirmation_id INT NOT NULL REFERENCES affirmations(affirmation_id) ON DELETE CASCADE,
     sent_email_at TIMESTAMP,
