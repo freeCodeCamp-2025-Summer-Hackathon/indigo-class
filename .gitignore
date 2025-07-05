@@ -1,5 +1,29 @@
+#enviromronments
 .venv
+venv/
 .env
 
+# python cache
 __pycache__/
 *.pyc
+
+#testing tools
+.pytest_cache
+.coverage
+.coverage.*
+.cache
+htmlcov/
+
+# os files
+## Mac OS system metadata
+.DS_Store
+## Windows thumbnail cache
+Thumbs.db
+
+# distribution/packaging
+dist/
+build/
+eggs/
+.eggs/
+*.egg-info
+*.egg
