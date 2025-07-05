@@ -3,14 +3,33 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{% block title %}Indigo Class{% endblock %}</title>
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='styles/index.css') }}"
     />
     <script src="{{ url_for('static', filename='scripts/index.js') }}"></script>
-    <title>Indigo Class</title>
   </head>
   <body>
-    {% block content %}{% endblock %}
+    <nav>
+      <a href="{{ url_for('root.index') }}">Indigo Class</a>
+      {% if current_user.is_authenticated %}
+      <a href="{{ url_for('auth.profile') }}">Profile</a>
+      <a href="{{ url_for('auth.logout') }}">Logout</a>
+      {% else %}
+      <a href="{{ url_for('auth.login') }}">Login</a>
+      <a href="{{ url_for('auth.register') }}">Register</a>
+      {% endif %}
+    </nav>
+
+    <main>
+      {% with messages = get_flashed_messages(with_categories=true) %} {% if
+      messages %} {% for category, message in messages %}
+      <div>
+        {{ message }}
+        <button type="button">×</button>
+      </div>
+      {% endfor %} {% endif %} {% endwith %} {% block content %}{% endblock %}
+    </main>
   </body>
 </html>
