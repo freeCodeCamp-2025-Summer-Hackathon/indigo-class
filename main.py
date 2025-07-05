@@ -1,6 +1,13 @@
 import os
 
 from app import create_app
+from dotenv import load_dotenv
+
+load_dotenv()
+
+
+if not os.environ.get("DATABASE_URL"):
+    raise ValueError("DATABASE_URL is not set")
 
 
 def main():
