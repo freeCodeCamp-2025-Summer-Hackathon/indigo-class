@@ -1,0 +1,17 @@
+{% extends "base.html" %} {% block title %}Profile{% endblock %} {% block
+content %}
+<h1>User Profile</h1>
+
+<div>
+  <h5>{{ user.name }}</h5>
+  <p>
+    <strong>Username:</strong> {{ user.username }}<br />
+    <strong>Email:</strong> {{ user.email }}<br />
+    <strong>Member since:</strong> {{ user.created_at.strftime('%B %d, %Y')
+    }}<br />
+    <strong>Email opt-in:</strong> {{ "Yes" if user.is_email_opt_in else "No" }}
+  </p>
+
+  <a href="{{ url_for('auth.logout') }}">Logout</a>
+</div>
+{% endblock %}

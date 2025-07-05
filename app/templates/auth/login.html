@@ -1,0 +1,27 @@
+{% extends "base.html" %} {% block title %}Login{% endblock %} {% block content
+%}
+<h1>Login</h1>
+
+{% with messages = get_flashed_messages(with_categories=true) %} {% if messages
+%} {% for category, message in messages %}
+<div>{{ message }}</div>
+{% endfor %} {% endif %} {% endwith %}
+
+<form method="POST" action="{{ url_for('auth.login') }}">
+  <label for="username">Username:</label>
+  <input type="text" id="username" name="username" required />
+
+  <label for="password">Password:</label>
+  <input type="password" id="password" name="password" required />
+
+  <label for="remember">Remember me</label>
+  <input type="checkbox" id="remember" name="remember" />
+
+  <button type="submit">Login</button>
+</form>
+
+<p>
+  Don't have an account?
+  <a href="{{ url_for('auth.register') }}">Register here</a>
+</p>
+{% endblock %}

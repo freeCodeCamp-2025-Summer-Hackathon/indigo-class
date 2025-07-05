@@ -1,0 +1,16 @@
+{% extends "base.html" %} {% block title %}{{ title }}{% endblock %} {% block
+content %}
+<h1>Dashboard</h1>
+
+<h5>Welcome, {{ user.name }}!</h5>
+<p>Manage your affirmations and track your progress.</p>
+
+<h5>Quick Stats</h5>
+<h3>{{ user.affirmations|length }}</h3>
+<p>Total Affirmations</p>
+<h3>{{ user.categories|length }}</h3>
+<p>Categories</p>
+
+<h5>Recent Activity</h5>
+<p>Your affirmation activity will appear here.</p>
+{% endblock %}
