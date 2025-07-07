@@ -1,0 +1,54 @@
+:root {
+    --color1: #4D317A;
+    --color2: white;
+    --color3: #b3d9ff
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 20px;
+}
+
+#log-in{
+    display: flex;
+    justify-content: flex-end;
+    align-self: flex-end;
+    color: var(--color2);
+}
+
+#log-in:hover{
+    color: var(--color3);
+}
+
+#navbar{
+    
+    padding: 1%;
+    margin: 0;
+    border: none;
+    background-color: var(--color1);
+}
+
+body {
+    text-align: center;
+    color: var(--color1);
+}
+
+form {
+    margin: 20px;
+}
+
+input {
+    border-radius: 8px;
+    padding: 1em 5em;
+    border: 1px solid var(--color1);
+}
+
+@media (min-width: 320px) {
+    #navbar{
+        padding: 3%;
+    }
+}
