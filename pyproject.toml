@@ -1,7 +1,7 @@
 [project]
-name = "indigo-class"
+name = "dailydose"
 version = "0.1.0"
-description = "A Flask web application for the Indigo-Class hackathon project"
+description = "A Flask web application for daily affirmations, developed by indigo-class."
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [

@@ -17,7 +17,7 @@ def index():
 
     return render_template(
         "home/index.html",
-        title="Indigo-Class",
+        title="DailyDose",
         current_time=datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
     )
 

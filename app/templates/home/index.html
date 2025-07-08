@@ -1,6 +1,6 @@
 {% extends "base.html" %} {% block title %}{{ title }}{% endblock %} {% block
 content %}
-<h1>Welcome to Indigo-Class</h1>
+<h1>Welcome to DailyDose</h1>
 
 {% if current_user.is_authenticated %}
 <h2>Welcome back, {{ current_user.name }}!</h2>
@@ -13,7 +13,7 @@ content %}
 {% endif %} {% else %}
 <h2>Your Personal Affirmation Journey</h2>
 <p>
-  Join Indigo-Class to start your daily affirmation practice and transform your
+  Join DailyDose to start your daily affirmation practice and transform your
   mindset.
 </p>
 <a href="{{ url_for('auth.register') }}">Get Started</a>

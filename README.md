@@ -1,4 +1,6 @@
-# Indigo-Class Hackathon Project
+# DailyDose
+
+A platform for daily affirmations and positive self-talk.
 
 ## - Prerequisites
 
