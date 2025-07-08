@@ -19,12 +19,6 @@
     justify-content: center;
 }
 
-.logo-link {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-}
-
 .logo {
     height: 2em;
 }
@@ -43,17 +37,18 @@ body {
     color: var(--color1);
 }
 
-h1{
+.header{
+    display: block;
     text-align: center;
+    font-size: 2em;
+    margin: 0.5em 0 0;
 }
 
 .registration-form {
     margin: 1em;
 }
 
-input[type="text"],
-input[type="email"],
-input[type="password"] {
+.form-input {
     width: 100%;
     border: 0.25em solid var(--color4);
     padding: 0.5em 0;
@@ -76,22 +71,35 @@ input[type="checkbox"] {
     padding: 0;
 }
 
+input[type="checkbox"]:hover{
+    cursor: pointer;
+}
+
 #sign-up-button{
     width: 100%;
-    color: var(--color2);
-    background-color: var(--color1);
+    border: none;
+    background-color: var(--color2);
+    color: var(--color1);
     font-size: 1em;
     padding: 0.5em;
     border-radius: 30px;
     margin: 1em 0 0;
 }
 
+#sign-up-button:hover{
+    color: var(--color2);
+    background-color: var(--color1);
+    cursor: pointer;
+}
+
 #existing-account{
+    text-align: center;
     display: block;
     border: none;
     font-size: 0.7em;
     margin: 1em auto 0;
     color: var(--color1);
+    text-decoration: none;
 }
 
 #existing-account:hover{
@@ -100,6 +108,7 @@ input[type="checkbox"] {
     padding: 0.2em;
     background-color: var(--color1);
     color: var(--color2);
+    text-decoration: none;
 }
 
 @media (min-width: 320px) {

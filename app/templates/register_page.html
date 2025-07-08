@@ -3,36 +3,36 @@
     <head>
         <meta charset="UTF-8">
         <title>Daily Dose Register Page</title>
-        <link href="RegisterPage.css" rel="stylesheet">
+        <link href="register_page.css" rel="stylesheet">
         <!-- <link rel="stylesheet" href="{{ url_for('static', filename='styles/RegisterPageindex.css') }}"/> -->
     </head>
 
     <body>
         <nav class="navbar">
-            <a href="Daily-Dose-Index.html"><img src="daily-dose-logo.png" class="logo"></a>
-            <a href="daily-dose-log-in.html" class="register-log-in">Log in</a>
+            <a href="daily_dose_index.html"><img src="daily_dose_logo.png" class="logo"></a>
+            <a href="daily_dose_log_in.html" class="register-log-in">Log in</a>
         </nav>
 
-        <h1>Register</h1>
+        <span class="header">Register</span>
         <form action="register" method="POST" class="registration-form">
-            <label for="email" class="form-input">Email:</label>
-            <input type="email" id="email">
+            <label for="email">Email:</label>
+            <input type="email" id="email" class="form-input">
             <label for="fname">First Name:</label>
-            <input type="text" id="fname">
+            <input type="text" id="fname" class="form-input">
             <label for="lname">Last Name:</label>
-            <input type="text" id="lname">
+            <input type="text" id="lname" class="form-input">
             <label for="username">Username:</label>
-            <input type="text" id="username">
+            <input type="text" id="username" class="form-input">
             <label for="passowrd">Password:</label>
-            <input type="text" id="password">
+            <input type="text" id="password" class="form-input">
             <label for="confirm-password">Confirm Password:</label>
-            <input type="text" id="confirm-password"><br>
+            <input type="text" id="confirm-password" class="form-input"><br>
             <div class="checkbox-group">
                 <input type="checkbox" id="receive-daily-quote">
                 <label for="receive-daily-quote">Receive daily quote in email</label>
             </div>
             <button type="button" id="sign-up-button">Sign Up</button>
-            <button type="button" id="existing-account">Have an existing account? Log in</button>
+            <a href="daily_dose_log_in.html" id="existing-account">Have an existing account? Log in</a>
         </form>
         <script src="RegisterPage.js"></script>
     </body>
