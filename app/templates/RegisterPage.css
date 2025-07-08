@@ -10,7 +10,7 @@
     padding: 0;
 }
 
-#navbar {
+.navbar {
     position: relative;
     height: 80px;
     background-color: var(--color1);
@@ -19,23 +19,23 @@
     justify-content: center;
 }
 
-#logo-link {
+.logo-link {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
 }
 
-#logo {
+.logo {
     height: 2em;
 }
 
-#log-in {
+.register-log-in {
     position: absolute;
     right: 20px;
     color: var(--color2);
 }
 
-#log-in:hover{
+.register-log-in:hover{
     color: var(--color3);
 }
 
@@ -47,8 +47,8 @@ h1{
     text-align: center;
 }
 
-#registration-form {
-    margin: 20px;
+.registration-form {
+    margin: 1em;
 }
 
 input[type="text"],
@@ -103,7 +103,7 @@ input[type="checkbox"] {
 }
 
 @media (min-width: 320px) {
-    #navbar{
+    .navbar{
         padding: 3%;
     }
 
@@ -122,7 +122,7 @@ input[type="checkbox"] {
 }
 
 @media (min-width: 1024px) {
-    #navbar{
+    .navbar{
         padding: 0.3%;
     }
 
