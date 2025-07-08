@@ -1,7 +1,8 @@
 :root {
     --color1: #4D317A;
     --color2: white;
-    --color3: #b3d9ff
+    --color3: #b3d9ff;
+    --color4: #C7C2E1;
 }
 
 * {
@@ -9,14 +10,28 @@
     padding: 0;
 }
 
-html {
-    font-size: 20px;
+#navbar {
+    position: relative;
+    height: 80px;
+    background-color: var(--color1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-#log-in{
-    display: flex;
-    justify-content: flex-end;
-    align-self: flex-end;
+#logo-link {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+#logo {
+    height: 2em;
+}
+
+#log-in {
+    position: absolute;
+    right: 20px;
     color: var(--color2);
 }
 
@@ -24,31 +39,102 @@ html {
     color: var(--color3);
 }
 
-#navbar{
-    
-    padding: 1%;
-    margin: 0;
-    border: none;
-    background-color: var(--color1);
-}
-
 body {
-    text-align: center;
     color: var(--color1);
 }
 
-form {
+h1{
+    text-align: center;
+}
+
+#registration-form {
     margin: 20px;
 }
 
-input {
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    border: 0.25em solid var(--color4);
+    padding: 0.5em 0;
+    font-size: 0.7em;
+    border-radius: 20px;
+    box-sizing: border-box;
+}
+
+.checkbox-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1em 0 0;
+    gap: 1em;
+}
+
+input[type="checkbox"] {
+    transform: scale(2);
+    margin: 0;
+    padding: 0;
+}
+
+#sign-up-button{
+    width: 100%;
+    color: var(--color2);
+    background-color: var(--color1);
+    font-size: 1em;
+    padding: 0.5em;
+    border-radius: 30px;
+    margin: 1em 0 0;
+}
+
+#existing-account{
+    display: block;
+    border: none;
+    font-size: 0.7em;
+    margin: 1em auto 0;
+    color: var(--color1);
+}
+
+#existing-account:hover{
+    border: 2px solid var(--color1);
     border-radius: 8px;
-    padding: 1em 5em;
-    border: 1px solid var(--color1);
+    padding: 0.2em;
+    background-color: var(--color1);
+    color: var(--color2);
 }
 
 @media (min-width: 320px) {
     #navbar{
         padding: 3%;
+    }
+
+    html{
+        font-size: 3em;
+    }
+    
+    input{
+        font-size: 0.7em;
+        border-radius: 20px;
+    }
+
+    #sign-up-button{
+    border-radius: 30px;
+    }
+}
+
+@media (min-width: 1024px) {
+    #navbar{
+        padding: 0.3%;
+    }
+
+    html{
+        font-size: 1.5em;
+    }
+
+    input{
+        border-radius: 8px;
+    }
+
+    #sign-up-button{
+    border-radius: 15px;
     }
 }
