@@ -197,7 +197,7 @@ wheels = [
 ]
 
 [[package]]
-name = "indigo-class"
+name = "dailydose"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [

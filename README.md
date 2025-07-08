@@ -1,4 +1,6 @@
-# Indigo-Class Hackathon Project
+# DailyDose
+
+A platform for daily affirmations and positive self-talk.
 
 ## - Prerequisites
 
@@ -58,12 +60,21 @@ indigo-class/
 ├── app/
 │   ├── __init__.py          # Flask app factory
 │   ├── controllers/
-│   │   └── root.py          # Root blueprint and routes
+│   │   ├── root.py          # Root blueprint and routes
+│   │   └── auth.py          # Authentication
 │   ├── static/              # Static files (CSS, JS, images)
 │   └── templates/           # HTML templates
 │       ├── base.html        # Base template
-│       └── home/
-│           └── index.html   # Home page template
+│       ├── _header.html     # Base template's header
+│       ├── _footer.html     # Base template's footer
+│       ├── home/
+│       │   ├── index.html             # Home page template
+│       │   ├── dashboard.html         # User dashboard template
+│       │   └── admin_dashboard.html   # Admin dashboard template:w
+│       └── auth/
+│           ├── register.html   # Account registration template
+│           ├── login.html      # Login template 
+│           └── profile.html    # User profile template
 ├── main.py                  # Application entry point
 ├── pyproject.toml           # Project configuration
 └── README.md                # This file
