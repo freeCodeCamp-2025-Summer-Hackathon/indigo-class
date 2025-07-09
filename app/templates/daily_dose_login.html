@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Daily Dose Log in Page</title>
+        <link href="log_in_page.css" rel="stylesheet">
+        <!-- <link rel="stylesheet" href="{{ url_for('static', filename='styles/index.css') }}"/> -->
+    </head>
+
+    <body>
+        <nav class="navbar">
+            <a href="daily_dose_index.html" id="logo-link"><img src="daily_dose_logo.png" class="logo"></a>
+            <a href="register_page.html" class="register-log-in">Register</a>
+        </nav>
+
+        <span class="header">Log In</span>
+        <form action="log-in" method="POST" class="registration-form">
+            <label for="username">Username:</label>
+            <input type="text" id="username" class="form-input">
+            <label for="password">Password:</label>
+            <input type="password" id="password" class="form-input">
+            <a href="forgot_password.html" id="forgot-password">Forgot your password?</a>
+            <div class="checkbox-group">
+                <input type="checkbox" id="remember-me">
+                <label for="remember-me">Remember me</label>
+            </div>
+            <button type="button" class="sign-up-log-in-button">Log In</button>
+            <a href="register_page.html" id="dont-have-an-account">Don't have an account yet? Sign up</a>
+        </form>
+        <script src="register_page.js"></script>
+    </body>
+</html>
