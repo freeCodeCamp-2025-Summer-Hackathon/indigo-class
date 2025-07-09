@@ -23,13 +23,15 @@
     height: 2em;
 }
 
-.register-log-in {
+.register__login {
+    text-decoration: none;;
     position: absolute;
     right: 20px;
     color: var(--color2);
 }
 
-.register-log-in:hover{
+.register__login:hover{
+    text-decoration: underline;
     color: var(--color3);
 }
 
@@ -37,18 +39,16 @@ body {
     color: var(--color1);
 }
 
-.header{
-    display: block;
+h2{
     text-align: center;
-    font-size: 2em;
     margin: 0.5em 0 0;
 }
 
-.registration-form {
+.registration__form {
     margin: 1em;
 }
 
-.form-input {
+.form__input {
     width: 100%;
     border: 0.25em solid var(--color4);
     padding: 0.5em 0;
@@ -57,11 +57,11 @@ body {
     box-sizing: border-box;
 }
 
-.checkbox-group {
+.checkbox__group {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 1em 0 0;
+    margin: 3em 0 0;
     gap: 1em;
 }
 
@@ -75,41 +75,41 @@ input[type="checkbox"]:hover{
     cursor: pointer;
 }
 
-#sign-up-button{
+#forgot__password{
+    display: block;
+    text-align: center;
+}
+
+.sign__up__login__button{
     width: 100%;
     border: none;
     background-color: var(--color2);
     color: var(--color1);
     font-size: 1em;
     padding: 0.5em;
-    border-radius: 30px;
-    margin: 1em 0 0;
+    margin: 1em 0 0.5em;
 }
 
-#sign-up-button:hover{
+.sign__up__login__button:hover{
     color: var(--color2);
     background-color: var(--color1);
     cursor: pointer;
 }
 
-#existing-account{
-    text-align: center;
+#existing__account{
     display: block;
-    border: none;
-    font-size: 0.7em;
-    margin: 1em auto 0;
+    text-align: center;
+    background-color: var(--color2);
     color: var(--color1);
     text-decoration: none;
 }
 
-#existing-account:hover{
-    border: 2px solid var(--color1);
-    border-radius: 8px;
-    padding: 0.2em;
+#existing__account:hover{
     background-color: var(--color1);
     color: var(--color2);
-    text-decoration: none;
 }
+
+
 
 @media (min-width: 320px) {
     .navbar{
@@ -125,8 +125,12 @@ input[type="checkbox"]:hover{
         border-radius: 20px;
     }
 
-    #sign-up-button{
+    .sign__up__login__button{
     border-radius: 30px;
+    }
+
+    #existing__account{
+    border-radius: 15px;
     }
 }
 
@@ -143,7 +147,11 @@ input[type="checkbox"]:hover{
         border-radius: 8px;
     }
 
-    #sign-up-button{
+    .sign__up__login__button{
     border-radius: 15px;
+    }
+
+    #existing__account{
+    border-radius: 8px;
     }
 }
