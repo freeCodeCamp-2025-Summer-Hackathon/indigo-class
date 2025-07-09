@@ -70,7 +70,7 @@ indigo-class/
 │       ├── home/
 │       │   ├── index.html             # Home page template
 │       │   ├── dashboard.html         # User dashboard template
-│       │   └── admin_dashboard.html   # Admin dashboard template:w
+│       │   └── admin_dashboard.html   # Admin dashboard template
 │       └── auth/
 │           ├── register.html   # Account registration template
 │           ├── login.html      # Login template 
