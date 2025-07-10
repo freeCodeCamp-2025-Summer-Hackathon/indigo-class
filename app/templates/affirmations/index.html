@@ -1,0 +1,7 @@
+{% extends "base.html" %} {% block title %} Affirmations {% endblock %} {% block
+content %}
+<h1>Affirmations</h1>
+
+{% for affirmation in all_affirmations %} {{ affirmation.affirmation_text }}
+<br />
+{% endfor %} {% endblock %}

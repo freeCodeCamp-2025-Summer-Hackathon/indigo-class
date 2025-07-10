@@ -51,3 +51,12 @@ def admin_dashboard():
         all_users=all_users,
         all_affirmations=all_affirmations,
     )
+
+
+@root_bp.route("/affirmations")
+def affirmations():
+    """
+    Affirmations page.
+    """
+    all_affirmations: List[Affirmation] = Affirmation.query.all()
+    return render_template("affirmations/index.html", all_affirmations=all_affirmations)
