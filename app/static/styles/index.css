@@ -1,3 +1,12 @@
+:root {
+  --clr-accent-1: #4D317A;
+  --clr-accent-2: #F0EAF4;
+  --clr-accent-3: #C7C2E1;
+  --clr-accent-4: #8B66C6;
+  --clr-white: #fff;
+  --clr-save-btn: #9E9E9E;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -5,18 +14,5 @@
 
 body {
   min-height: 100vh;
-}
-
-h1 {
-  font-size: 4rem;
-  font-weight: 700;
-  color: #000;
-}
-
-.main {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
+  background-color: var(--clr-accent-2);
 }
