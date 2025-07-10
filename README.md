@@ -53,6 +53,30 @@ uv sync
 uv run main.py
 ```
 
+## - Running with Docker
+
+For easier deployment and environment consistency, you can run this application using Docker.
+
+### Prerequisites for Docker
+
+- **Docker Desktop**: Make sure you have Docker Desktop installed on your system. You can download it from https://www.docker.com/products/docker-desktop/ or https://docs.docker.com/engine/install/ for linux.
+- **Docker Files**: Ensure that Dockerfile and docker-compose.yml are present in the root directory of this project.
+
+### Using Docker Compose
+
+1. **Build and Run the Application:**<br>Open your terminal in the project's root directory (where docker-compose.yml is located) and run:
+    ```
+    docker compose up --build -d
+    ```
+    - `docker compose up`: Builds (if necessary) and starts the services defined in `docker-compose.yml`.
+    - `--build`: Ensures the Docker image is rebuilt, picking up any changes in your `Dockerfile` or source code.
+    - `-d`: Runs the containers in detached mode (in the background).
+1. **Access the Application:**<br>Your Flask application should now be running and accessible at `http://localhost:8000` in your web browser.
+1. **Stop the Application:**<br>To stop and remove the containers, networks, and volumes created by `docker compose up`, run:
+    ```
+    docker compose down
+    ```
+
 ## Project Structure
 
 ```
@@ -84,5 +108,7 @@ indigo-class/
 │           └── profile.html    # User profile template
 ├── main.py                  # Application entry point
 ├── pyproject.toml           # Project configuration
+├── Dockerfile               # Instructions for building the Docker image
+├── docker-compose.yml       # Requirements for building the Docker image
 └── README.md                # This file
 ```
