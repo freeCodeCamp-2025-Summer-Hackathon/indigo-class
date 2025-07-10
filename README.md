@@ -64,23 +64,18 @@ For easier deployment and environment consistency, you can run this application 
 
 ### Using Docker Compose
 
-<ol>
-  <li>
-    <b>Build and Run the Application:</b><br>Open your terminal in the project's root directory (where docker-compose.yml is located) and run:<br><pre>docker compose up --build -d</pre>
-    <ul>
-      <li><code>docker compose up</code>: Builds (if necessary) and starts the services defined in <code>docker-compose.yml</code>.</li>
-      <li><code>--build</code>: Ensures the Docker image is rebuilt, picking up any changes in your <code>Dockerfile</code> or source code.</li>
-      <li><code>-d</code>: Runs the containers in detached mode (in the background).</li>
-    </ul>
-  </li>
-  <li>
-    <b>Access the Application:</b><br>Your Flask application should now be running and accessible at <code>http://localhost:8000</code> in your web browser.
-  </li>
-  <li>
-    <b>Stop the Application:</b><br>To stop and remove the containers, networks, and volumes created by <code>docker compose up</code>, run:
-    <pre>docker compose down</pre>
-  </li>
-</ol>
+1. **Build and Run the Application:**<br>Open your terminal in the project's root directory (where docker-compose.yml is located) and run:
+    ```
+    docker compose up --build -d
+    ```
+    - `docker compose up`: Builds (if necessary) and starts the services defined in `docker-compose.yml`.
+    - `--build`: Ensures the Docker image is rebuilt, picking up any changes in your `Dockerfile` or source code.
+    - `-d`: Runs the containers in detached mode (in the background).
+1. **Access the Application:**<br>Your Flask application should now be running and accessible at `http://localhost:8000` in your web browser.
+1. **Stop the Application:**<br>To stop and remove the containers, networks, and volumes created by `docker compose up`, run:
+    ```
+    docker compose down
+    ```
 
 ## Project Structure
 
@@ -106,5 +101,7 @@ indigo-class/
 │           └── profile.html    # User profile template
 ├── main.py                  # Application entry point
 ├── pyproject.toml           # Project configuration
+├── Dockerfile               # Instructions for building the Docker image
+├── docker-compose.yml       # Requirements for building the Docker image
 └── README.md                # This file
 ```
