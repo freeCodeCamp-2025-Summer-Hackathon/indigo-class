@@ -4,4 +4,6 @@ content %}
 
 {% for affirmation in all_affirmations %} {{ affirmation.affirmation_text }}
 <br />
-{% endfor %} {% endblock %}
+{% endfor %}
+<p>Add affirmation <a href="{{ url_for('root.add_affirmation') }}">here</a></p>
+{% endblock %}
