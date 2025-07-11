@@ -24,7 +24,7 @@ content %}
 
 <section class="home__affirms">
   <h2>Today's Affirmation</h2>
-  <div class="affirm-wrapper">
+  <div class="affirms__wrapper">
     <!-- We may use Jinja for loop for displaying affirmations -->
     <div class="affirm">
       <figure class="affirm__wrapper">
@@ -71,8 +71,8 @@ content %}
 {% if current_user.is_authenticated %}
 <section class="home__save-affirms">
   <h2>Keep words that matter to you here.</h2>
-  <a class="home__link-btn" href="{{ url_for('user.view_affirmations' ) }}">View Affirmations</a>
-  <a class="home__link-btn" href="{{ url_for('user.submit_affirmations' ) }}">Submit Affirmations</a>
+  <a class="home__link-btn" href="#">View Affirmations</a>
+  <a class="home__link-btn" href="#">Submit Affirmations</a>
   <figure class="affirm__wrapper">
     <blockquote class="affirm__quote">
       I trust in my inner wisdom.
