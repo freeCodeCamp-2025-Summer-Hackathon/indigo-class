@@ -91,6 +91,13 @@ indigo-class/
 │       ├── base.html        # Base template
 │       ├── _header.html     # Base template's header
 │       ├── _footer.html     # Base template's footer
+│       ├── admin/
+│       │   ├── dashboard.html
+│       │   ├── users.html
+│       │   ├── affirmations.html
+│       │   ├── categories.html
+│       │   ├── analytics.html
+│       │   └── settings.html
 │       ├── home/
 │       │   ├── index.html             # Home page template
 │       │   ├── dashboard.html         # User dashboard template
