@@ -1,11 +1,13 @@
 :root {
-  --clr-accent-1: #4D317A;
-  --clr-accent-2: #F0EAF4;
-  --clr-accent-3: #C7C2E1;
-  --clr-accent-4: #8B66C6;
+  --purple-dark: #4D317A;
+  --body-bg-clr: #F0EAF4;
+  --purple-outline: #C7C2E1;
+  --purple-light: #8B66C6;
   --clr-white: #fff;
   --clr-save-btn: #9E9E9E;
   --clr-txt-fade: #4c4c4c;
+  --red-important: #BD4545;
+  --red-important-hover: #681414;
 }
 
 * {
@@ -15,7 +17,7 @@
 
 body {
   min-height: 100vh;
-  background-color: var(--clr-accent-2);
+  background-color: var(--body-bg-clr);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -39,7 +41,7 @@ main {
 
 .affirm__wrapper {
   padding: 1em;
-  border: 3px solid var(--clr-accent-3);
+  border: 3px solid var(--purple-outline);
   border-radius: 1em;
   background-color: var(--clr-white);
 }
@@ -48,7 +50,7 @@ main {
   text-align: center;
   font-size: 1.5em;
   padding: 1em 0;
-  color: var(--clr-accent-1);
+  color: var(--purple-dark);
 }
 
 .affirm__cats {
