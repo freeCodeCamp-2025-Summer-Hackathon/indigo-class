@@ -32,10 +32,10 @@ content %}
           I am present in the moment and embrace it fully.
         </blockquote>
         <!-- We may use Jinja for loop for displaying the categories of this affirmation -->
-        <figcaption>Self Care, Emotion</figcaption>
+        <figcaption class="affirm__cats">Self Care, Emotion</figcaption>
       </figure>
       <div class="affirm__btn--wrapper">
-        <button aria-label="Save affirmation">+</button>
+        <button class="affirm__btn" aria-label="Save affirmation">+</button>
         <p>
           {% if current_user.is_authenticated %}
             Save this affirmation
@@ -52,10 +52,10 @@ content %}
           I trust in my inner wisdom.
         </blockquote>
         <!-- We may use Jinja for loop for displaying the categories of this affirmation -->
-        <figcaption>Self Worth</figcaption>
+        <figcaption class="affirm__cats">Self Worth</figcaption>
       </figure>
       <div class="affirm__btn--wrapper">
-        <button aria-label="Save affirmation">+</button>
+        <button class="affirm__btn" aria-label="Save affirmation">+</button>
         <p>
           {% if current_user.is_authenticated %}
             Save this affirmation
@@ -77,7 +77,7 @@ content %}
     <blockquote class="affirm__quote">
       I trust in my inner wisdom.
     </blockquote>
-    <figcaption>Self Worth</figcaption>
+  <figcaption class="affirm__cats">Self Worth</figcaption>
     <button class="home__get-affirm">Get Affirmation</button>
   </figure>
 </section> 
