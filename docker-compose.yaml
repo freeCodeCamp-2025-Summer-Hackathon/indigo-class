@@ -1,0 +1,12 @@
+services:
+  dailydose:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    command: /bin/bash -c "cp .env.example .env && uv sync && uv run main.py"
+    restart: unless-stopped
+
+
+

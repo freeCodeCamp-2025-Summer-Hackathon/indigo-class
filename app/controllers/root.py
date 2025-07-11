@@ -45,7 +45,7 @@ def admin_dashboard():
     all_affirmations: List[Affirmation] = Affirmation.query.all()
 
     return render_template(
-        "home/admin_dashboard.html",
+        "admin/dashboard.html",
         title="Admin Dashboard",
         user=current_user,
         all_users=all_users,
