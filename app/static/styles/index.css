@@ -16,4 +16,17 @@
 body {
   min-height: 100vh;
   background-color: var(--clr-accent-2);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+main {
+  width: 90%;
+}
+
+.home__hero,
+.home__affirms h2 {
+  text-align: center;
 }
