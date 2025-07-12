@@ -1,43 +1,99 @@
-{% extends "base.html" %} {% block title %}Register{% endblock %} {% block
-content %}
-<h1>Register</h1>
+{% extends "base.html" %}
 
-{% with messages = get_flashed_messages(with_categories=true) %} {% if messages
-%} {% for category, message in messages %}
-<div>{{ message }}</div>
-{% endfor %} {% endif %} {% endwith %}
+{% block title %}
+    Register | DailyDose
+{% endblock %}
 
-<form method="POST" action="{{ url_for('auth.register') }}">
-  <div>
-    <label for="name">Full Name:</label>
-    <input type="text" id="name" name="name" required />
-  </div>
+{% block content %}
+    <section class="register">
+        <h1 class="register__title">Register</h1>
 
-  <div>
-    <label for="username">Username:</label>
-    <input type="text" id="username" name="username" required />
-  </div>
+        <form
+            class="register__form form"
+            method="POST"
+            action="{{ url_for('auth.register') }}"
+        >
+            <div class="form__group">
+                <label for="email" class="form__label">Email:</label>
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    class="form__input"
+                    required
+                />
+            </div>
 
-  <div>
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email" required />
-  </div>
+            <div class="form__group">
+                <label for="first-name" class="form__label">First Name:</label>
+                <input
+                    type="text"
+                    id="first-name"
+                    name="first_name"
+                    class="form__input"
+                />
+            </div>
 
-  <div>
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password" required />
-  </div>
+            <div class="form__group">
+                <label for="last-name" class="form__label">Last Name:</label>
+                <input
+                    type="text"
+                    id="last-name"
+                    name="last_name"
+                    class="form__input"
+                />
+            </div>
 
-  <div>
-    <label for="is_email_opt_in">Email Daily Affirmations:</label>
-    <input type="checkbox" id="is_email_opt_in" name="is_email_opt_in" />
-  </div>
+            <div class="form__group">
+                <label for="username" class="form__label">Username:</label>
+                <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    class="form__input"
+                />
+            </div>
 
-  <button type="submit">Register</button>
-</form>
+            <div class="form__group">
+                <label for="password" class="form__label">Password:</label>
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    class="form__input"
+                />
+            </div>
 
-<p>
-  Already have an account?
-  <a href="{{ url_for('auth.login') }}">Login here</a>
-</p>
+            <div class="form__group">
+                <label for="password-confirmation" class="form__label">Confirm Password:</label>
+                <input
+                    type="password"
+                    id="password-confirmation"
+                    name="password_confirmation"
+                    class="form__input"
+                />
+            </div>
+
+            <div class="form__group form__group--checkbox">
+                <input
+                    type="checkbox"
+                    id="is-email-opt-in"
+                    name="is_email_opt_in"
+                    class="form__checkbox"
+                />
+                <label for="is-email-opt-in" class="form__label form__label--checkbox">
+                    Receive daily quote in email
+                </label>
+            </div>
+
+            <button type="submit" class="form__button btn">
+                Sign Up
+            </button>
+        </form>
+
+        <p class="register__login-link">
+            Have an existing account?
+            <a href="{{ url_for('auth.login') }}">Log in</a>
+        </p>
+    </section>
 {% endblock %}
