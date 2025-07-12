@@ -3,9 +3,9 @@
   --body-bg-clr: #F0EAF4;
   --purple-outline: #C7C2E1;
   --purple-light: #8B66C6;
-  --clr-white: #fff;
-  --clr-save-btn: #9E9E9E;
-  --clr-txt-fade: #4c4c4c;
+  --white: #fff;
+  --save-btn-clr: #9E9E9E;
+  --txt-fade-clr: #4c4c4c;
   --red-important: #BD4545;
   --red-important-hover: #681414;
 }
@@ -43,7 +43,7 @@ main {
   padding: 1em;
   border: 3px solid var(--purple-outline);
   border-radius: 1em;
-  background-color: var(--clr-white);
+  background-color: var(--white);
 }
 
 .affirm__quote {
@@ -65,9 +65,25 @@ main {
 }
 
 .affirm__btn {
-  background-color: var(--clr-save-btn);
-  color: var(--clr-white);
+  background-color: var(--save-btn-clr);
+  color: var(--white);
   border: none;
   border-radius: 0.3em;
   padding: 0.25em 0.5em;
+}
+
+.home__btn {
+  text-align: center;
+  text-decoration: none;
+  display: block;
+  padding: 1em;
+  background-color: var(--purple-dark);
+  color: var(--white);
+  border: none;
+  border-radius: 0.75em;
+  width: 100%;
+}
+
+.home__btn + .home__btn {
+  margin-top: 0.5em;
 }
