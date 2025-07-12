@@ -42,6 +42,39 @@ body {
   background-color: var(--purple-outline);
 }
 
+.home__cta {
+  background-color: var(--purple-dark);
+  padding: 1.5em 1em;
+  text-align: center;
+}
+
+.home__cta--wrapper {
+  background-color: var(--white);
+  border: 0.2em solid var(--purple-outline);
+  border-radius: 0.5em;
+  padding: 1em;
+}
+
+.home__cta--heading {
+  font-size: 1em;
+  font-weight: normal;
+}
+
+.home__cta--register {
+  font-size: 1.5em;
+  margin-top: 0.6em;
+}
+
+.home__cta--btn {
+  display: block;
+  background-color: var(--purple-dark);
+  color: var(--white);
+  padding: 0.75em;
+  margin: 0.75em auto;
+  border-radius: 0.5em;
+  text-decoration: none;
+}
+
 .affirms__wrapper {
   display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(min(100%/1, max(15rem, 100%/4)), 1fr));

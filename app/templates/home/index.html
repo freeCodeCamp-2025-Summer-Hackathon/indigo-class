@@ -87,10 +87,12 @@ content %}
 </section> 
 {% else %}
 <section class="home__cta">
-  <h2 class="home__cta--heading">Peace is a click away</h2>
-  <p>Register to save affirmations that matter to you.</p>
-  <a class="home__cta--btn" href="{{ url_for('auth.register') }}">Register now</a>
-  <p>Have an account already? <a href="{{ url_for('auth.login') }}">Log in</a>.</p>
+  <div class="home__cta--wrapper">
+    <h2 class="home__cta--heading">Peace is a click away</h2>
+    <p class="home__cta--register">Register to save affirmations that matter to you.</p>
+    <a class="home__cta--btn" href="{{ url_for('auth.register') }}">Register now</a>
+    <p>Have an account already? <a href="{{ url_for('auth.login') }}"><strong>Log in</strong></a>.</p>
+  </div>
 </section> 
 {% endif %}
 {% endblock %}
