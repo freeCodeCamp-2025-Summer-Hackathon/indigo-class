@@ -1,7 +1,7 @@
 {% extends "base.html" %} {% block title %}{{ title }}{% endblock %} {% block
 content %}
 
-<section class="home__hero">
+<section class="home__section home__hero">
   {% if current_user.is_authenticated %}
   <h1>Welcome Back, {{ current_user.name }}!</h1>
   <p>You are logged in as: {{ current_user.username }}</p>
@@ -22,7 +22,7 @@ content %}
   <p>Current time: {{ current_time }}</p>
 </section>
 
-<section class="home__affirms">
+<section class="home__section home__affirms">
   <h2>Today's Affirmation</h2>
   <div class="affirms__wrapper">
     <!-- We may use Jinja for loop for displaying affirmations -->
@@ -70,16 +70,20 @@ content %}
 
 {% if current_user.is_authenticated %}
 <section class="home__save-affirms">
-  <h2>Keep words that matter to you here.</h2>
-  <a class="home__btn" href="#">View Affirmations</a>
-  <a class="home__btn" href="#">Submit Affirmations</a>
-  <figure class="affirm__wrapper">
-    <blockquote class="affirm__quote">
-      I trust in my inner wisdom.
-    </blockquote>
-  <figcaption class="affirm__cats">Self Worth</figcaption>
-  </figure>
-  <button class="home__btn">Get Affirmation</button>
+  <div class="home__section">
+    <h2>Keep words that matter to you here.</h2>
+    <a class="home__btn" href="#">View Affirmations</a>
+    <a class="home__btn" href="#">Submit Affirmations</a>
+  </div>
+  <div class="home__section">
+    <figure class="affirm__wrapper">
+      <blockquote class="affirm__quote">
+        I trust in my inner wisdom.
+      </blockquote>
+    <figcaption class="affirm__cats">Self Worth</figcaption>
+    </figure>
+    <button class="home__btn">Get Affirmation</button>
+  </div>
 </section> 
 {% else %}
 <section class="home__cta">

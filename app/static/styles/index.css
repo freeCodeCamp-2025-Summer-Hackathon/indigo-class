@@ -24,13 +24,22 @@ body {
   align-items: center;
 }
 
-main {
-  width: 90%;
+.home__section {
+  padding: 1em;
 }
 
-.home__hero,
-.home__affirms h2 {
+.home__section h2 {
   text-align: center;
+  margin-bottom: 1em;
+}
+
+.home__hero {
+  text-align: center;
+}
+
+.home__save-affirms {
+  text-align: center;
+  background-color: var(--purple-outline);
 }
 
 .affirms__wrapper {
