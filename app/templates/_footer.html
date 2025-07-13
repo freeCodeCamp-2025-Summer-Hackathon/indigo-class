@@ -1,3 +1,18 @@
+{% set current_user = namespace(is_authenticated=True, is_admin=False) %}
+
 <footer>
-  <p>Developed by <a href="https://github.com/freeCodeCamp-2025-Summer-Hackathon/indigo-class">indigo-class</a>, team of <a href="https://github.com/freeCodeCamp-2025-Summer-Hackathon">freeCodeCamp 2025 Summer Hackathon</a>.</p>
+  {% if current_user.is_authenticated %}
+  {% else %}
+  <section id="footer__register">
+    <p id="footer__register--slogan">Peace is a click away</p>
+    <p id="footer__register--text">Register to save affirmations that matter to you.</p>
+    <button id="footer__register--button">Register now</button>
+    <p class="login__prompt">Have an account already? <a href="{{ url_for('auth.login') }}">Log in</a></p>
+  </section>
+  {% endif %}
+  <section>
+    <a href="{{ url_for('root.index') }}"><img src="./static/styles/logo_white.svg" id="footer__logo"></a>
+    <button id="footer__totop--button" type="button" onclick="toTop()">Back to top</button>
+  </section>
+  <address>Developed by <a href="https://github.com/freeCodeCamp-2025-Summer-Hackathon/indigo-class">indigo-class</a>, team of <a href="https://github.com/freeCodeCamp-2025-Summer-Hackathon">freeCodeCamp 2025 Summer Hackathon</a>.</address>
 </footer>
