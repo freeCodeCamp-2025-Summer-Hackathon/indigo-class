@@ -1,0 +1,72 @@
+.home__section {
+  padding: 1em;
+}
+
+.home__section h2 {
+  text-align: center;
+  margin-bottom: 1em;
+}
+
+.home__hero {
+  text-align: center;
+}
+
+.home__save-affirms {
+  text-align: center;
+  background-color: var(--purple-outline);
+}
+
+.affirms__wrapper {
+  display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(min(100%/1, max(15rem, 100%/4)), 1fr));
+	gap: 1em;
+}
+
+.affirm__wrapper {
+  padding: 1em;
+  border: 3px solid var(--purple-outline);
+  border-radius: 1em;
+  background-color: var(--white);
+}
+
+.affirm__quote {
+  text-align: center;
+  font-size: 1.5em;
+  padding: 1em 0;
+  color: var(--purple-dark);
+}
+
+.affirm__cats {
+  font-size: 0.9em;
+}
+
+.affirm__btn--wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5em;
+  margin-top: 0.5em;
+}
+
+.affirm__btn {
+  background-color: var(--save-btn-clr);
+  color: var(--white);
+  border: none;
+  border-radius: 0.3em;
+  padding: 0.25em 0.5em;
+}
+
+.home__btn {
+  text-align: center;
+  text-decoration: none;
+  display: block;
+  padding: 1em;
+  background-color: var(--purple-dark);
+  color: var(--white);
+  border: none;
+  border-radius: 0.75em;
+  width: 100%;
+}
+
+.home__btn + .home__btn {
+  margin-top: 0.5em;
+}

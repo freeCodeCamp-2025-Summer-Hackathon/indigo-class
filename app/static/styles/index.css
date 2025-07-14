@@ -24,108 +24,16 @@ body {
   align-items: center;
 }
 
-.home__section {
-  padding: 1em;
+h1 {
+  font-size: 4rem;
+  font-weight: 700;
+  color: #000;
 }
 
-.home__section h2 {
-  text-align: center;
-  margin-bottom: 1em;
-}
-
-.home__hero {
-  text-align: center;
-}
-
-.home__save-affirms {
-  text-align: center;
-  background-color: var(--purple-outline);
-}
-
-.home__cta {
-  background-color: var(--purple-dark);
-  padding: 1.5em 1em;
-  text-align: center;
-}
-
-.home__cta--wrapper {
-  background-color: var(--white);
-  border: 0.2em solid var(--purple-outline);
-  border-radius: 0.5em;
-  padding: 1em;
-}
-
-.home__cta--heading {
-  font-size: 1em;
-  font-weight: normal;
-}
-
-.home__cta--register {
-  font-size: 1.5em;
-  margin-top: 0.6em;
-}
-
-.home__cta--btn {
-  display: block;
-  background-color: var(--purple-dark);
-  color: var(--white);
-  padding: 0.75em;
-  margin: 0.75em auto;
-  border-radius: 0.5em;
-  text-decoration: none;
-}
-
-.affirms__wrapper {
-  display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(min(100%/1, max(15rem, 100%/4)), 1fr));
-	gap: 1em;
-}
-
-.affirm__wrapper {
-  padding: 1em;
-  border: 3px solid var(--purple-outline);
-  border-radius: 1em;
-  background-color: var(--white);
-}
-
-.affirm__quote {
-  text-align: center;
-  font-size: 1.5em;
-  padding: 1em 0;
-  color: var(--purple-dark);
-}
-
-.affirm__cats {
-  font-size: 0.9em;
-}
-
-.affirm__btn--wrapper {
+main {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.5em;
-  margin-top: 0.5em;
-}
-
-.affirm__btn {
-  background-color: var(--save-btn-clr);
-  color: var(--white);
-  border: none;
-  border-radius: 0.3em;
-  padding: 0.25em 0.5em;
-}
-
-.home__btn {
-  text-align: center;
-  text-decoration: none;
-  display: block;
-  padding: 1em;
-  background-color: var(--purple-dark);
-  color: var(--white);
-  border: none;
-  border-radius: 0.75em;
-  width: 100%;
-}
-
-.home__btn + .home__btn {
-  margin-top: 0.5em;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 20px;
 }
