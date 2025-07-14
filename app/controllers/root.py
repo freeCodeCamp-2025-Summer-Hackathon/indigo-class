@@ -60,7 +60,9 @@ def affirmations():
     Affirmations page.
     """
     all_affirmations: List[Affirmation] = Affirmation.query.all()
-    return render_template("affirmations/index.html", all_affirmations=all_affirmations)
+    return render_template(
+        "affirmations/index.html", all_affirmations=all_affirmations, user=current_user
+    )
 
 
 @root_bp.route("/affirmations/add", methods=["GET", "POST"])
@@ -108,3 +110,15 @@ def edit_affirmation(affirmation_id):
         return redirect(url_for("root.affirmations"))
 
     return render_template("affirmations/edit.html", affirmation=affirmation)
+
+
+@root_bp.post("/affirmations/delete/<int:affirmation_id>")
+@login_required
+def delete_affirmation(affirmation_id):
+    affirmation = Affirmation.query.get_or_404(affirmation_id)
+    if affirmation.user_id == current_user.user_id:
+        db.session.delete(affirmation)
+        db.session.commit()
+        flash("Affirmation deleted", "success")
+
+    return redirect(url_for("root.affirmations"))

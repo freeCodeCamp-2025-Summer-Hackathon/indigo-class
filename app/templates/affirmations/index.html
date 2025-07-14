@@ -6,8 +6,16 @@ content %}
 <p>
   <a
     href="{{ url_for('root.edit_affirmation', affirmation_id=affirmation.affirmation_id)}}"
-    >{{ affirmation.affirmation_text }}</a
-  >
+    >{{ affirmation.affirmation_text }} 
+  </a>
+    {% if affirmation.user_id == user.user_id %}
+    <form
+      method="POST"
+      action="{{ url_for('root.delete_affirmation', affirmation_id=affirmation.affirmation_id) }}"
+    >
+      <button type="submit">Delete</button>
+    </form>
+    {% endif %}
 </p>
 {% endfor %}
 <p>Add affirmation <a href="{{ url_for('root.add_affirmation') }}">here</a></p>
