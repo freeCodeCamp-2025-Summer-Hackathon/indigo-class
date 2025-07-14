@@ -1,12 +1,12 @@
 <header>
   <nav class="nav__top">
-    <a href="{{ url_for('root.index') }}"><img src="./static/styles/logo_white.svg" id="nav__logo"></a>
+    <a href="{{ url_for('root.index') }}"><img src="{{ url_for('static', filename='images/logo_white.svg') }}" alt="DailyDose logo" class="nav__logo"></a>
     {% if current_user.is_authenticated and current_user.is_admin %}
     <div class="nav__menu">
-      <a href="javascript:void(0);" onclick="navDropdown()" id="nav__name">Admin</a>
-      <a href="javascript:void(0);" onclick="navDropdown()">
-        <img src="./static/styles/profile_img.svg" id="nav__img">
-      </a>
+      <button onclick="navDropdown()" class="nav__name">Admin</button>
+      <button onclick="navDropdown()">
+        <img src="{{ url_for('static', filename='images/profile_img.svg') }}" alt="User profile" class="nav__img">
+      </button>
     </div>
     <nav id="nav__dropdown">
       <a href="{{ url_for('root.admin_dashboard') }}" class="nav__menu--button{% if request.path == url_for('root.admin_dashboard') %} active{% endif %}">Users</a>
@@ -17,10 +17,10 @@
     </div>
     {% elif current_user.is_authenticated %}
     <div class="nav__menu">
-      <a onclick="navDropdown()" id="nav__name">Username</a>
-      <a onclick="navDropdown()">
-        <img src="./static/styles/profile_img.svg" id="nav__img">
-      </a>
+      <button onclick="navDropdown()" class="nav__name">Username</button>
+      <button onclick="navDropdown()">
+        <img src="{{ url_for('static', filename='images/profile_img.svg') }}" alt="User profile" class="nav__img">
+      </button>
     </div>
     <!-- Navigation links (hidden by default) -->
     <nav id="nav__dropdown">

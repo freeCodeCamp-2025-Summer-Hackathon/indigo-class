@@ -15,9 +15,11 @@
 }
 
 body {
-  min-height: 100%;
+  min-height: 100vh;
   margin: 50px 0 0 0;
   background-color: var(--body-bg-clr);
+  display: flex;
+  flex-direction: column;
 }
 
 h1 {
@@ -50,7 +52,6 @@ main {
   overflow: visible;
 }
 
-
 .nav__menu {
   position: absolute;
   right: 0;
@@ -59,19 +60,24 @@ main {
   cursor: pointer;
 }
 
-#nav__name {
+.nav__menu > button {
+  background-color: inherit;
+  border: none;
+}
+
+.nav__name {
   color: white;
   text-decoration: none;
   padding: 0;
 }
 
-#nav__img {
+.nav__img {
   height: 40px;
   padding: 5px 10px 0 10px;
   position: relative;
 }
 
-#nav__logo {
+.nav__logo {
   height: 40px;
   padding: 5px 0 0 0;
   margin: 0 15px;
@@ -130,11 +136,12 @@ footer {
   width: 100%;
   padding: 30px 5vw;
   text-align: center;
-  position: absolute;
+  position: relative;
   bottom: 0;
+  margin-top: auto;
 }
 
-#footer__register {
+.footer__register {
   background-color: white;
   border: 3px var(--purple-outline) solid;
   border-radius: 20px;
@@ -142,41 +149,46 @@ footer {
   margin-bottom: 20px;
 }
 
-#footer__register--slogan {
+.footer__register--slogan {
   font-size: 1rem;
   color: var(--purple-dark);
   margin-bottom: 1rem;
 }
 
-#footer__register--text {
+.footer__register--text {
   font-size: 1.5rem;
   font-weight: bold;
   color: black;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
 }
 
-#footer__register--button {
+.footer__register--button {
   background-color: var(--purple-dark);
   border-radius: 10px;
   border: none;
   font-size: 1rem;
   font-weight: bold;
+  text-decoration: none;
   color: white;
   padding: 15px;
-  margin-bottom: 1rem;
 }
 
 .login__prompt {
   font-size: 0.7rem;
-  color: var(--purple-dark)
+  color: var(--purple-dark);
+  margin-top: 2rem;
 }
 
-#footer__logo {
+.login__prompt > a {
+  color: inherit;
+}
+
+.footer__logo {
   height: 30px;
   margin: 0 15px -10px 15px;
 }
 
-#footer__totop--button {
+.footer__totop--button {
   background-color: #8B66C6;
   border-radius: 10px;
   border: none;
@@ -201,7 +213,7 @@ button {
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (min-width: 600px) {
-  #nav__logo {
+  .nav__logo {
     position: relative;
   }
 }
