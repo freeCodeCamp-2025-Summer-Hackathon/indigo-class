@@ -33,6 +33,10 @@ class User(db.Model, UserMixin):
         """Return the user ID as a string for Flask-Login."""
         return str(self.user_id)
 
+    def is_admin(self):
+        """Check if the user is an admin."""
+        return self.roles.filter(Role.name == "admin").first() is not None
+
 
 class Role(db.Model):
     __tablename__ = "roles"
