@@ -57,6 +57,12 @@ uv run main.py
 
 For easier deployment and environment consistency, you can run this application using Docker.
 
+### Configure environment variables
+
+```bash
+cp .env.example .env
+```
+
 ### Prerequisites for Docker
 
 - **Docker Desktop**: Make sure you have Docker Desktop installed on your system. You can download it from https://www.docker.com/products/docker-desktop/ or https://docs.docker.com/engine/install/ for linux.

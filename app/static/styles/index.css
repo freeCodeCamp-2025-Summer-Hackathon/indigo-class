@@ -15,6 +15,17 @@
   margin: 0;
 }
 
+:root {
+  --body-bg-clr: #F0EAF4;
+  --purple-dark: #4D317A;
+  --purple-light: #8B66C6;
+  --purple-outline: #C7C2E1;
+  --red-important: #BD4545;
+  --red-important-hover: #681414;
+  font-family: Nunito, Arial, sans-serif;
+  scroll-behavior: smooth;
+}
+
 body {
   min-height: 100vh;
   background-color: var(--body-bg-clr);
@@ -36,4 +47,186 @@ main {
   align-items: center;
   justify-content: center;
   padding: 20px 20px;
+}
+
+/* Mobile-first design - minimum 300px screen width */
+.nav__top {
+  position: fixed;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  background-color: var(--purple-dark);
+  color: white;
+  height: 50px;
+  width: 100%;
+  text-align: center;
+  align-items: center;
+  font-size: 0.8rem;
+  overflow: visible;
+}
+
+.nav__menu {
+  position: absolute;
+  right: 0;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.nav__menu > button {
+  background-color: inherit;
+  border: none;
+}
+
+.nav__name {
+  color: white;
+  text-decoration: none;
+  padding: 0;
+}
+
+.nav__img {
+  height: 40px;
+  padding: 5px 10px 0 10px;
+  position: relative;
+}
+
+.nav__logo {
+  height: 40px;
+  padding: 5px 0 0 0;
+  margin: 0 15px;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+#nav__dropdown {
+  visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--purple-dark);
+  width: 40vw;
+  max-width: 150px;
+  position: absolute;
+  top: 50px;
+  right: 0;
+  text-align: right;
+}
+
+#nav__dropdown > .nav__menu--button {
+  border-top: white 1px solid;
+}
+
+.nav__menu--button {
+  text-decoration: none;
+  color: white;
+  padding: 10px;
+  height: inherit;
+}
+
+.nav__menu--button:hover {
+  background-color: var(--purple-light);
+}
+
+a.nav__menu--button.active {
+  background-color: #8B66C6;
+  font-weight: bold;
+}
+
+.nav__menu--button:not(#nav__dropdown > .nav__menu--button) {
+  padding-top: 15px;
+}
+
+.logout {
+  background-color: var(--red-important);
+}
+
+.logout:hover {
+  background-color: var(--red-important-hover);
+}
+
+footer {
+  background-color: var(--purple-dark);
+  width: 100%;
+  padding: 30px 5vw;
+  text-align: center;
+  position: relative;
+  bottom: 0;
+  margin-top: auto;
+}
+
+.footer__register {
+  background-color: white;
+  border: 3px var(--purple-outline) solid;
+  border-radius: 20px;
+  padding: 15px;
+  margin-bottom: 20px;
+}
+
+.footer__register--slogan {
+  font-size: 1rem;
+  color: var(--purple-dark);
+  margin-bottom: 1rem;
+}
+
+.footer__register--text {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: black;
+  margin-bottom: 2rem;
+}
+
+.footer__register--button {
+  background-color: var(--purple-dark);
+  border-radius: 10px;
+  border: none;
+  font-size: 1rem;
+  font-weight: bold;
+  text-decoration: none;
+  color: white;
+  padding: 15px;
+}
+
+.login__prompt {
+  font-size: 0.7rem;
+  color: var(--purple-dark);
+  margin-top: 2rem;
+}
+
+.login__prompt > a {
+  color: inherit;
+}
+
+.footer__logo {
+  height: 30px;
+  margin: 0 15px -10px 15px;
+}
+
+.footer__totop--button {
+  background-color: #8B66C6;
+  border-radius: 10px;
+  border: none;
+  font-size: 0.8rem;
+  color: white;
+  padding: 10px;
+}
+
+address {
+  font-size: 0.6rem;
+  color: var(--purple-outline);
+  margin: 20px 0 0 0;
+}
+
+address a {
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+  .nav__logo {
+    position: relative;
+  }
 }
