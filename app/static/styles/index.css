@@ -1,3 +1,15 @@
+:root {
+  --purple-dark: #4D317A;
+  --body-bg-clr: #F0EAF4;
+  --purple-outline: #C7C2E1;
+  --purple-light: #8B66C6;
+  --white: #fff;
+  --save-btn-clr: #9E9E9E;
+  --txt-fade-clr: #4c4c4c;
+  --red-important: #BD4545;
+  --red-important-hover: #681414;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -21,6 +33,8 @@ body {
   background-color: var(--body-bg-clr);
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 h1 {
@@ -37,12 +51,26 @@ main {
   padding: 1.5rem 1.5rem;
 }
 
-/* Mobile-first design - minimum 300px screen width */
-.nav__top {
+header {
+  width: 100%;
   position: fixed;
   top: 0;
+  background-color: var(--purple-dark);
+  align-items: center;
+  height: 3rem;
+}
+
+main {
+  padding-top: 4rem;
+}
+
+h1 {
+  font-size: 3rem;
+}
+
+/* Mobile-first design - minimum 300px screen width */
+.nav__top {
   display: flex;
-  justify-content: center;
   background-color: var(--purple-dark);
   color: white;
   width: 100%;
