@@ -2,8 +2,13 @@
 content %}
 <h1>Affirmations</h1>
 
-{% for affirmation in all_affirmations %} {{ affirmation.affirmation_text }}
-<br />
+{% for affirmation in all_affirmations %}
+<p>
+  <a
+    href="{{ url_for('root.edit_affirmation', affirmation_id=affirmation.affirmation_id)}}"
+    >{{ affirmation.affirmation_text }}</a
+  >
+</p>
 {% endfor %}
 <p>Add affirmation <a href="{{ url_for('root.add_affirmation') }}">here</a></p>
 {% endblock %}

@@ -85,3 +85,26 @@ def add_affirmation():
         return redirect(url_for("root.affirmations"))
 
     return render_template("affirmations/add.html")
+
+
+@root_bp.route("/affirmations/edit/<int:affirmation_id>", methods=["GET", "POST"])
+@login_required
+def edit_affirmation(affirmation_id):
+    affirmation = Affirmation.query.get_or_404(affirmation_id)
+    if affirmation.user_id != current_user.user_id:
+        flash("Can not edit others affirmation", "error")
+        return redirect(url_for("root.affirmations"))
+
+    if request.method == "POST":
+        textInput: str | None = request.form.get("affirmation_text")
+
+        if not textInput:
+            return render_template("affirmations/edit.html", affirmation=affirmation)
+
+        affirmation.affirmation_text = textInput
+        db.session.commit()
+
+        flash("Affirmation updated", "success")
+        return redirect(url_for("root.affirmations"))
+
+    return render_template("affirmations/edit.html", affirmation=affirmation)
