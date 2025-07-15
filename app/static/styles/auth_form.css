@@ -39,4 +39,11 @@ h2{
   justify-content: left;
   margin: 0.5rem 0 0;
   gap: 0.5rem;
+}.forgotpass__noacc{
+  font-size: 1rem;
+}
+
+.form__link{
+  font-size: 1rem;
+  color: var(--purple-dark);
 }
