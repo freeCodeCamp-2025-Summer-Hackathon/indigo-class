@@ -22,7 +22,7 @@ body {
   flex-direction: column;
 }
 
-h1 {
+.page-title {
   font-size: 4rem;
   font-weight: 700;
   color: #000;
@@ -209,6 +209,46 @@ address a {
 
 button {
   cursor: pointer;
+}
+
+.form__input {
+    width: 100%;
+    border: 0.25em solid var(--purple-light);
+    padding: 0.5em 0;
+    font-size: 0.7em;
+    border-radius: 20px;
+    box-sizing: border-box;
+}
+
+.form__group {
+    margin: 1em;
+}
+
+.form__group .form__group--checkbox{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 3em 0 0;
+    gap: 1em;
+}
+
+.form__button .btn{
+    width: 100%;
+    border: none;
+    background-color: var(--purple-dark);
+    color: var(--body-bg-clr);
+    font-size: 1em;
+    padding: 0.5em;
+    margin: 1em 0 0.5em;
+}
+
+.register__login-link{
+    display: block;
+    text-align: center;
+    margin: 1em;
+    background-color: var(--purple-dark);
+    color: var(--body-bg-clr);
+    text-decoration: none;
 }
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
