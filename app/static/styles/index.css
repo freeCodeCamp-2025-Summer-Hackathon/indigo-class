@@ -211,44 +211,44 @@ button {
   cursor: pointer;
 }
 
+.form__label{
+  color: var(--purple-light);
+}
+
 .form__input {
-    width: 100%;
-    border: 0.25em solid var(--purple-light);
-    padding: 0.5em 0;
-    font-size: 0.7em;
-    border-radius: 20px;
-    box-sizing: border-box;
+  width: 100%;
+  border: 0.25em solid var(--purple-outline);
+  padding: 0.5em 0;
+  font-size: 0.8em;
+  border-radius: 10px;
+  box-sizing: border-box;
 }
 
 .form__group {
-    margin: 1em;
+    margin: 1rem;
 }
 
-.form__group .form__group--checkbox{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 3em 0 0;
-    gap: 1em;
+.form__button.btn{
+  width: 100%;
+  border: none;
+  border-radius: 10px;
+  background-color: var(--purple-dark);
+  color: var(--body-bg-clr);
+  font-size: 1rem;
+  padding: 0.5rem;
+  margin: 1rem 0 0.5rem;
 }
 
-.form__button .btn{
-    width: 100%;
-    border: none;
-    background-color: var(--purple-dark);
-    color: var(--body-bg-clr);
-    font-size: 1em;
-    padding: 0.5em;
-    margin: 1em 0 0.5em;
+.form__button.btn:hover{
+  text-decoration: underline;
 }
 
-.register__login-link{
-    display: block;
-    text-align: center;
-    margin: 1em;
-    background-color: var(--purple-dark);
-    color: var(--body-bg-clr);
-    text-decoration: none;
+.form__group--checkbox{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0.5rem 0 0;
+  gap: 0.5rem;
 }
 
 /* Small devices (portrait tablets and large phones, 600px and up) */

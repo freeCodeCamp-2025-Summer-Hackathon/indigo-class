@@ -8,16 +8,18 @@
 {% endfor %} {% endif %} {% endwith %}
 
 <form method="POST" action="{{ url_for('auth.login') }}">
-  <label for="username">Username:</label>
+  <label for="username" class="form__label">Username:</label>
   <input type="text" id="username" name="username" class="form__input" required />
 
-  <label for="password">Password:</label>
+  <label for="password" class="form__label">Password:</label>
   <input type="password" id="password" name="password" class="form__input" required />
 
-  <label for="remember">Remember me</label>
-  <input type="checkbox" id="remember" name="remember" class="form__input"/>
+  <div class="form__group form__group--checkbox">
+    <label for="remember" class="form__label">Remember me</label>
+    <input type="checkbox" id="remember" name="remember" class="form__input"/>
+  </div>
 
-  <button type="submit">Login</button>
+  <button type="submit" class="form__button btn">Login</button>
 </form>
 
 <p>
