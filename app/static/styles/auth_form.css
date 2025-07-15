@@ -36,8 +36,7 @@ h2{
 
 .form__group--checkbox{
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: left;
   margin: 0.5rem 0 0;
   gap: 0.5rem;
 }

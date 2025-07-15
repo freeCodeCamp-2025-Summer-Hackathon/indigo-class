@@ -8,7 +8,7 @@
 {% endfor %} {% endif %} {% endwith %}
 
 <form method="POST" action="{{ url_for('auth.login') }}">
-  <div class="form__group"></div>
+  <div class="form__group">
     <label for="username" class="form__label">Username:</label>
     <input type="text" id="username" name="username" class="form__input" required />
   </div>
