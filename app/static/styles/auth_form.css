@@ -1,18 +1,22 @@
+h2{
+  color: var(--purple-dark);
+}
+
 .form__label{
   color: var(--purple-light);
 }
 
 .form__input {
   width: 100%;
-  border: 0.25em solid var(--purple-outline);
-  padding: 0.5em 0;
-  font-size: 0.8em;
+  border: 0.25rem solid var(--purple-outline);
+  padding: 0.5rem 0;
+  font-size: 0.8rem;
   border-radius: 10px;
   box-sizing: border-box;
 }
 
 .form__group {
-    margin: 1rem;
+  margin: 1rem;
 }
 
 .form__button.btn{
