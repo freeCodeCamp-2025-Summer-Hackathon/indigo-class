@@ -130,7 +130,9 @@ def delete_user(user_id: int):
     db.session.delete(user)
     db.session.commit()
     flash("User deleted successfully.", "warning")
-    return redirect(url_for("user.user_list"))
+    return redirect(
+        url_for("user.user_list", page=request.args.get("page", 1, type=int))
+    )
 
 
 # Change email toggle
