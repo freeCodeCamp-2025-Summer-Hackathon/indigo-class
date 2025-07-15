@@ -1,0 +1,23 @@
+{% extends "base.html" %} {% block title %} Affirmations {% endblock %} {% block
+content %}
+
+<form
+  method="POST"
+  action="{{ url_for('root.edit_affirmation', affirmation_id=affirmation.affirmation_id) }}"
+>
+  <p><label for="affirmation_text">Affirmation:</label></p>
+  <textarea
+    id="affirmation_text"
+    name="affirmation_text"
+    rows="4"
+    cols="50"
+    required
+  >
+{{ affirmation.affirmation_text }}</textarea
+  >
+  <br />
+
+  <button type="submit">Edit</button>
+</form>
+
+{% endblock %}
