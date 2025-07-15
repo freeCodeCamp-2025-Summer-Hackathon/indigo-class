@@ -6,7 +6,7 @@
 
 {% block content %}
     <section>
-        <h1>Register</h1>
+        <h2>Register</h2>
 
         <form
             class="register__form form"
@@ -91,9 +91,8 @@
             </button>
         </form>
 
-        <p class="register__login-link">
-            Have an existing account?
-            <a href="{{ url_for('auth.login') }}">Log in</a>
-        </p>
+        <span class="register__login-link">
+            <a href="{{ url_for('auth.login') }}">Have an existing account? Log in</a>
+        </span>
     </section>
 {% endblock %}
