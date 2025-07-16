@@ -5,9 +5,11 @@ content %}
   {% if current_user.is_authenticated %}
   <h1>Welcome Back, {{ current_user.name }}!</h1>
   <p>You are logged in as: {{ current_user.username }}</p>
-  <a class="home__btn" href="{{ url_for('root.dashboard') }}">Go to Dashboard</a>
+  <a class="home__btn" href="{{ url_for('root.dashboard') }}"
+    >Go to Dashboard</a
+  >
   <a class="" href="{{ url_for('auth.profile') }}">View Profile</a>
-  
+
   {% if current_user.is_admin %}
   <a href="{{ url_for('root.admin_dashboard') }}">Go to Admin Dashboard</a>
   {% endif %} {% else %}
@@ -18,8 +20,6 @@ content %}
     mindset.
   </p>
   {% endif %}
-  
-  <p>Current time: {{ current_time }}</p>
 </section>
 
 <section class="home__section home__affirms">
@@ -35,17 +35,21 @@ content %}
         <figcaption class="affirm__cats">Self Care, Emotion</figcaption>
       </figure>
       <div class="affirm__btn--wrapper">
-        <button class="affirm__btn" aria-label="Save affirmation">+</button>
+        <button
+          class="affirm__btn"
+          aria-label="Save affirmation"
+          onclick="saveAffirmation('{{ affirmation.affirmation_id }}')"
+        >
+          +
+        </button>
         <p>
-          {% if current_user.is_authenticated %}
-            Save this affirmation
-          {% else %}
-            <a href="{{ url_for('auth.login') }}">Log in</a> to save this affirmation
-          {% endif %}
+          {% if current_user.is_authenticated %} Save this affirmation {% else%}
+          <a href="{{ url_for('auth.login') }}">Log in</a> to save this
+          affirmation {% endif %}
         </p>
       </div>
     </div>
-    {% endfor %}    
+    {% endfor %}
   </div>
 </section>
 
@@ -57,16 +61,17 @@ content %}
     <a class="home__btn" href="#">Submit Affirmations</a>
   </div>
   <div class="home__section">
-    {% for affirmation in all_affirmations[:1] %} 
+    {% for affirmation in all_affirmations[:1] %}
     <figure class="affirm__wrapper">
-      <blockquote class="affirm__quote">
+      <blockquote class="affirm__quote" id="random-affirmation">
         {{ affirmation.affirmation_text }}
       </blockquote>
       <figcaption class="affirm__cats">Self Worth</figcaption>
     </figure>
     {% endfor %}
-    <button class="home__btn">Get Affirmation</button>
+    <button class="home__btn" onclick="getRandomAffirmation()">
+      Get Affirmation
+    </button>
   </div>
 </section>
-{% endif %}
-{% endblock %}
+{% endif %} {% endblock %}
