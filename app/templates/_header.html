@@ -1,7 +1,7 @@
 <header>
   <nav class="nav__top">
     <a href="{{ url_for('root.index') }}"><img src="{{ url_for('static', filename='images/logo_white.svg') }}" alt="DailyDose logo" class="nav__logo"></a>
-    {% if current_user.is_authenticated and current_user.is_admin %}
+    {% if current_user.is_authenticated and current_user.is_admin() %}
     <div class="nav__menu">
       <button onclick="navDropdown()" class="nav__name">Admin</button>
       <button onclick="navDropdown()">

@@ -63,14 +63,20 @@ def register() -> Union[str, Response]:
 
     if request.method == "POST":
         # read form data
-        name: str = request.form.get("name")
+        name: str = request.form.get("first_name") + " " + request.form.get("last_name")
         username: str = request.form.get("username")
         email: str = request.form.get("email")
         password: str = request.form.get("password")
         is_email_opt_in: bool = request.form.get("is_email_opt_in") == "on"
 
         # validate required fields
-        required_fields: list[str] = ["name", "username", "email", "password"]
+        required_fields: list[str] = [
+            "first_name",
+            "last_name",
+            "username",
+            "email",
+            "password",
+        ]
         for field in required_fields:
             if not request.form.get(field):
                 flash(f"Missing required field: {field}", "error")
