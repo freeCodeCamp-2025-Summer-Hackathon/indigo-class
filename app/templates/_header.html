@@ -14,7 +14,7 @@
       <a href="{{ url_for('root.admin_dashboard') }}" class="nav__menu--button{% if request.path == url_for('root.admin_dashboard') %} active{% endif %}">Affirmations</a>
       <a href="{{ url_for('root.admin_dashboard') }}" class="nav__menu--button{% if request.path == url_for('root.admin_dashboard') %} active{% endif %}">Settings</a>
       <a href="{{ url_for('auth.logout') }}" class="nav__menu--button logout">Logout</a>
-    </div>
+    </nav>
     {% elif current_user.is_authenticated %}
     <div class="nav__menu">
       <button onclick="navDropdown()" class="nav__name">Username</button>
@@ -22,7 +22,7 @@
         <img src="{{ url_for('static', filename='images/profile_img.svg') }}" alt="User profile" class="nav__img">
       </button>
     </div>
-    <!-- Navigation links (hidden by default) -->
+    <!-- {# Navigation links (hidden by default) #} -->
     <nav id="nav__dropdown">
       <a href="{{ url_for('root.index') }}" class="nav__menu--button{% if request.path == url_for('root.index') %} active{% endif %}">Home</a>
       <a href="{{ url_for('root.dashboard') }}" class="nav__menu--button{% if request.path == url_for('root.dashboard') %} active{% endif %}">Dashboard</a>

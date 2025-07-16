@@ -235,7 +235,7 @@ button {
   cursor: pointer;
 }
 
-/* Small devices (portrait tablets and large phones, 600px and up) */
+/* Small devices - For users */
 @media only screen and (min-width: 600px) {
   .nav__logo {
     position: relative;
@@ -243,3 +243,5 @@ button {
     
   }
 }
+
+/* Admin header & footer */
