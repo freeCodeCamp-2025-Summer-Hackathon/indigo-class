@@ -150,3 +150,20 @@ def toggle_email_subscription(user_id: int):
     return redirect(
         url_for("user.user_list", page=request.args.get("page", 1, type=int))
     )
+
+
+# Reset_password from admin
+@user_bp.route("/<int:user_id>/reset_password", methods=["POST"])
+@login_required
+def admin_reset_password(user_id: int):
+    if not current_user.is_admin():
+        flash("Unauthorized access.", "danger")
+        return redirect(url_for("root.index"))
+    user: User = User.query.get_or_404(user_id)
+    token = generate_reset_token(user.user_id)
+    send_password_reset_email(user, token)
+
+    flash("Password reset email has been sent!", "success")
+    return redirect(
+        url_for("user.user_list", page=request.args.get("page", 1, type=int))
+    )
