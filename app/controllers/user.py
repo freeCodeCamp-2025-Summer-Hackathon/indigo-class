@@ -10,6 +10,7 @@ from flask_login import current_user, login_required
 from app.models import db, User
 from sqlalchemy import and_
 from sqlalchemy.orm import joinedload
+from reset_password import generate_reset_token, send_password_reset_email
 
 user_bp = Blueprint("user", __name__, url_prefix="/admin/user")
 
