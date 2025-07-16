@@ -5,13 +5,13 @@
 {% endblock %}
 
 {% block content %}
-    <section class="register">
-        <h1 class="register__title">Register</h1>
+    <section>
+        <h1 class="page-title">Register</h1>
 
         <form
-            class="register__form form"
+            class="form"
             method="POST"
-            action="{{ url_for('auth.register') }}"
+            action= "{{ url_for('auth.register') }}"
         >
             <div class="form__group">
                 <label for="email" class="form__label">Email:</label>
@@ -23,7 +23,7 @@
                     required
                 />
             </div>
-
+ 
             <div class="form__group">
                 <label for="first-name" class="form__label">First Name:</label>
                 <input
@@ -91,9 +91,9 @@
             </button>
         </form>
 
-        <p class="register__login-link">
-            Have an existing account?
-            <a href="{{ url_for('auth.login') }}">Log in</a>
-        </p>
+        <div>
+            <a href="{{ url_for('auth.login') }} " class="form__link">Have an existing account? Log in</a>
+        </div>
+
     </section>
 {% endblock %}
