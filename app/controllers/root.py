@@ -15,11 +15,14 @@ def index():
     """
     Main landing page.
     """
+    all_affirmations: List[Affirmation] = Affirmation.query.all()
 
     return render_template(
         "home/index.html",
         title="DailyDose",
         current_time=datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        user=current_user,
+        all_affirmations=all_affirmations,
     )
 
 

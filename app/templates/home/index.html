@@ -25,11 +25,11 @@ content %}
 <section class="home__section home__affirms">
   <h2>Today's Affirmation</h2>
   <div class="affirms__wrapper">
-    <!-- We may use Jinja for loop for displaying affirmations -->
+    {% for affirmation in all_affirmations[:3] %}
     <div class="affirm">
       <figure class="affirm__wrapper">
         <blockquote class="affirm__quote">
-          I am present in the moment and embrace it fully.
+          {{ affirmation.affirmation_text }}
         </blockquote>
         <!-- We may use Jinja for loop for displaying the categories of this affirmation -->
         <figcaption class="affirm__cats">Self Care, Emotion</figcaption>
@@ -45,26 +45,7 @@ content %}
         </p>
       </div>
     </div>
-
-    <div class="affirm">
-      <figure class="affirm__wrapper">
-        <blockquote class="affirm__quote">
-          I trust in my inner wisdom.
-        </blockquote>
-        <!-- We may use Jinja for loop for displaying the categories of this affirmation -->
-        <figcaption class="affirm__cats">Self Worth</figcaption>
-      </figure>
-      <div class="affirm__btn--wrapper">
-        <button class="affirm__btn" aria-label="Save affirmation">+</button>
-        <p>
-          {% if current_user.is_authenticated %}
-            Save this affirmation
-          {% else %}
-            <a href="{{ url_for('auth.login') }}">Log in</a> to save this affirmation
-          {% endif %}
-        </p>
-      </div>
-    </div>
+    {% endfor %}    
   </div>
 </section>
 
@@ -80,7 +61,7 @@ content %}
       <blockquote class="affirm__quote">
         I trust in my inner wisdom.
       </blockquote>
-    <figcaption class="affirm__cats">Self Worth</figcaption>
+      <figcaption class="affirm__cats">Self Worth</figcaption>
     </figure>
     <button class="home__btn">Get Affirmation</button>
   </div>
