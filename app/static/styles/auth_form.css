@@ -1,11 +1,9 @@
-.page-title{
+h2{
   color: var(--purple-dark);
-  text-align: center;
-  font-weight: 400;
 }
 
 .form__label{
-  color: var(--purple-dark);
+  color: var(--purple-light);
 }
 
 .form__input {
@@ -41,16 +39,11 @@
   justify-content: left;
   margin: 0.5rem 0 0;
   gap: 0.5rem;
+}.forgotpass__noacc{
+  font-size: 1rem;
 }
 
 .form__link{
-  font-size: 0.8rem;
+  font-size: 1rem;
   color: var(--purple-dark);
-  text-decoration: none;
-  text-align: center;
-}
-
-.form__link:hover{
-  text-decoration: underline;
-  
 }
