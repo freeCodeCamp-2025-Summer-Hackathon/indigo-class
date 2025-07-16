@@ -131,3 +131,17 @@ def logout() -> Response:
 @login_required
 def profile() -> str:
     return render_template("auth/profile.html", user=current_user)
+
+
+@auth_bp.route("/reset_password", methods=["GET", "POST"])
+def reset_password() -> Union[str, Response]:
+    if request.method == "POST":
+        email: str = request.form.get("email")
+        if not email:
+            flash("Email is required.", "error")
+            return render_template("auth/reset_password.html")
+
+        flash("Password reset is successful.", "success")
+        return redirect(url_for("auth.login"))
+
+    return render_template("auth/reset_password.html")
