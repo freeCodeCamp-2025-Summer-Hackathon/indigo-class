@@ -57,12 +57,14 @@ content %}
     <a class="home__btn" href="#">Submit Affirmations</a>
   </div>
   <div class="home__section">
+    {% for affirmation in all_affirmations[:1] %} 
     <figure class="affirm__wrapper">
       <blockquote class="affirm__quote">
-        I trust in my inner wisdom.
+        {{ affirmation.affirmation_text }}
       </blockquote>
       <figcaption class="affirm__cats">Self Worth</figcaption>
     </figure>
+    {% endfor %}
     <button class="home__btn">Get Affirmation</button>
   </div>
 </section>
