@@ -37,8 +37,6 @@ def user_list():
             "user_id": user.user_id,
             "name": user.name,
             "username": user.username,
-            # "first_name": user.first_name,
-            # 'last_name': user.last_name,
             "email": user.email,
             "is_email_opt_in": user.is_email_opt_in,
             "role_name": [role.name for role in user.roles],
