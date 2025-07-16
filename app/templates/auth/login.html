@@ -1,6 +1,6 @@
 {% extends "base.html" %} {% block title %}Login{% endblock %} {% block content
 %}
-<h2>Login</h2>
+<h1 class="page-title">Login</h1>
 
 {% with messages = get_flashed_messages(with_categories=true) %} {% if messages
 %} {% for category, message in messages %}
@@ -26,13 +26,13 @@
   <button type="submit" class="form__button btn">Login</button>
 </form>
 
-<span class="forgotpass__noaccount">
-  <a href="{{ url_for('auth.reset_password') }}">Forgot your password?</a>
-</span>
+<div>
+  <a href="{{ url_for('auth.reset_password') }}" class="form__link">Forgot your password?</a>
+</div>
 
-<span class="forgotpass__noaccount">
+<div>
   <a href="{{ url_for('auth.register') }}" class="form__link">Don't have an account? Register here</a>
-</span>
+</div>
 
 
 {% endblock %}
