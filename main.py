@@ -1,6 +1,6 @@
 import os
 
-from app import create_app
+from app import create_app, db
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -13,6 +13,9 @@ if not os.environ.get("DATABASE_URL"):
 def main():
     """Main function to run the flask application."""
     app = create_app()
+
+    with app.app_context():
+        db.create_all()
 
     host = os.environ.get("FLASK_HOST", "0.0.0.0")
     port = int(os.environ.get("FLASK_PORT", 8000))
