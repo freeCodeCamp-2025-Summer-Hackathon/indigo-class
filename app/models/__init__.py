@@ -35,7 +35,7 @@ class User(db.Model, UserMixin):
 
     def is_admin(self):
         """Check if the user is an admin."""
-        return self.roles.filter(Role.name == "admin").first() is not None
+        return any(role.name == "admin" for role in self.roles)
 
 
 class Role(db.Model):

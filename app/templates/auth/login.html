@@ -1,6 +1,6 @@
 {% extends "base.html" %} {% block title %}Login{% endblock %} {% block content
 %}
-<h1>Login</h1>
+<h1 class="page-title">Login</h1>
 
 {% with messages = get_flashed_messages(with_categories=true) %} {% if messages
 %} {% for category, message in messages %}
@@ -8,20 +8,31 @@
 {% endfor %} {% endif %} {% endwith %}
 
 <form method="POST" action="{{ url_for('auth.login') }}">
-  <label for="username">Username:</label>
-  <input type="text" id="username" name="username" required />
+  <div class="form__group">
+    <label for="username" class="form__label">Username:</label>
+    <input type="text" id="username" name="username" class="form__input" required />
+  </div>
 
-  <label for="password">Password:</label>
-  <input type="password" id="password" name="password" required />
+  <div class="form__group">
+    <label for="password" class="form__label">Password:</label>
+    <input type="password" id="password" name="password" class="form__input" required />
+  </div>
 
-  <label for="remember">Remember me</label>
-  <input type="checkbox" id="remember" name="remember" />
+  <div class="form__group form__group--checkbox">
+    <input type="checkbox" id="remember" name="remember" class="form__checkbox"/>
+    <label for="remember" class="form__label form__label--checkbox">Remember me</label>
+  </div>
 
-  <button type="submit">Login</button>
+  <button type="submit" class="form__button btn">Login</button>
 </form>
 
-<p>
-  Don't have an account?
-  <a href="{{ url_for('auth.register') }}">Register here</a>
-</p>
+<div>
+  <a href="{{ url_for('auth.reset_password') }}" class="form__link">Forgot your password?</a>
+</div>
+
+<div>
+  <a href="{{ url_for('auth.register') }}" class="form__link">Don't have an account? Register here</a>
+</div>
+
+
 {% endblock %}
