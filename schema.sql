@@ -1,9 +1,9 @@
 CREATE TABLE users (
     user_id SERIAL PRIMARY KEY,
-    name VARCHAR NOT NULL,
-    username VARCHAR NOT NULL UNIQUE,
-    email VARCHAR NOT NULL UNIQUE,
-    password_hash VARCHAR NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    username VARCHAR(255) NOT NULL UNIQUE,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL,
     is_email_opt_in BOOLEAN DEFAULT FALSE,
     created_at TIMESTAMP DEFAULT NOW(),
     updated_at TIMESTAMP DEFAULT NOW()
@@ -11,7 +11,7 @@ CREATE TABLE users (
 
 CREATE TABLE roles (
     role_id SERIAL PRIMARY KEY,
-    name VARCHAR NOT NULL UNIQUE,
+    name VARCHAR(100) NOT NULL UNIQUE,
     description TEXT,
     created_at TIMESTAMP DEFAULT NOW(),
     updated_at TIMESTAMP DEFAULT NOW()
@@ -25,9 +25,8 @@ CREATE TABLE user_roles (
 
 CREATE TABLE categories (
     category_id SERIAL PRIMARY KEY,
-    name VARCHAR NOT NULL,
-    user_id INT NOT NULL REFERENCES users(user_id) ON DELETE CASCADE,
-    is_admin_set BOOLEAN DEFAULT FALSE,
+    name VARCHAR(255) NOT NULL,
+    description TEXT,
     created_at TIMESTAMP DEFAULT NOW(),
     updated_at TIMESTAMP DEFAULT NOW()
 );
@@ -55,4 +54,10 @@ CREATE TABLE daily_mail_history (
     affirmation_id INT NOT NULL REFERENCES affirmations(affirmation_id) ON DELETE CASCADE,
     sent_email_at TIMESTAMP,
     scheduled_for TIMESTAMP
+);
+
+CREATE TABLE saved_affirmations (
+    saved_affirmation_id SERIAL PRIMARY KEY,
+    user_id INT NOT NULL REFERENCES users(user_id) ON DELETE CASCADE,
+    affirmation_id INT NOT NULL REFERENCES affirmations(affirmation_id) ON DELETE CASCADE
 );
