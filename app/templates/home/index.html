@@ -31,8 +31,11 @@ content %}
         <blockquote class="affirm__quote">
           {{ affirmation.affirmation_text }}
         </blockquote>
-        <!-- We may use Jinja for loop for displaying the categories of this affirmation -->
-        <figcaption class="affirm__cats">Self Care, Emotion</figcaption>
+        <figcaption class="affirm__cats">
+          {% for category in affirmation.categories %}
+            {{ category.category.name }}
+          {% endfor %}
+        </figcaption>
       </figure>
       <div class="affirm__btn--wrapper">
         <button
