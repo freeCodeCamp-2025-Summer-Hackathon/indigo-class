@@ -1,7 +1,7 @@
 {% extends "base.html" %} {% block title %} Affirmations {% endblock %} {% block
 content %}
 
-<form method="POST" action="{{ url_for('root.add_affirmation') }}">
+<form method="POST" action="{{ url_for('affirmations.add_affirmation') }}">
   <p><label for="affirmation_text">Affirmation:</label></p>
   <textarea
     id="affirmation_text"
@@ -18,7 +18,8 @@ Add your affirmation here</textarea
 </form>
 
 <p>
-  See all affirmations <a href="{{ url_for('root.affirmations') }}">here</a>
+  See all affirmations
+  <a href="{{ url_for('affirmations.affirmations') }}">here</a>
 </p>
 
 {% endblock %}

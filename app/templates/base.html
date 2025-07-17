@@ -12,7 +12,7 @@
       rel="stylesheet"
       href="{{ url_for('static', filename='styles/home.css') }}"
     />
-     <link
+    <link
       rel="stylesheet"
       href="{{ url_for('static', filename='styles/auth.css') }}"
     />
@@ -26,7 +26,7 @@
       messages %} {% for category, message in messages %}
       <div>
         {{ message }}
-        <button type="button">×</button>
+        <button type="button" onclick="this.parentElement.remove()">×</button>
       </div>
       {% endfor %} {% endif %} {% endwith %} {% block content %}{% endblock %}
     </main>
