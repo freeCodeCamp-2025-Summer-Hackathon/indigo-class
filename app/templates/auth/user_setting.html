@@ -5,9 +5,12 @@
 {% endblock %}
 
 {% block content %}
-    <span class="background">
+    <span class="setting__background">
         <h2>User Settings</h2>
     </span>
 
+    <!-- <span class="display__name"> {{ url_for('auth.username') }}</span> -->
+    <span class="display__name">{{ Display Name }} </span>
+    <img src="../static/images/edit_icon.png" class="edit__icon" data-type="display__name">
     
 {% endblock %}
