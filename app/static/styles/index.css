@@ -239,3 +239,17 @@ button {
 }
 
 /* Admin header & footer */
+.header__aside {
+  width: 20%;
+  height: 100vh;
+  max-width: 500px;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background-color: var(--purple-dark);
+  align-items: center;
+}
+
+.nav__aside {
+  background-color: inherit;
+}
