@@ -8,23 +8,16 @@
   --txt-fade-clr: #4c4c4c;
   --red-important: #BD4545;
   --red-important-hover: #681414;
+  --edit-btn-clr: #008000;
+  --delete-btn-clr: #c20000;
+  font-family: "Nunito", Arial, sans-serif;
+  scroll-behavior: smooth;
 }
 
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-}
-
-:root {
-  --body-bg-clr: #F0EAF4;
-  --purple-dark: #4D317A;
-  --purple-light: #8B66C6;
-  --purple-outline: #C7C2E1;
-  --red-important: #BD4545;
-  --red-important-hover: #681414;
-  font-family: Nunito, Arial, sans-serif;
-  scroll-behavior: smooth;
 }
 
 body {
@@ -66,6 +59,7 @@ main {
 
 h1 {
   font-size: 3rem;
+  margin-bottom: 0.5em;
 }
 
 /* Mobile-first design - minimum 300px screen width */
