@@ -39,6 +39,7 @@ content %}
         </figcaption>
       </figure>
       <div class="affirm__btn--wrapper">
+        {% if current_user.is_authenticated %}
         <button
           class="affirm__btn"
           aria-label="Save affirmation"
@@ -46,8 +47,9 @@ content %}
         >
           +
         </button>
+        {% endif %}
         <p>
-          {% if current_user.is_authenticated %} Save this affirmation {% else%}
+          {% if current_user.is_authenticated %} Save this affirmation {% else %}
           <a href="{{ url_for('auth.login') }}">Log in</a> to save this
           affirmation {% endif %}
         </p>
