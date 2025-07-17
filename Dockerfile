@@ -4,8 +4,6 @@ WORKDIR /app
 
 RUN pip install uv
 
-COPY . .
-
-CMD ["/bin/bash", "-c", "uv sync && uv run main.py"]
+CMD ["bash", "-c", "uv sync && uv run main.py"]
 
 EXPOSE 8000

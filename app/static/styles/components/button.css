@@ -1,0 +1,46 @@
+.btn {
+  padding: var(--space-md) var(--space-md);
+  border: none;
+  border-radius: var(--radius-md);
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn--primary {
+  background-color: var(--purple-dark);
+  color: #fff;
+}
+
+.btn--primary:hover {
+  background-color: var(--purple-light);
+}
+
+.btn--dashed {
+  background-color: #fff;
+  border: 3px dashed var(--purple-dark);
+  color: var(--purple-dark);
+  font-size: 0.7em;
+}
+
+.btn--dashed i {
+	font-size: 50px;
+	display: block;
+	line-height: 1;
+	font-style: normal;
+}
+
+.btn--danger {
+  background-color: var(--red-important);
+  color: #fff;
+}
+
+.btn--danger:hover {
+  background-color: var(--red-important-hover);
+}
+
+.btn--block {
+  display: block;
+  width: 100%;
+  text-align: center;
+}
