@@ -5,7 +5,7 @@ content %}
 {% for affirmation in all_affirmations %}
 <p>
   <a
-    href="{{ url_for('root.edit_affirmation', affirmation_id=affirmation.affirmation_id)}}"
+    href="{{ url_for('affirmations.edit_affirmation', affirmation_id=affirmation.affirmation_id)}}"
     >{{ affirmation.affirmation_text }} 
   </a>
     {% if affirmation.user_id == user.user_id %}
@@ -18,5 +18,5 @@ content %}
     {% endif %}
 </p>
 {% endfor %}
-<p>Add affirmation <a href="{{ url_for('root.add_affirmation') }}">here</a></p>
+<p>Add affirmation <a href="{{ url_for('affirmations.add_affirmation') }}">here</a></p>
 {% endblock %}
