@@ -18,6 +18,7 @@ content %}
     <div class="affirm__btn--wrapper">
       <a
         href="{{ url_for('affirmations.edit_affirmation', affirmation_id=affirmation.affirmation_id)}}"
+        class="affirm__edit"
         >Edit
       </a>
       {% if affirmation.user_id == user.user_id %}
@@ -25,7 +26,7 @@ content %}
         method="POST"
         action="{{ url_for('affirmations.delete_affirmation', affirmation_id=affirmation.affirmation_id) }}"
       >
-        <button type="submit">Delete</button>
+        <button class="affirm__delete" type="submit">Delete</button>
       </form>
     </div>
     {% endif %}

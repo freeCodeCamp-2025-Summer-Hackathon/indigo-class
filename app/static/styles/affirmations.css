@@ -38,3 +38,21 @@
   padding: 0.25em 0.5em;
 }
 
+.affirm__edit,
+.affirm__delete {
+  border: none;
+  border-radius: 0.4em;
+  padding: 0.5em;
+  font-size: 0.9em;
+  color: var(--white);
+  text-decoration: none;
+}
+
+.affirm__edit {
+  background-color: var(--edit-btn-clr);
+}
+
+.affirm__delete {
+  background-color: var(--delete-btn-clr);
+}
+
