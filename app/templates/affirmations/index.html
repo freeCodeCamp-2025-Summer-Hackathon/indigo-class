@@ -2,21 +2,39 @@
 content %}
 <h1>Affirmations</h1>
 
-{% for affirmation in all_affirmations %}
-<p>
-  <a
-    href="{{ url_for('root.edit_affirmation', affirmation_id=affirmation.affirmation_id)}}"
-    >{{ affirmation.affirmation_text }} 
-  </a>
-    {% if affirmation.user_id == user.user_id %}
-    <form
-      method="POST"
-      action="{{ url_for('root.delete_affirmation', affirmation_id=affirmation.affirmation_id) }}"
-    >
-      <button type="submit">Delete</button>
-    </form>
+<section class="affirms__wrapper">
+  {% for affirmation in all_affirmations %}
+  <div class="affirm">
+    <figure class="affirm__wrapper">
+      <blockquote class="affirm__quote">
+        {{ affirmation.affirmation_text }} 
+      </blockquote>
+      <figcaption class="affirm__cats">
+        {% for category in affirmation.categories %}
+          {{ category.category.name }}
+        {% endfor %}
+      </figcaption>
+    </figure>
+    <div class="affirm__btn--wrapper">
+      <a
+        href="{{ url_for('affirmations.edit_affirmation', affirmation_id=affirmation.affirmation_id)}}"
+        class="affirm__edit"
+        >Edit
+      </a>
+      {% if affirmation.user_id == user.user_id %}
+      <form
+        method="POST"
+        action="{{ url_for('affirmations.delete_affirmation', affirmation_id=affirmation.affirmation_id) }}"
+      >
+        <button class="affirm__delete" type="submit">Delete</button>
+      </form>
+    </div>
     {% endif %}
-</p>
-{% endfor %}
-<p>Add affirmation <a href="{{ url_for('root.add_affirmation') }}">here</a></p>
+  </div>
+  {% endfor %}
+</section>
+
+<section class="affirm__section--bottom">
+  <a href="{{ url_for('affirmations.add_affirmation') }}" class="affirm__action">Add affirmation</a>
+</section>
 {% endblock %}

@@ -1,0 +1,83 @@
+.affirms__wrapper {
+  display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(min(100%/1, max(15rem, 100%/4)), 1fr));
+	gap: 1em;
+}
+
+.affirm__wrapper {
+  padding: 1em;
+  border: 3px solid var(--purple-outline);
+  border-radius: 1em;
+  background-color: var(--white);
+}
+
+.affirm__quote {
+  text-align: center;
+  font-size: 1.5em;
+  padding: 1em 0;
+  color: var(--purple-dark);
+}
+
+.affirm__cats {
+  font-size: 0.9em;
+}
+
+.affirm__btn--wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5em;
+  margin-top: 0.5em;
+  align-items: center;
+}
+
+.affirm__btn {
+  background-color: var(--save-btn-clr);
+  color: var(--white);
+  border: none;
+  border-radius: 0.3em;
+  padding: 0.25em 0.5em;
+}
+
+.affirm__action {
+  text-align: center;
+  text-decoration: none;
+  display: block;
+  padding: 1em;
+  background-color: var(--purple-dark);
+  color: var(--white);
+  border: none;
+  border-radius: 0.75em;
+  width: 100%;
+}
+
+* + .affirm__action,
+form .affirm__edit {
+  margin-top: 1em;
+}
+
+.affirm__action + .affirm__action {
+  margin-top: 0.5em;
+}
+
+.affirm__edit,
+.affirm__delete {
+  border: none;
+  border-radius: 0.4em;
+  padding: 0.5em;
+  font-size: 0.9em;
+  color: var(--white);
+  text-decoration: none;
+}
+
+.affirm__edit {
+  background-color: var(--edit-btn-clr);
+}
+
+.affirm__delete {
+  background-color: var(--delete-btn-clr);
+}
+
+.affirm__section--bottom {
+  margin-top: 3em;
+}
+

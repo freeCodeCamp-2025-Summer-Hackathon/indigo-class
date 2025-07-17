@@ -92,6 +92,7 @@ indigo-class/
 │   ├── controllers/
 │   │   ├── root.py          # Root blueprint and routes
 │   │   └── auth.py          # Authentication
+|   |   |__ user.py          # User blueprint and routes
 │   ├── static/              # Static files (CSS, JS, images)
 │   └── templates/           # HTML templates
 │       ├── base.html        # Base template

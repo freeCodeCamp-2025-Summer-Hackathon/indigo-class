@@ -1,9 +1,11 @@
 {% extends "base.html" %} {% block title %} Affirmations {% endblock %} {% block
 content %}
 
+<h1>Edit Affirmation</h1>
+
 <form
   method="POST"
-  action="{{ url_for('root.edit_affirmation', affirmation_id=affirmation.affirmation_id) }}"
+  action="{{ url_for('affirmations.edit_affirmation', affirmation_id=affirmation.affirmation_id) }}"
 >
   <p><label for="affirmation_text">Affirmation:</label></p>
   <textarea
@@ -11,13 +13,13 @@ content %}
     name="affirmation_text"
     rows="4"
     cols="50"
+    class="form__input"
     required
   >
 {{ affirmation.affirmation_text }}</textarea
   >
-  <br />
 
-  <button type="submit">Edit</button>
+  <button type="submit" class="affirm__edit">Edit</button>
 </form>
 
 {% endblock %}
