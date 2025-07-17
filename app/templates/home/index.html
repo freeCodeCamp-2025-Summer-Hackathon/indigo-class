@@ -2,7 +2,6 @@
 content %}
 
 <section class="home__section home__hero">
-  {% if current_user.is_authenticated %}
   <h1>Welcome Back, {{ current_user.name }}!</h1>
   <p>You are logged in as: {{ current_user.username }}</p>
   <a class="affirm__action" href="{{ url_for('root.dashboard') }}"
@@ -56,7 +55,6 @@ content %}
   </div>
 </section>
 
-{% if current_user.is_authenticated %}
 <section class="home__save-affirms">
   <div class="home__section">
     <h2>Keep words that matter to you here.</h2>
