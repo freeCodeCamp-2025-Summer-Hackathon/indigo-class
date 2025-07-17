@@ -66,6 +66,7 @@ main {
 
 h1 {
   font-size: 3rem;
+  margin-bottom: 0.5em;
 }
 
 /* Mobile-first design - minimum 300px screen width */

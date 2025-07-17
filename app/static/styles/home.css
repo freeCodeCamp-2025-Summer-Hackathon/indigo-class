@@ -11,10 +11,6 @@
   text-align: center;
 }
 
-.home__hero h1 {
-  margin-bottom: 0.5em;
-}
-
 .home__save-affirms {
   text-align: center;
   background-color: var(--purple-outline);
