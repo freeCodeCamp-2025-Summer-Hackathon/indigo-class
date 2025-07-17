@@ -7,8 +7,8 @@
   <address>Developed by <a href="https://github.com/freeCodeCamp-2025-Summer-Hackathon/indigo-class">indigo-class</a>, team of <a href="https://github.com/freeCodeCamp-2025-Summer-Hackathon">freeCodeCamp 2025 Summer Hackathon</a>.</address>
   {% elif request.path == url_for('auth.login') %}
   {% elif request.path == url_for('auth.register') %}
-  <!-- TODO: Need to add reset password page url when ready -->
-  <!-- This makes footer only a purple bar for footer since the 3 pages don't need the CTAs -->
+  {% elif request.path == url_for('auth.reset_password_request') %}
+  <!-- {# This makes footer only a purple bar for footer since the 3 pages don't need the CTAs #} -->
   {% else %}
   <section class="footer__register">
     <p class="footer__register--slogan">Peace is a click away</p>
