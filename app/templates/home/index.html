@@ -60,7 +60,7 @@ content %}
 </section>
 
 <section class="home__save-affirms">
-  {% if current_user.is_authenticate %}    
+  {% if current_user.is_authenticated %}
   <div class="home__section">
     <h2>Keep words that matter to you here.</h2>
     <a class="affirm__action" href="{{ url_for('affirmations.affirmations') }}">View Affirmations</a>
