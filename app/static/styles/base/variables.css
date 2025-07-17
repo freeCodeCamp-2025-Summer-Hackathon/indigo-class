@@ -1,0 +1,24 @@
+:root {
+  --body-bg-clr: #F0EAF4;
+  --purple-dark: #4D317A;
+  --purple-light: #8B66C6;
+  --purple-outline: #C7C2E1;
+  --red-important: #BD4545;
+  --red-important-hover: #681414;
+  --save-btn-clr: #9E9E9E;
+  --edit-btn-clr: #008000;
+  --delete-btn-clr: #c20000;
+  --white: #fff;
+  --muted: #999;
+
+  --font-base: 'Nunito', Arial, sans-serif;
+
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+}

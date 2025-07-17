@@ -5,10 +5,8 @@
 }
 
 .affirm__wrapper {
-  padding: 1em;
-  border: 3px solid var(--purple-outline);
-  border-radius: 1em;
-  background-color: var(--white);
+  border-image: url(../../images/quote-box.png) 30 66 30 66 fill / 30px 66px 30px 66px;
+  padding: 30px;
 }
 
 .affirm__quote {
@@ -28,6 +26,7 @@
   gap: 0.5em;
   margin-top: 0.5em;
   align-items: center;
+  padding-inline: 10px;
 }
 
 .affirm__btn {
@@ -81,3 +80,38 @@ form .affirm__edit {
   margin-top: 3em;
 }
 
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 11px;
+}
+
+.pagination .btn {
+  margin: 0;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border-radius: 10px;
+}
+
+.pagination ul {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.pagination ul li {
+  background-color: var(--muted);
+  border-radius: 50%;
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+}
+
+.pagination ul li.active {
+  background-color: var(--purple-dark);
+}
