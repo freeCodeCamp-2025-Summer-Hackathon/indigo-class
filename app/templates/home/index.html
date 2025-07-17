@@ -11,14 +11,13 @@ content %}
 
   {% if current_user.is_admin %}
   <a class="affirm__action" href="{{ url_for('root.admin_dashboard') }}">Go to Admin Dashboard</a>
-  {% endif %} {% else %}
+  {% endif %}
   <h1>Welcome to DailyDose</h1>
   <h2>Your Personal Affirmation Journey</h2>
   <p>
     Join DailyDose to start your daily affirmation practice and transform your
     mindset.
   </p>
-  {% endif %}
 </section>
 
 <section class="home__section home__affirms">
