@@ -1,0 +1,9 @@
+.bg--purple-dark { background-color: var(--purple-dark); }
+.bg--purple-light { background-color: var(--purple-light); }
+.bg--purple-outline { background-color: var(--purple-outline); }
+.bg--white { background-color: var(--white); }
+
+.text--purple-dark { color: var(--purple-dark); }
+.text--red-important { color: var(--red-important); }
+
+.opacity--50 { opacity: 0.5; }

@@ -1,9 +1,10 @@
 services:
   dailydose:
-    build: .
+    build:
+      context: .
     ports:
       - "8000:8000"
+    working_dir: /app
     volumes:
       - .:/app
-    command: /bin/bash -c "uv sync && uv run main.py"
-    restart: unless-stopped
+    command: bash -c "uv sync && uv run main.py"
