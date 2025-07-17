@@ -9,8 +9,12 @@
         <h2>User Settings</h2>
     </span>
 
-    <!-- <span class="display__name"> {{ url_for('auth.username') }}</span> -->
-    <span class="display__name">{{ Display Name }} </span>
+    <span class="display__name"> {{ url_for('auth.username') }}</span>
     <img src="../static/images/edit_icon.png" class="edit__icon" data-type="display__name">
     
+
+    <div class="modal__bg">
+        <div class="modal__content">
+        </div>
+    </div>
 {% endblock %}
