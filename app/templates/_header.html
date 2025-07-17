@@ -1,4 +1,4 @@
-<header>
+<header class="header__top">
   <nav class="nav__top">
     <a href="{{ url_for('root.index') }}"><img src="{{ url_for('static', filename='images/logo_white.svg') }}" alt="DailyDose logo" class="nav__logo"></a>
     {% if current_user.is_authenticated and current_user.is_admin() %}
@@ -14,7 +14,7 @@
       <a href="{{ url_for('root.admin_dashboard') }}" class="nav__menu--button{% if request.path == url_for('root.admin_dashboard') %} active{% endif %}">Affirmations</a>
       <a href="{{ url_for('root.admin_dashboard') }}" class="nav__menu--button{% if request.path == url_for('root.admin_dashboard') %} active{% endif %}">Settings</a>
       <a href="{{ url_for('auth.logout') }}" class="nav__menu--button logout">Logout</a>
-    </div>
+    </nav>
     {% elif current_user.is_authenticated %}
     <div class="nav__menu">
       <button onclick="navDropdown()" class="nav__name">{{ current_user.username }}</button>
