@@ -10,11 +10,52 @@
     </span>
 
     <span class="display__name"> {{ url_for('auth.username') }}</span>
-    <img src="../static/images/edit_icon.png" class="edit__icon" data-type="display__name">
+    <img src="../static/images/edit_icon.svg" class="edit__icon" data-type="display__name">
     
 
     <div class="modal__bg">
         <div class="modal__content">
         </div>
     </div>
+
+    <img src="../static/images/profile_img.svg" class="profile__pic">
+    <img src="../static/images/edit_icon.svg" class="edit__icon__pic" data-type="change__pic">
+
+    <button type="button" class="change__credentials" data-type="change__email">
+        <label>Change Email</label>
+        <input disabled placeholder="chloe@coolemail.com">
+    </button>
+    
+    <div class="daily__affirmation">
+            <input type="checkbox" class="check__box">
+            <label>Receive daily affirmation in email</label>
+    </div>
+
+    <button type="button" class="change__credentials" data-type="change__username">
+        <label>Change Username</label>
+        <input disabled placeholder="NewUser">
+    </button>
+
+    <button type="button" class="change__credentials" data-type="change__password">
+        <label>Change Password</label>
+        <input disabled placeholder="***************">
+    </button>
+
+    <button type="button" class="change__credentials" data-type="change__fname">
+        <label>Change First Name</label>
+        <input disabled placeholder="Chloe">
+    </button>
+
+    <button type="button" class="change__credentials" data-type="change__lname">
+        <label>Change Last Name</label>
+        <input disabled placeholder="Smith">
+    </button>
+
+    <button type="button" class="logout__delete" id="log__out">
+        <span>Log out</span>
+    </button>
+
+    <button type="button" class="logout__delete" id="delete" data-type="delete">
+        <span>Delete</span>
+    </button>
 {% endblock %}
