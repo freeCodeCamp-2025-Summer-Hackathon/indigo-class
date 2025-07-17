@@ -61,7 +61,7 @@ content %}
   <div class="home__section">
     <h2>Keep words that matter to you here.</h2>
     <a class="affirm__action" href="{{ url_for('affirmations.affirmations') }}">View Affirmations</a>
-    <a class="affirm__action" href="{{ url_for('affirmations.add_affirmation') }}">Submit Affirmations</a>
+    <a class="affirm__action" href="{{ url_for('affirmations.add_affirmation') }}">Add Affirmation</a>
   </div>
   <div class="home__section">
     {% for affirmation in all_affirmations[:1] %}

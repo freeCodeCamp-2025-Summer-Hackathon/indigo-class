@@ -54,6 +54,11 @@
   margin-top: 0.5em;
 }
 
+form .affirm__action,
+form .affirm__edit {
+  margin-top: 1em;
+}
+
 .affirm__edit,
 .affirm__delete {
   border: none;
