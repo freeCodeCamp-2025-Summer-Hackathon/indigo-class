@@ -11,7 +11,7 @@ from flask_login import current_user, login_required
 from app.models import db, User
 from sqlalchemy import and_
 from sqlalchemy.orm import joinedload
-from auth import generate_reset_token
+from .auth import generate_reset_token
 from flask_mail import Message
 from app import mail
 
@@ -177,7 +177,6 @@ def admin_reset_password(user_id: int):
                 please ignore this email.
                 """
     mail.send(msg)
-
     flash("Password reset email has been sent!", "success")
     return redirect(
         url_for("user.user_list", page=request.args.get("page", 1, type=int))
