@@ -5,11 +5,13 @@ content %}
   {% if current_user.is_authenticated %}
   <h1>Welcome Back, {{ current_user.name }}!</h1>
   <p>You are logged in as: {{ current_user.username }}</p>
-  <a class="home__btn" href="{{ url_for('root.dashboard') }}">Go to Dashboard</a>
-  <a class="" href="{{ url_for('auth.profile') }}">View Profile</a>
-  
+  <a class="affirm__action" href="{{ url_for('root.dashboard') }}"
+    >Go to Dashboard</a
+  >
+  <a class="affirm__action" href="{{ url_for('auth.profile') }}">View Profile</a>
+
   {% if current_user.is_admin %}
-  <a href="{{ url_for('root.admin_dashboard') }}">Go to Admin Dashboard</a>
+  <a class="affirm__action" href="{{ url_for('root.admin_dashboard') }}">Go to Admin Dashboard</a>
   {% endif %} {% else %}
   <h1>Welcome to DailyDose</h1>
   <h2>Your Personal Affirmation Journey</h2>
@@ -18,8 +20,6 @@ content %}
     mindset.
   </p>
   {% endif %}
-  
-  <p>Current time: {{ current_time }}</p>
 </section>
 
 <section class="home__section home__affirms">
@@ -31,21 +31,28 @@ content %}
         <blockquote class="affirm__quote">
           {{ affirmation.affirmation_text }}
         </blockquote>
-        <!-- We may use Jinja for loop for displaying the categories of this affirmation -->
-        <figcaption class="affirm__cats">Self Care, Emotion</figcaption>
+        <figcaption class="affirm__cats">
+          {% for category in affirmation.categories %}
+            {{ category.category.name }}
+          {% endfor %}
+        </figcaption>
       </figure>
       <div class="affirm__btn--wrapper">
-        <button class="affirm__btn" aria-label="Save affirmation">+</button>
+        <button
+          class="affirm__btn"
+          aria-label="Save affirmation"
+          onclick="saveAffirmation('{{ affirmation.affirmation_id }}')"
+        >
+          +
+        </button>
         <p>
-          {% if current_user.is_authenticated %}
-            Save this affirmation
-          {% else %}
-            <a href="{{ url_for('auth.login') }}">Log in</a> to save this affirmation
-          {% endif %}
+          {% if current_user.is_authenticated %} Save this affirmation {% else%}
+          <a href="{{ url_for('auth.login') }}">Log in</a> to save this
+          affirmation {% endif %}
         </p>
       </div>
     </div>
-    {% endfor %}    
+    {% endfor %}
   </div>
 </section>
 
@@ -53,20 +60,21 @@ content %}
 <section class="home__save-affirms">
   <div class="home__section">
     <h2>Keep words that matter to you here.</h2>
-    <a class="home__btn" href="#">View Affirmations</a>
-    <a class="home__btn" href="#">Submit Affirmations</a>
+    <a class="affirm__action" href="{{ url_for('affirmations.affirmations') }}">View Affirmations</a>
+    <a class="affirm__action" href="{{ url_for('affirmations.add_affirmation') }}">Add Affirmation</a>
   </div>
   <div class="home__section">
-    {% for affirmation in all_affirmations[:1] %} 
+    {% for affirmation in all_affirmations[:1] %}
     <figure class="affirm__wrapper">
-      <blockquote class="affirm__quote">
+      <blockquote class="affirm__quote" id="random-affirmation">
         {{ affirmation.affirmation_text }}
       </blockquote>
       <figcaption class="affirm__cats">Self Worth</figcaption>
     </figure>
     {% endfor %}
-    <button class="home__btn">Get Affirmation</button>
+    <button class="affirm__action" onclick="getRandomAffirmation()">
+      Get Affirmation
+    </button>
   </div>
 </section>
-{% endif %}
-{% endblock %}
+{% endif %} {% endblock %}

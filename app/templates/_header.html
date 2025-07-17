@@ -17,7 +17,7 @@
     </nav>
     {% elif current_user.is_authenticated %}
     <div class="nav__menu">
-      <button onclick="navDropdown()" class="nav__name">Username</button>
+      <button onclick="navDropdown()" class="nav__name">{{ current_user.username }}</button>
       <button onclick="navDropdown()">
         <img src="{{ url_for('static', filename='images/profile_img.svg') }}" alt="User profile" class="nav__img">
       </button>
