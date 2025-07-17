@@ -2,37 +2,54 @@
 %}
 <h1 class="page-title">Login</h1>
 
-{% with messages = get_flashed_messages(with_categories=true) %} {% if messages
-%} {% for category, message in messages %}
-<div>{{ message }}</div>
-{% endfor %} {% endif %} {% endwith %}
-
 <form method="POST" action="{{ url_for('auth.login') }}">
   <div class="form__group">
     <label for="username" class="form__label">Username:</label>
-    <input type="text" id="username" name="username" class="form__input" required />
+    <input
+      type="text"
+      id="username"
+      name="username"
+      class="form__input"
+      required
+    />
   </div>
 
   <div class="form__group">
     <label for="password" class="form__label">Password:</label>
-    <input type="password" id="password" name="password" class="form__input" required />
+    <input
+      type="password"
+      id="password"
+      name="password"
+      class="form__input"
+      required
+    />
   </div>
 
   <div class="form__group form__group--checkbox">
-    <input type="checkbox" id="remember" name="remember" class="form__checkbox"/>
-    <label for="remember" class="form__label form__label--checkbox">Remember me</label>
+    <input
+      type="checkbox"
+      id="remember"
+      name="remember"
+      class="form__checkbox"
+    />
+    <label for="remember" class="form__label form__label--checkbox"
+      >Remember me</label
+    >
   </div>
 
   <button type="submit" class="form__button btn">Login</button>
 </form>
 
 <div>
-  <a href="{{ url_for('auth.reset_password') }}" class="form__link">Forgot your password?</a>
+  <a href="{{ url_for('auth.reset_password_request') }}" class="form__link"
+    >Forgot your password?</a
+  >
 </div>
 
 <div>
-  <a href="{{ url_for('auth.register') }}" class="form__link">Don't have an account? Register here</a>
+  <a href="{{ url_for('auth.register') }}" class="form__link"
+    >Don't have an account? Register here</a
+  >
 </div>
-
 
 {% endblock %}
