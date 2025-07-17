@@ -1,15 +1,11 @@
-h2{
-  color: var(--purple-dark);
-}
-
 .form__label{
-  color: var(--purple-light);
+  color: var(--purple-dark);
 }
 
 .form__input {
   width: 100%;
   border: 0.25rem solid var(--purple-outline);
-  padding: 0.5rem 0;
+  padding: 0.5em;
   font-size: 0.8rem;
   border-radius: 10px;
   box-sizing: border-box;
@@ -41,11 +37,14 @@ h2{
   gap: 0.5rem;
 }
 
-.forgotpass__noacc{
-  font-size: 1rem;
+.form__link{
+  font-size: 0.8rem;
+  color: var(--purple-dark);
+  text-decoration: none;
+  text-align: center;
 }
 
-.form__link{
-  font-size: 1rem;
-  color: var(--purple-dark);
+.form__link:hover{
+  text-decoration: underline;
+  
 }
