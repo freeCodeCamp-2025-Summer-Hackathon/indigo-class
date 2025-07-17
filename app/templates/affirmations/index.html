@@ -11,7 +11,7 @@ content %}
     {% if affirmation.user_id == user.user_id %}
     <form
       method="POST"
-      action="{{ url_for('root.delete_affirmation', affirmation_id=affirmation.affirmation_id) }}"
+      action="{{ url_for('affirmations.delete_affirmation', affirmation_id=affirmation.affirmation_id) }}"
     >
       <button type="submit">Delete</button>
     </form>

@@ -57,8 +57,8 @@ content %}
 <section class="home__save-affirms">
   <div class="home__section">
     <h2>Keep words that matter to you here.</h2>
-    <a class="home__btn" href="#">View Affirmations</a>
-    <a class="home__btn" href="#">Submit Affirmations</a>
+    <a class="home__btn" href="{{ url_for('affirmations.affirmations') }}">View Affirmations</a>
+    <a class="home__btn" href="{{ url_for('affirmations.add_affirmation') }}">Submit Affirmations</a>
   </div>
   <div class="home__section">
     {% for affirmation in all_affirmations[:1] %}
