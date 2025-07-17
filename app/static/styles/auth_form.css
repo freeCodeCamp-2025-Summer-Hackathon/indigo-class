@@ -39,7 +39,9 @@ h2{
   justify-content: left;
   margin: 0.5rem 0 0;
   gap: 0.5rem;
-}.forgotpass__noacc{
+}
+
+.forgotpass__noacc{
   font-size: 1rem;
 }
 
