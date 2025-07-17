@@ -1,0 +1,372 @@
+.hidden {
+    display: none;
+}
+
+.dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: var(--purple-dark);
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    z-index: 10;
+}
+
+.dropdown li a {
+    display: block;
+    padding: 10px;
+    color: var(--white-text);
+    text-decoration: none;
+}
+
+.dropdown li a:hover {
+    background-color: var(--purple-light);
+}
+
+.divider {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: var(--purple-outline);
+    padding: 0.5em;
+}
+
+h2{
+    margin-left: 0.5em;
+    color: var(--purple-dark);
+}
+
+.display__name{
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 1em 0;
+}
+
+.edit__icon{
+    position: relative;
+    height: 2em;
+    cursor: pointer;
+}
+
+.modal__bg {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--modal-bg);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal__content {
+    background-color: var(--white-text);
+    padding: 2.5em;
+    border: 7px solid var(--purple-dark);
+    border-radius: 20px;
+    width: 90%;
+    max-width: 400px;
+    position: relative;
+}
+
+.paragraph{
+    position: absolute;
+}
+
+.modal__content label{
+    display: block;
+    text-align: left;
+    margin-bottom: 0.5em;
+}
+
+.modal__content input {
+    width: 100%;
+    border: 0.25em solid var(--purple-light);
+    padding: 0.5em 0;
+    font-size: 0.7em;
+    border-radius: 20px;
+    box-sizing: border-box;
+    margin-bottom: 0.5em;
+}
+
+.modal__content .submit{
+        width: 100%;
+        border: none;
+        border-radius: 20px;
+        background-color: var(--purple-dark);
+        color: var(--white-text);
+        font-size: 1em;
+        padding: 0.5em;
+        margin: 1em 0 0.5em;
+        cursor: pointer;
+}
+
+.modal__content .submit:hover{
+    text-decoration: underline;
+}
+
+.modal__content .close {
+    position: absolute;
+    color: var(--white-text);
+    background-color: var(--red-important);
+    padding: 0.1em 0.3em;
+    border-radius: 8px;
+    top: 0.2em;
+    right: 0.2em;
+    font-size: 1.5em;
+    cursor: pointer;
+}
+
+.modal__content .close:hover{
+    background-color: var(--red-important-hover);
+}
+
+.modal__buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1em;
+    margin-top: 1em;
+}
+
+.profile__pic{
+    display: block;
+    margin: 2em auto;
+    border: 8px solid var(--purple-dark);
+    border-radius: 50%;
+    height: 5em;
+}
+
+.edit__icon__pic{
+    position: relative;
+    height: 2em;
+    cursor: pointer;
+}
+
+.change__credentials{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 98%;
+    padding: 0.5em;
+    font-size: 0.8em;
+    background-color: var(--purple-dark);
+    border-radius: 10px;
+    margin: 2em auto;
+    cursor: pointer;
+}
+
+.change__credentials label{
+    color: var(--white-text);
+    padding-right: 1em;
+    cursor: pointer;
+}
+
+.change__credentials input{
+    border: none;
+    background-color: var(--purple-dark);
+    color: var(--purple-light);
+    font-size: 1em;
+    cursor: pointer;
+}
+
+.daily__affirmation {
+    display: flex;
+    justify-content: space-evenly;
+    margin: 2em auto;
+    color: var(--purple-dark);
+}
+
+.check__box {
+    width: 4em;
+    height: 4em;
+    appearance: none;
+    border: 2px solid var(--purple-dark);
+    border-radius: 4px;
+    background-color: var(--purple-dark);
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+}
+
+.check__box:checked::after {
+    content: "✔";
+    color: var(--white-text);
+    font-size: 3em;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -55%);
+}
+
+.logout__delete{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 98%;
+    padding: 0.5em;
+    font-size: 0.8em;
+    color: var(--white-text);
+    background-color: var(--red-important);
+    border-radius: 10px;
+    margin: 2em auto;
+    cursor: pointer;
+}
+
+.logout__delete:hover{
+    background-color: var(--red-important-hover);
+    text-decoration: underline;
+}
+
+.delete__paragraph{
+    position: absolute;
+}
+
+.modal__content .delete__acc{
+        width: 100%;
+        border: none;
+        border-radius: 20px;
+        background-color: var(--red-important);
+        color: var(--white-text);
+        font-size: 1em;
+        padding: 0.5em;
+        margin: 1em 0 0.5em;
+        cursor: pointer;
+}
+
+.modal__content .delete__acc:hover{
+        text-decoration: underline;
+}
+
+.modal__content .cancel{
+        width: 100%;
+        border: none;
+        border-radius: 20px;
+        background-color: var(--purple-dark);
+        color: var(--white-text);
+        font-size: 1em;
+        padding: 0.5em;
+        margin: 1em 0 0.5em;
+        cursor: pointer;
+}
+
+.modal__content .cancel:hover{
+        text-decoration: underline;
+}
+
+@media (min-width: 320px) {
+    .navbar{
+        padding: 3%;
+    }
+
+    html{
+        font-size: 3em;
+    }
+
+    .profile{
+        right: 180px;
+    }
+
+    .navbar__pic{
+    height: 2.5em;
+    }
+
+    .dropdown {
+    top: 140px;
+    }
+
+    .edit__icon{
+        right: -700px;
+        top: 30px;
+    }
+
+    .modal__content{
+        font-size: 1em;
+    }
+
+    .paragraph{
+        font-size: 0.8em;
+        right: 130px;
+        top: 40px;
+    }
+
+    .modal__content label{
+        top: 10px;
+        right: 100px;
+    }
+
+    .edit__icon__pic{
+        right: -550px;
+        top: -180px;
+    }
+
+    .delete__paragraph{
+        font-size: 0.8em;
+        right: 80px;
+        top: 20px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .navbar{
+        padding: 0.3%;
+    }
+
+    html{
+        font-size: 1.5em;
+    }
+    
+    .profile{
+        right: 120px;
+    }
+    
+    .navbar__pic{
+    height: 3em;
+    }
+
+    .dropdown {
+    top: 80px;
+    }
+
+    .edit__icon{
+        top: 15px;
+        right: -650px;
+    }
+
+    .paragraph{
+    top: 10px;
+    right: 150px;
+    font-size: 1.2em;
+    }
+
+    .modal__content label{
+        font-size: 1.3em;
+    }
+
+    .modal__content input{
+        font-size: 1.2em;
+    }
+
+    .delete__paragraph{
+        font-size: 1em;
+        top: 5px;
+        right: 50px;
+    }
+}
+
+@media (min-width: 1440px) {
+    .edit__icon{
+        right: -850px;
+    }
+}
+
+@media (min-width: 2560px) {
+    .edit__icon{
+        right: -1400px;
+    }
+}
