@@ -28,6 +28,7 @@ class User(db.Model, UserMixin):
     roles = relationship("Role", secondary="user_roles", back_populates="users")
     affirmations = relationship("Affirmation", back_populates="user")
     daily_mail_history = relationship("DailyMailHistory", back_populates="user")
+    saved_affirmations = relationship("SavedAffirmation", back_populates="user")
 
     def get_id(self):
         """Return the user ID as a string for Flask-Login."""
@@ -102,6 +103,7 @@ class Affirmation(db.Model):
     user = relationship("User", back_populates="affirmations")
     categories = relationship("AffirmationCategory", back_populates="affirmation")
     daily_history = relationship("DailyMailHistory", back_populates="affirmation")
+    saved_affirmations = relationship("SavedAffirmation", back_populates="affirmation")
 
 
 class AffirmationCategory(db.Model):
@@ -145,3 +147,20 @@ class DailyMailHistory(db.Model):
 
     user = relationship("User", back_populates="daily_mail_history")
     affirmation = relationship("Affirmation", back_populates="daily_history")
+
+
+class SavedAffirmation(db.Model):
+    __tablename__ = "saved_affirmations"
+
+    saved_affirmation_id = Column(Integer, primary_key=True, autoincrement=True)
+    user_id = Column(
+        Integer, ForeignKey("users.user_id", ondelete="CASCADE"), nullable=False
+    )
+    affirmation_id = Column(
+        Integer,
+        ForeignKey("affirmations.affirmation_id", ondelete="CASCADE"),
+        nullable=False,
+    )
+
+    user = relationship("User", back_populates="saved_affirmations")
+    affirmation = relationship("Affirmation", back_populates="saved_affirmations")

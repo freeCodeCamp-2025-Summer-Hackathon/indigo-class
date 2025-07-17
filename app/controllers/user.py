@@ -5,12 +5,15 @@ from flask import (
     request,
     render_template,
     url_for,
+    current_app,
 )
 from flask_login import current_user, login_required
 from app.models import db, User
 from sqlalchemy import and_
 from sqlalchemy.orm import joinedload
-from reset_password import generate_reset_token, send_password_reset_email
+from auth import generate_reset_token
+from flask_mail import Message
+from app import mail
 
 user_bp = Blueprint("user", __name__, url_prefix="/admin/user")
 
@@ -59,7 +62,7 @@ def edit_user(user_id: int):
         flash("Unauthorized access.", "danger")
         return redirect(url_for("root.index"))
 
-    user: User = User.query.get_or_404(user_id)
+    user = User.query.get_or_404(user_id)
     if request.method == "POST":
         current_form = {
             "name": request.form.get("name"),
@@ -125,7 +128,7 @@ def delete_user(user_id: int):
     if not current_user.is_admin():
         flash("Unauthorized access.", "danger")
         return redirect(url_for("root.index"))
-    user: User = User.query.get_or_404(user_id)
+    user = User.query.get_or_404(user_id)
     db.session.delete(user)
     db.session.commit()
     flash("User deleted successfully.", "warning")
@@ -141,7 +144,7 @@ def toggle_email_subscription(user_id: int):
     if not current_user.is_admin():
         flash("Unauthorized access.", "danger")
         return redirect(url_for("root.index"))
-    user: User = User.query.get_or_404(user_id)
+    user = User.query.get_or_404(user_id)
     user.is_email_opt_in = not user.is_email_opt_in
     db.session.commit()
     flash(
@@ -160,9 +163,20 @@ def admin_reset_password(user_id: int):
     if not current_user.is_admin():
         flash("Unauthorized access.", "danger")
         return redirect(url_for("root.index"))
-    user: User = User.query.get_or_404(user_id)
-    token = generate_reset_token(user.user_id)
-    send_password_reset_email(user, token)
+    user = User.query.get_or_404(user_id)
+    token = generate_reset_token(user.email)
+    reset_url = url_for("auth.reset_password_token", token=token, _external=True)
+    msg = Message(
+        subject="Password Reset Request",
+        recipients=[user.email],
+        sender=current_app.config.get("MAIL_DEFAULT_SENDER"),
+    )
+    msg.body = f"""To reset your password, click the following link: {reset_url}
+                \n\n
+                If you did not request a password reset,
+                please ignore this email.
+                """
+    mail.send(msg)
 
     flash("Password reset email has been sent!", "success")
     return redirect(
