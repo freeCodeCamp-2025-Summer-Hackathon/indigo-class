@@ -38,6 +38,22 @@
   padding: 0.25em 0.5em;
 }
 
+.affirm__action {
+  text-align: center;
+  text-decoration: none;
+  display: block;
+  padding: 1em;
+  background-color: var(--purple-dark);
+  color: var(--white);
+  border: none;
+  border-radius: 0.75em;
+  width: 100%;
+}
+
+.affirm__action + .affirm__action {
+  margin-top: 0.5em;
+}
+
 .affirm__edit,
 .affirm__delete {
   border: none;
@@ -54,5 +70,9 @@
 
 .affirm__delete {
   background-color: var(--delete-btn-clr);
+}
+
+.affirm__section--bottom {
+  margin-top: 3em;
 }
 

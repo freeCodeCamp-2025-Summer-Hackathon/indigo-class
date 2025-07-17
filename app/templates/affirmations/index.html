@@ -2,7 +2,7 @@
 content %}
 <h1>Affirmations</h1>
 
-<div class="affirms__wrapper">
+<section class="affirms__wrapper">
   {% for affirmation in all_affirmations %}
   <div class="affirm">
     <figure class="affirm__wrapper">
@@ -32,6 +32,9 @@ content %}
     {% endif %}
   </div>
   {% endfor %}
-</div>
-<p><a href="{{ url_for('affirmations.add_affirmation') }}">Add affirmation</a></p>
+</section>
+
+<section class="affirm__section--bottom">
+  <a href="{{ url_for('affirmations.add_affirmation') }}" class="affirm__action">Add affirmation</a>
+</section>
 {% endblock %}

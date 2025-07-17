@@ -5,7 +5,7 @@ content %}
   {% if current_user.is_authenticated %}
   <h1>Welcome Back, {{ current_user.name }}!</h1>
   <p>You are logged in as: {{ current_user.username }}</p>
-  <a class="home__btn" href="{{ url_for('root.dashboard') }}"
+  <a class="affirm__action" href="{{ url_for('root.dashboard') }}"
     >Go to Dashboard</a
   >
   <a class="" href="{{ url_for('auth.profile') }}">View Profile</a>
@@ -60,8 +60,8 @@ content %}
 <section class="home__save-affirms">
   <div class="home__section">
     <h2>Keep words that matter to you here.</h2>
-    <a class="home__btn" href="{{ url_for('affirmations.affirmations') }}">View Affirmations</a>
-    <a class="home__btn" href="{{ url_for('affirmations.add_affirmation') }}">Submit Affirmations</a>
+    <a class="affirm__action" href="{{ url_for('affirmations.affirmations') }}">View Affirmations</a>
+    <a class="affirm__action" href="{{ url_for('affirmations.add_affirmation') }}">Submit Affirmations</a>
   </div>
   <div class="home__section">
     {% for affirmation in all_affirmations[:1] %}
@@ -72,7 +72,7 @@ content %}
       <figcaption class="affirm__cats">Self Worth</figcaption>
     </figure>
     {% endfor %}
-    <button class="home__btn" onclick="getRandomAffirmation()">
+    <button class="affirm__action" onclick="getRandomAffirmation()">
       Get Affirmation
     </button>
   </div>

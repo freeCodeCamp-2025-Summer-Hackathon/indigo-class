@@ -15,19 +15,3 @@
   text-align: center;
   background-color: var(--purple-outline);
 }
-
-.home__btn {
-  text-align: center;
-  text-decoration: none;
-  display: block;
-  padding: 1em;
-  background-color: var(--purple-dark);
-  color: var(--white);
-  border: none;
-  border-radius: 0.75em;
-  width: 100%;
-}
-
-.home__btn + .home__btn {
-  margin-top: 0.5em;
-}
