@@ -50,13 +50,13 @@
   width: 100%;
 }
 
-.affirm__action + .affirm__action {
-  margin-top: 0.5em;
-}
-
-form .affirm__action,
+* + .affirm__action,
 form .affirm__edit {
   margin-top: 1em;
+}
+
+.affirm__action + .affirm__action {
+  margin-top: 0.5em;
 }
 
 .affirm__edit,

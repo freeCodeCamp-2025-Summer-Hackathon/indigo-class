@@ -8,10 +8,10 @@ content %}
   <a class="affirm__action" href="{{ url_for('root.dashboard') }}"
     >Go to Dashboard</a
   >
-  <a class="" href="{{ url_for('auth.profile') }}">View Profile</a>
+  <a class="affirm__action" href="{{ url_for('auth.profile') }}">View Profile</a>
 
   {% if current_user.is_admin %}
-  <a href="{{ url_for('root.admin_dashboard') }}">Go to Admin Dashboard</a>
+  <a class="affirm__action" href="{{ url_for('root.admin_dashboard') }}">Go to Admin Dashboard</a>
   {% endif %} {% else %}
   <h1>Welcome to DailyDose</h1>
   <h2>Your Personal Affirmation Journey</h2>
