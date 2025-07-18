@@ -1,0 +1,17 @@
+{% extends "base.html" %} {% block title %} Categories {% endblock %} {% block
+content %}
+
+<h2>Categories</h2>
+
+<ul>
+    {% for category in all_categories %}
+        <li> {{category.name}} 
+            {%if category.user_id == current_user.id %}
+            <a href="{{url_for('category.edit_category', category_id=category.category_id)}}"
+        </li>
+    {% endfor %}
+</ul>
+
+
+
+{% endblock %}
