@@ -4,6 +4,7 @@ from flask_login import UserMixin
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Boolean, Column, DateTime, ForeignKey, Integer, String, Text
 from sqlalchemy.orm import relationship
+from sqlalchemy.schema import UniqueConstraint
 
 db = SQLAlchemy()
 
@@ -76,6 +77,10 @@ class Category(db.Model):
     user_id = Column(
         Integer, ForeignKey("users.user_id", ondelete="CASCADE"), nullable=False
     )
+    __table_args__ = (
+        UniqueConstraint("user_id", "name", name="unique_user_category_name"),
+    )
+
     is_admin_set = Column(Boolean, default=False)
 
     created_at = Column(DateTime, default=datetime.now(timezone.utc))
