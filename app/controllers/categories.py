@@ -52,9 +52,9 @@ def add_category():
 def edit_category(category_id):
     category = Category.query.get_or_404(category_id)
 
-    if category.user_id != current_user.id:
+    if category.user_id != current_user.user_id:
         flash("You can only edit your own categories.", "error")
-        return redirect(url_for("category.list_categories"))
+        return redirect(url_for("categories.list_categories"))
 
     if request.method == "POST":
         category.name = request.form["name"]
@@ -70,9 +70,9 @@ def edit_category(category_id):
 def delete_category(category_id):
     category = Category.query.get_or_404(category_id)
 
-    if category.user_id != current_user.id:
+    if category.user_id != current_user.user_id:
         flash("You can only delete your own categories.", "error")
-        return redirect(url_for("category.list_categories"))
+        return redirect(url_for("categories.list_categories"))
 
     db.session.delete(category)
     db.session.commit()
