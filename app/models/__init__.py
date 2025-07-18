@@ -29,6 +29,7 @@ class User(db.Model, UserMixin):
     affirmations = relationship("Affirmation", back_populates="user")
     daily_mail_history = relationship("DailyMailHistory", back_populates="user")
     saved_affirmations = relationship("SavedAffirmation", back_populates="user")
+    categories = relationship("Category", back_populates="user")
 
     def get_id(self):
         """Return the user ID as a string for Flask-Login."""
@@ -71,7 +72,11 @@ class Category(db.Model):
 
     category_id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String(255), nullable=False)
-    description = Column(Text)
+
+    user_id = Column(
+        Integer, ForeignKey("users.user_id", ondelete="CASCADE"), nullable=False
+    )
+    is_admin_set = Column(Boolean, default=False)
 
     created_at = Column(DateTime, default=datetime.now(timezone.utc))
     updated_at = Column(
@@ -81,6 +86,7 @@ class Category(db.Model):
     )
 
     affirmations = relationship("AffirmationCategory", back_populates="category")
+    user = relationship("User", back_populates="categories")
 
 
 class Affirmation(db.Model):
