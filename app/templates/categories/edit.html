@@ -4,8 +4,8 @@ content %}
 <h1>Edit Category</h1>
 
 <form method="POST" action="{{ url_for("categories.edit_category", category_id=category.category_id) }}">
-    <label>Name:</label>
-    <input type="text" name="name">
+    <label for="category-name">Name:</label>
+    <input type="text" name="name" id="category-name">
     <button type="submit">Edit</button>
 </form>
 
