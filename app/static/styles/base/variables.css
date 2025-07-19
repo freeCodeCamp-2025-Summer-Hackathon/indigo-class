@@ -21,4 +21,7 @@
 
   --radius-sm: 4px;
   --radius-md: 8px;
+
+  --grid-columns: 12;
+  --grid-gap: 1rem;
 }
