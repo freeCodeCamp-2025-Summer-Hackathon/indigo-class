@@ -41,12 +41,12 @@ content %}
         <blockquote class="affirm__quote">
           Lying can never save us from another lie.
         </blockquote>
-        <!-- We may use Jinja for loop for displaying the categories of this affirmation -->
         <figcaption class="affirm__cats">Self Care, Emotion</figcaption>
       </figure>
     </div>
-    <a class="btn btn--primary btn--block" href="#">View Affirmations</a>
-    <a class="btn btn--primary btn--block" href="#">Submit Affirmations</a>
+    <a class="btn btn--primary btn--block" href="{{ url_for('affirmations.affirmations') }}">View Affirmations</a>
+    <a class="btn btn--primary btn--block" href="{{ url_for('affirmations.add_affirmation') }}">Submit Affirmations</a>
+    <a class="btn btn--primary btn--block" href="{{ url_for('categories.list_categories') }}">View Affirmation Categories</a>
 </section>
 
 <section class="collections">

@@ -91,28 +91,39 @@ indigo-class/
 │   ├── __init__.py          # Flask app factory
 │   ├── controllers/
 │   │   ├── root.py          # Root blueprint and routes
-│   │   └── auth.py          # Authentication
-|   |   |__ user.py          # User blueprint and routes
+│   │   ├── auth.py          # Authentication blueprint and routes
+│   │   ├── affirmations.py  # Affirmation blueprint and routes
+│   │   ├── affirmations.py  # Affirmation categories blueprint and routes
+|   |   └── user.py          # User blueprint and routes
 │   ├── static/              # Static files (CSS, JS, images)
 │   └── templates/           # HTML templates
-│       ├── base.html        # Base template
-│       ├── _header.html     # Base template's header
-│       ├── _footer.html     # Base template's footer
-│       ├── admin/
-│       │   ├── dashboard.html
-│       │   ├── users.html
-│       │   ├── affirmations.html
-│       │   ├── categories.html
-│       │   ├── analytics.html
-│       │   └── settings.html
+│       ├── base.html a      # Base template
+│       ├── _header.html     # Base template's header partial
+│       ├── _footer.html     # Base template's footer partial
 │       ├── home/
 │       │   ├── index.html             # Home page template
-│       │   ├── dashboard.html         # User dashboard template
-│       │   └── admin_dashboard.html   # Admin dashboard template
-│       └── auth/
-│           ├── register.html   # Account registration template
-│           ├── login.html      # Login template 
-│           └── profile.html    # User profile template
+│       │   └── dashboard.html         # User dashboard template
+│       ├── auth/
+│       │   ├── register.html                 # Account registration template
+│       │   ├── login.html                    # Login template
+│       │   ├── profile.html                  # User profile template
+│       │   ├── reset_password_request.html   # Password reset request template
+│       │   └── new_password.html             # New password input template
+│       ├── affirmations/
+│       │   ├── index.html   # Affirmation list template
+│       │   ├── add.html     # Affirmation submission template
+│       │   └── edit.html    # Affirmation edit template
+│       ├── categories/
+│       │   ├── list.html    # Affirmation categeries list template
+│       │   ├── add.html     # Affirmation category submission template
+│       │   └── edit.html    # Affirmation category edit template
+│       └── admin/
+│           ├── dashboard.html      # Admin dashboard template
+│           ├── users.html          # Users management template
+│           ├── affirmations.html   # Affirmation management template
+│           ├── categories.html     # Categories management template
+│           ├── analytics.html      # Analytics template
+│           └── settings.html       # Admin settings template
 ├── main.py                  # Application entry point
 ├── pyproject.toml           # Project configuration
 ├── Dockerfile               # Instructions for building the Docker image

@@ -1,12 +1,12 @@
 {% extends "base.html" %} {% block title %} Categories {% endblock %} {% block
 content %}
 
-<h2>Edit Category</h2>
+<h1>Edit Affirmation Category</h1>
 
 <form method="POST" action="{{ url_for("categories.edit_category", category_id=category.category_id) }}">
-    <label>Name:</label>
-    <input type="text" name="name">
-    <button type="submit">Edit</button>
+    <p><label for="category-name">Category Name:</label></p>
+    <input type="text" name="name" id="category-name" class="form__input">
+    <button type="submit" class="affirm__edit">Edit</button>
 </form>
 
 {% endblock %}

@@ -1,7 +1,7 @@
 .affirms__wrapper {
   display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(min(100%/1, max(15rem, 100%/4)), 1fr));
-	gap: 1em;
+	gap: 2em 1em;
 }
 
 .affirm__wrapper {
@@ -24,7 +24,6 @@
   display: flex;
   flex-wrap: wrap;
   gap: 0.5em;
-  margin-top: 0.5em;
   align-items: center;
   padding-inline: 10px;
 }
@@ -51,7 +50,7 @@
 
 * + .affirm__action,
 form .affirm__edit {
-  margin-top: 1em;
+  margin-top: 0.7em;
 }
 
 .affirm__action + .affirm__action {
@@ -62,10 +61,11 @@ form .affirm__edit {
 .affirm__delete {
   border: none;
   border-radius: 0.4em;
-  padding: 0.5em;
+  padding: 0.5em 0.7em;
   font-size: 0.9em;
   color: var(--white);
   text-decoration: none;
+  display: inline-block;
 }
 
 .affirm__edit {
@@ -114,4 +114,17 @@ form .affirm__edit {
 
 .pagination ul li.active {
   background-color: var(--purple-dark);
+}
+
+.category {
+  display: grid;
+  gap: 0.5em;
+}
+
+.category__name {
+  text-align: center;
+  font-size: 1.5rem;
+  border: 0.1em solid var(--purple-light);
+  border-radius: 0.3em;
+  background-color: var(--white);
 }

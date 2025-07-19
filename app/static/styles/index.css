@@ -15,5 +15,6 @@
 /* Importing utility styles */
 @import './utilities/spacing.css';
 @import './utilities/colors.css';
+@import './utilities/alignment.css';
 /* Importing page-specific styles */
 @import './pages/home.css';
