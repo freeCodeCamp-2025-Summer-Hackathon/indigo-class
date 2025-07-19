@@ -23,9 +23,9 @@
     <main>
       {% with messages = get_flashed_messages(with_categories=true) %} {% if
       messages %} {% for category, message in messages %}
-      <div>
-        {{ message }}
-        <button type="button" onclick="this.parentElement.remove()">×</button>
+      <div class="flash-msg">
+        <p>{{ message }}</p>
+        <button class="flash-msg__btn" type="button" onclick="this.parentElement.remove()">×</button>
       </div>
       {% endfor %} {% endif %} {% endwith %} {% block content %}{% endblock %}
     </main>

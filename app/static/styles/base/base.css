@@ -36,10 +36,30 @@ body {
   align-items: center;
 }
 
-.page-title {
-  font-size: 4rem;
+.flash-msg {
+  width: 100%;
+  padding: 0.7em;
+  background-color: var(--red-important);
+  color: var(--white);
   font-weight: 700;
-  color: #000;
+  display: flex;
+  gap: 1em;
+  align-items: center;
+  justify-content: center;
+}
+
+.flash-msg__btn {
+  border: none;
+  background-color: var(--red-important-hover);
+  color: var(--white);
+}
+
+.page-title {
+  padding: 0.5em 0;
+  font-size: 2.25rem;
+  font-weight: 400;
+  text-align: center;
+  color: #4d317a;
 }
 
 .header__top {

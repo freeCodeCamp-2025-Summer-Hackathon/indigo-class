@@ -1,3 +1,13 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 350px;
+}
+
+.form__group, .form__input, .form__label {
+  width: 100%;
+}
 .form__label{
   color: var(--purple-dark);
 }
@@ -32,19 +42,19 @@
 
 .form__group--checkbox{
   display: flex;
-  justify-content: left;
-  margin: 0.5rem 0 0;
+  justify-content: center;
+  align-items: center;
   gap: 0.5rem;
+  margin: 0.5rem 0 0;
 }
 
 .form__link{
   font-size: 0.8rem;
   color: var(--purple-dark);
   text-decoration: none;
-  text-align: center;
+  padding-bottom: 0.5em;
 }
 
 .form__link:hover{
   text-decoration: underline;
-  
 }
