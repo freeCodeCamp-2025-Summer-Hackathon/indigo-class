@@ -32,7 +32,7 @@
 
 .form__group--checkbox{
   display: flex;
-  justify-content: left;
+  justify-content: center;
   margin: 0.5rem 0 0;
   gap: 0.5rem;
 }
