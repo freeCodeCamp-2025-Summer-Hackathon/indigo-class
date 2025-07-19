@@ -1,16 +1,18 @@
 {% extends "base.html" %} {% block title %} Categories {% endblock %} {% block
 content %}
 
-<h1>Categories</h1>
+<h1>Affirmation Categories</h1>
 
-<section>
+<section class="affirms__wrapper">
     {% for category in categories %}
-    <div>
-        <h3>{{ category.name }}</h3>
-        <a class="affirm__edit" href="{{ url_for('categories.edit_category', category_id=category.category_id )}}">Edit</a>
-        <a class="affirm__delete" href="{{ url_for('categories.delete_category', category_id=category.category_id )}}">Delete</a>
+    <div class="category">
+        <p class="category__name">{{ category.name }}</p>
+        <div class="category__btns">
+            <a class="affirm__edit" href="{{ url_for('categories.edit_category', category_id=category.category_id )}}">Edit</a>
+            <a class="affirm__delete" href="{{ url_for('categories.delete_category', category_id=category.category_id )}}">Delete</a>
+        </div>
     <div>
     {% endfor %}
-    </section>
+</section>
 
 {% endblock %}
