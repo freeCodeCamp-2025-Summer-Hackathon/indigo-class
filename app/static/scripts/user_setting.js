@@ -75,12 +75,12 @@ function generateModalContent(type) {
         return `
         <span class="close">&times;</span>
         <form class="form__group delete" method="POST" action="{{ url_for('auth.user_setting') }}">
-            <p class="delete__paragraph">Are you sure you really want to delete your account?</p>
+            <p class="paragraph">Are you sure you really want to delete your account?</p>
 
             <label for="password">Current Password:</label>
             <input type="password" id="password" required>
             
-            <button type="submit" class="delete__acc">Yes</button>
+            <button type="submit" class="logout__delete">Yes</button>
             <button type="button" class="cancel">No</button>
         </form>
         `
