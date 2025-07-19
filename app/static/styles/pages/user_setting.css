@@ -1,0 +1,270 @@
+:root {
+    --modal-bg: rgba(0, 0, 0, 0.6);
+}
+
+.setting__bg {
+    margin: 3.5rem 0 2rem;
+    width: 100%;
+    background-color: var(--purple-outline);
+    padding: 0.3rem;
+    font-size: 2rem;
+}
+
+.display__name {
+    font-size: 2rem;
+    margin: 2rem 0;
+}
+
+.edit__icon {
+    height: 2.5rem;
+    cursor: pointer;
+}
+
+.edit__icon.name {
+    position: relative;
+    left: 12rem;
+    bottom: 4.5rem;
+}
+
+.edit__icon.pic {
+    position: relative;
+    left: 2.5rem;
+    bottom: 2rem;
+}
+
+.modal__bg {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--modal-bg);
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+}
+
+.modal__content {
+    background-color: var(--white);
+    padding: 2rem;
+    border: 7px solid var(--purple-dark);
+    border-radius: 20px;
+    width: 90%;
+    max-width: 480px;
+    position: relative;
+}
+
+.modal__content label {
+    display: block;
+    text-align: left;
+    margin-bottom: 1rem;
+    font-size: 2.5rem;
+}
+
+.modal__content input {
+    width: 100%;
+    border: 0.25em solid var(--purple-light);
+    padding: 1rem 1rem;
+    border-radius: 20px;
+    box-sizing: border-box;
+    margin-bottom: 1rem;
+    font-size: 2.5rem;
+}
+
+.modal__content .submit {
+        width: 100%;
+        border: none;
+        border-radius: 20px;
+        background-color: var(--purple-dark);
+        color: var(--white);
+        font-size: 2.5rem;
+        padding: 2rem;
+        margin: 1rem 0 0.5rem;
+        cursor: pointer;
+}
+
+.modal__content .submit:hover {
+    text-decoration: underline;
+}
+
+.modal__content .close {
+    position: absolute;
+    color: var(--white);
+    background-color: var(--red-important);
+    padding: 1rem 1rem;
+    border-radius: 8px;
+    top: 0.5rem;
+    right: 0.5rem;
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+.modal__content .close:hover {
+    background-color: var(--red-important-hover);
+}
+
+.profile__pic {
+    height: 7rem;
+    background-color: var(--purple-outline);
+    border: 5px solid var(--purple-dark);
+    border-radius: 50%;
+}
+
+.dropdown {
+    background-color: var(--purple-dark);
+    color: var(--white);
+    margin: 2rem 0 0;
+    padding: 1rem;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+.dropdown input {
+    background-color: var(--purple-dark);
+    color: var(--purple-outline);
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+}
+.dropdown label {
+    cursor: pointer;
+}
+
+.content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: var(--purple-dark);
+    color: var(--white);
+    width: 100%;
+    visibility: hidden;
+    padding: 1rem;
+    font-size: 2rem;
+}
+
+.content input {
+    font-size: 2rem;
+}
+
+.content.visible {
+    visibility: visible;
+}
+
+.input__row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.input__row label {
+    white-space: nowrap; /* prevent label from breaking into 2 lines */
+    width: 40rem;          /*make input field */
+}
+
+.input__row input {
+    flex: 1; /* input takes up remaining space */
+    font-size: 2rem;
+}
+
+.form__group {
+    width: 100%;
+}
+
+.form__actions {
+    display:flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.submit {
+    background-color: var(--white);
+    color: var(--purple-dark);
+    border: 3px solid var(--white);
+    border-radius: 5px;
+    padding: 0;
+    width: 10rem;
+    height: 3rem;
+    font-size: 2.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.submit:hover {
+    text-decoration: underline;
+}
+
+.close {
+    color: var(--white);
+    background-color: var(--red-important);
+    border-radius: 8px;
+    padding: 0;
+    width: 3rem;
+    height: 3rem;
+    font-size: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.close:hover {
+    background-color: var(--red-important-hover);
+}
+
+.daily__affirmation {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 1em auto;
+    color: var(--purple-dark);
+    font-size: 2rem;
+}
+
+.check__box {
+    width: 4em;
+    height: 4em;
+    appearance: none;
+    border-radius: 4px;
+    background-color: var(--purple-dark);
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+}
+
+.check__box:checked::after {
+    content: "✔";
+    color: var(--white);
+    font-size: 3em;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -55%);
+}
+
+.logout__delete {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 98%;
+    padding: 1rem;
+    font-size: 2rem;
+    color: var(--white);
+    background-color: var(--red-important);
+    border-radius: 10px;
+    margin: 2rem auto;
+    cursor: pointer;
+}
+
+.logout__delete:hover {
+    background-color: var(--red-important-hover);
+    text-decoration: underline;
+}
