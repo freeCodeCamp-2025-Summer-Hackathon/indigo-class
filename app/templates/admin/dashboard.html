@@ -1,4 +1,29 @@
 {% extends "base.html" %} {% block title %}{{ title }}{% endblock %} {% block
 content %}
 
+<div class="grid">
+    <div class="grid__col--2">
+        sidebar
+    </div>
+    <div class="grid__col--10">
+        <section class="admin__dashboard">
+            <h2>Welcome to the admin dashboard, Admin.</h2>
+            <div class="admin__cards">
+                <div class="admin__card">
+                    <h4>Total Number of Users:</h4>
+                    <p>88</p>
+                </div>
+                <div class="admin__card">
+                    <h4>Total Number of Affirmations</h4>
+                    <p>204</p>
+                </div>
+                <div class="admin__card">
+                    <h4>Total Number of Categories:</h4>
+                    <p>21</p>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
 {% endblock %}

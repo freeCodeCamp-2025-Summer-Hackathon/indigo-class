@@ -265,6 +265,10 @@ address a {
   margin: 0;
 }
 
+main {
+  width: 100%;
+}
+
 /* Accessibility: Reduce motion for users who prefer it */
 @media (prefers-reduced-motion: reduce) {
   html {

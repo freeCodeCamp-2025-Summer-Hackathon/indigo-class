@@ -12,6 +12,8 @@
 @import './components/section.css';
 @import './components/icon-text.css';
 @import './components/affirmation.css';
+/* Importing layout styles */
+@import './layout/grid.css';
 /* Importing utility styles */
 @import './utilities/spacing.css';
 @import './utilities/colors.css';
