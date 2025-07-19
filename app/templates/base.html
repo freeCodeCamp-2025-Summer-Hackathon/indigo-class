@@ -16,10 +16,8 @@
     <script src="{{ url_for('static', filename='scripts/index.js') }}"></script>
   </head>
   <body>
-    {# include "_header.html" #}
+    {%- include "_header.html" -%}
     {# <!-- TODO: Admin header --> #}
-    {%- include "_headeradminTEST.html" -%}
-
     <main>
       {% with messages = get_flashed_messages(with_categories=true) %} {% if
       messages %} {% for category, message in messages %}

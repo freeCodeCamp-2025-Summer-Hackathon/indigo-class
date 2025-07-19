@@ -62,7 +62,18 @@ body {
   color: #4d317a;
 }
 
-.header__top {
+h1 {
+  font-size: 3rem;
+  margin-bottom: 0.5em;
+}
+
+h2 {
+  color: var(--purple-dark);
+}
+
+/* Mobile-first design - minimum 300px screen width */
+/* Mobile: User & Admin headers similar */
+.header {
   width: 100%;
   position: fixed;
   top: 0;
@@ -71,17 +82,15 @@ body {
   z-index: 10;
 }
 
-h1 {
-  font-size: 3rem;
-  margin-bottom: 0.5em;
+.nav__menu {
+  position: absolute;
+  right: 0;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
 }
 
-h2{
-  color: var(--purple-dark);
-}
-
-/* Mobile-first design - minimum 300px screen width */
-.nav__top {
+.nav {
   display: flex;
   justify-content: center;
   background-color: var(--purple-dark);
@@ -103,16 +112,6 @@ h2{
 .nav__logo img,
 .footer__logo img {
   width: 102px;
-}
-
-.nav__menu {
-  position: absolute;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  display: flex;
-  align-items: center;
-  cursor: pointer;
 }
 
 .nav__menu > button {
@@ -171,6 +170,54 @@ a.nav__menu--button.active {
 
 .logout:hover {
   background-color: var(--red-important-hover);
+}
+
+/* Desktop: user and admin headers differ */
+@media (min-width: 1000px) {
+  .header__admin {
+    width: 20%;
+    height: 100%;
+    max-width: 500px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: var(--purple-dark);
+    align-items: center;
+    z-index: 10;
+  }
+
+  .header__admin > .nav {
+    display: flex;
+    justify-content: center;
+    background-color: inherit;
+    color: white;
+    text-align: center;
+    font-size: 0.8rem;
+    overflow: visible;
+    padding: 0.3rem;
+    position: relative;
+  }
+
+  .header__admin > .nav > .nav__logo {
+    padding-top: 30%;
+  }
+
+  .header__admin > .nav > .nav__menu {
+    display: flex;
+    position: relative;
+    cursor: none;
+  }
+
+  .header__admin > .nav__dropdown {
+    display: flex;
+    flex-direction: column;
+    background-color: inherit;
+    width: 100%;
+  }
+
+  .header__admin > .nav__dropdown > .logout__admin {
+    align-self: flex-end;
+  }
 }
 
 footer {
@@ -266,65 +313,6 @@ address a {
   font-size: 1.5em;
   font-weight: normal;
   margin: 0;
-}
-
-/* Small devices (portrait tablets and large phones, 600px and up) */
-@media only screen and (min-width: 600px) {
-  .nav__logo {
-    height: 2.5rem;
-    margin: 0 0.5rem;
-    position: relative;
-  }
-}
-
-/* Admin side header & menu (mobile) */
-
-
-/* Admin side header & menu (desktop) */
-@media only screen and (min-width: 600px) {
-  .header__aside {
-    width: 20%;
-    height: 100%;
-    max-width: 500px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    background-color: var(--purple-dark);
-    align-items: center;
-    z-index: 10;
-  }
-
-  .nav__aside {
-    display: flex;
-    justify-content: center;
-    background-color: inherit;
-    color: white;
-    text-align: center;
-    font-size: 0.8rem;
-    overflow: visible;
-    padding: 0.3rem;
-    position: relative;
-  }
-
-  .nav__admin--menu {
-    position: absolute;
-    right: 0;
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-  }
-
-  #nav__admin--dropdown {
-    display: flex;
-    flex-direction: column;
-    background-color: inherit;
-    width: 100%;
-  }
-  
-  .logout__admin {
-    align-self: flex-end;
-  }
-
 }
 
 /* Accessibility: Reduce motion for users who prefer it */
