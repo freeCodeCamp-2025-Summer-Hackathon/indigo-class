@@ -1,8 +1,15 @@
+button {
+  cursor: pointer;
+}
+
 .btn {
+  display: inline-block;
   padding: var(--space-md) var(--space-md);
   border: none;
   border-radius: var(--radius-md);
   font-weight: bold;
+  text-align: center;
+  text-decoration: none;
   cursor: pointer;
   transition: background 0.2s;
 }
