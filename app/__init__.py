@@ -4,6 +4,7 @@ import os
 from flask import Flask, jsonify
 from flask_login import LoginManager
 from flask_mail import Mail
+from sqlalchemy import text
 
 from app.models import User, db
 
@@ -53,16 +54,19 @@ def create_app():
     from .controllers.auth import auth_bp
     from .controllers.user import user_bp
     from .controllers.affirmations import affirmations_bp
+    from .controllers.categories import categories_bp
 
     app.register_blueprint(root_bp)
     app.register_blueprint(auth_bp)
     app.register_blueprint(user_bp)
     app.register_blueprint(affirmations_bp)
+    app.register_blueprint(categories_bp)
 
     @app.route("/health")
     def health_check():
         try:
-            db.engine.execute("SELECT 1")
+            with db.engine.connect() as conn:
+                conn.execute(text("SELECT 1"))
             db_status = "connected"
         except Exception as e:
             db_status = f"error: {str(e)}"

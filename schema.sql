@@ -26,7 +26,8 @@ CREATE TABLE user_roles (
 CREATE TABLE categories (
     category_id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
-    description TEXT,
+    user_id INT NOT NULL REFERENCES users(user_id) ON DELETE CASCADE,
+    is_admin_set BOOLEAN DEFAULT FALSE,
     created_at TIMESTAMP DEFAULT NOW(),
     updated_at TIMESTAMP DEFAULT NOW()
 );

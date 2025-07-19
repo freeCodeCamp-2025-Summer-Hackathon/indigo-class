@@ -2,6 +2,7 @@
 content %}
 
 <section class="home__section home__hero">
+  {% if current_user.is_authenticated %}
   <h1>Welcome Back, {{ current_user.name }}!</h1>
   <p>You are logged in as: {{ current_user.username }}</p>
   <a class="affirm__action" href="{{ url_for('root.dashboard') }}"
@@ -12,12 +13,14 @@ content %}
   {% if current_user.is_admin %}
   <a class="affirm__action" href="{{ url_for('root.admin_dashboard') }}">Go to Admin Dashboard</a>
   {% endif %}
+  {% else %}
   <h1>Welcome to DailyDose</h1>
   <h2>Your Personal Affirmation Journey</h2>
   <p>
     Join DailyDose to start your daily affirmation practice and transform your
     mindset.
   </p>
+  {% endif %}
 </section>
 
 <section class="home__section home__affirms">
@@ -36,6 +39,7 @@ content %}
         </figcaption>
       </figure>
       <div class="affirm__btn--wrapper">
+        {% if current_user.is_authenticated %}
         <button
           class="affirm__btn"
           aria-label="Save affirmation"
@@ -43,8 +47,9 @@ content %}
         >
           +
         </button>
+        {% endif %}
         <p>
-          {% if current_user.is_authenticated %} Save this affirmation {% else%}
+          {% if current_user.is_authenticated %} Save this affirmation {% else %}
           <a href="{{ url_for('auth.login') }}">Log in</a> to save this
           affirmation {% endif %}
         </p>
@@ -55,11 +60,13 @@ content %}
 </section>
 
 <section class="home__save-affirms">
+  {% if current_user.is_authenticated %}
   <div class="home__section">
     <h2>Keep words that matter to you here.</h2>
     <a class="affirm__action" href="{{ url_for('affirmations.affirmations') }}">View Affirmations</a>
     <a class="affirm__action" href="{{ url_for('affirmations.add_affirmation') }}">Add Affirmation</a>
   </div>
+  {% endif %}
   <div class="home__section">
     {% for affirmation in all_affirmations[:1] %}
     <figure class="affirm__wrapper">

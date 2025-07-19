@@ -1,0 +1,42 @@
+.icon-text {
+    display: flex;
+    align-items: center;
+}
+
+.icon-text__label {
+    color: var(--purple-dark);
+    font-size: 1em;
+}
+
+.icon-text__icon {
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: auto;
+    margin-right: 2px;
+}
+
+.icon-text--pinned .icon-text__icon {
+    background-image: url('../../images/pin_purple.svg');
+    width: 18px;
+    height: 19px;
+}
+
+.icon-text--checkbox .icon-text__icon {
+    background-color: var(--purple-dark);
+    background-image: url('../../images/check_white.svg');
+    border-radius: 5px;
+    width: 27px;
+    height: 27px;
+    margin-right: 5px;
+}
+
+.icon-text--checkbox .icon-text__label {
+    color: var(--muted);
+    font-size: small;
+}
+
+.icon-text--collections .icon-text__icon {
+    background-image: url('../../images/collection_purple.svg');
+    width: 14px;
+    height: 10px;
+}
