@@ -76,8 +76,8 @@ h2{
 }
 
 .nav__logo {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .nav__logo img,
@@ -213,7 +213,8 @@ footer {
 }
 
 .footer__logo {
-    display: inline-block;
+  display: inline-block;
+  height: 2rem;
 }
 
 .footer__totop--button {
@@ -247,16 +248,68 @@ address a {
   margin: 0;
 }
 
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+  .nav__logo {
+    height: 2.5rem;
+    margin: 0 0.5rem;
+    position: relative;
+  }
+}
+
+/* Admin side header & menu (mobile) */
+
+
+/* Admin side header & menu (desktop) */
+@media only screen and (min-width: 600px) {
+  .header__aside {
+    width: 20%;
+    height: 100%;
+    max-width: 500px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: var(--purple-dark);
+    align-items: center;
+    z-index: 10;
+  }
+
+  .nav__aside {
+    display: flex;
+    justify-content: center;
+    background-color: inherit;
+    color: white;
+    text-align: center;
+    font-size: 0.8rem;
+    overflow: visible;
+    padding: 0.3rem;
+    position: relative;
+  }
+
+  .nav__admin--menu {
+    position: absolute;
+    right: 0;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+  }
+
+  #nav__admin--dropdown {
+    display: flex;
+    flex-direction: column;
+    background-color: inherit;
+    width: 100%;
+  }
+  
+  .logout__admin {
+    align-self: flex-end;
+  }
+
+}
+
 /* Accessibility: Reduce motion for users who prefer it */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
-  }
-}
-
-/* Small devices (portrait tablets and large phones, 600px and up) */
-@media only screen and (min-width: 600px) {
-  .nav__logo {
-    
   }
 }

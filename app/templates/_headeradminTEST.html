@@ -1,18 +1,17 @@
 <!-- {# TODO: Need to figure if can combine this header into main header html file #} -->
 <header class="header__aside">
-    <nav class="nav__aside">
-      <div class="nav__menu">
-        <button onclick="navDropdown()" class="nav__name">TEST ADMIN MENU</button>
-        <button onclick="navDropdown()">
-          <img src="{{ url_for('static', filename='images/profile_img.svg') }}" alt="User profile" class="nav__img">
-        </button>
-      </div>
-      <a href="{{ url_for('root.index') }}"><img src="{{ url_for('static', filename='images/logo_white.svg') }}" alt="DailyDose logo" class="nav__logo"></a>
-      <nav id="nav__">
-        <a href="{{ url_for('root.admin_dashboard') }}" class="nav__menu--button{% if request.path == url_for('root.admin_dashboard') %} active{% endif %}">Dashboard</a>
-        <a href="{{ url_for('root.admin_dashboard') }}" class="nav__menu--button{% if request.path == url_for('root.admin_dashboard') %} active{% endif %}">Users</a>
-        <a href="{{ url_for('root.admin_dashboard') }}" class="nav__menu--button{% if request.path == url_for('root.admin_dashboard') %} active{% endif %}">Categories</a>
-        <a href="{{ url_for('root.admin_dashboard) }}" class="nav__menu--button{% if request.path == url_for('root.admin_dashboard') %} active{% endif %}">Affirmations</a>
-        <a href="{{ url_for('auth.logout') }}" class="nav__menu--button logout">Logout</a>
-      </nav>
+  <nav class="nav__aside">
+    <div class="nav__admin--menu">
+      <p class="nav__name">TEST ADMIN MENU</p>
+      <img src="{{ url_for('static', filename='images/profile_img.svg') }}" alt="User profile" class="nav__img">
+    </div>
+  </nav>
+  <a class="nav__logo" href="{{ url_for('root.index') }}"><img src="{{ url_for('static', filename='images/logo_white.svg') }}" alt="DailyDose logo"></a>
+  <nav id="nav__admin--dropdown">
+    <a href="{{ url_for('root.admin_dashboard') }}" class="nav__menu--button{% if request.path == url_for('root.admin_dashboard') %} active{% endif %}">Dashboard</a>
+    <a href="{{ url_for('root.admin_dashboard') }}" class="nav__menu--button{% if request.path == url_for('root.admin_dashboard') %} active{% endif %}">Users</a>
+    <a href="{{ url_for('root.admin_dashboard') }}" class="nav__menu--button{% if request.path == url_for('root.admin_dashboard') %} active{% endif %}">Categories</a>
+    <a href="{{ url_for('root.admin_dashboard') }}" class="nav__menu--button{% if request.path == url_for('root.admin_dashboard') %} active{% endif %}">Affirmations</a>
+    <a href="{{ url_for('auth.logout') }}" class="nav__menu--button logout__admin">Logout</a>
+  </nav>
 </header>
