@@ -4,7 +4,7 @@ from typing import List
 from sqlalchemy import func
 
 from app import db
-from app.models import Affirmation, SavedAffirmation
+from app.models import Affirmation, SavedAffirmation, Category, AffirmationCategory
 
 affirmations_bp = Blueprint("affirmations", __name__)
 
@@ -134,3 +134,44 @@ def unsave_affirmation():
     db.session.delete(saved)
     db.session.commit()
     return jsonify({"message": "Affirmation unsaved"}), 200
+
+
+@affirmations_bp.post("/affirmations/select-category")
+@login_required
+def select_affirmation_category():
+    # Get affirmation and category id
+    data = request.get_json()
+    affirmation_id = data.get("affirmationId")
+    category_id = data.get("categoryId")
+
+    if not (affirmation_id or category_id):
+        return jsonify({"error": "No affirmation or category ID provided"}), 400
+
+    # Check if affirmations_categories row have already existed
+    affirmation_category = AffirmationCategory.query.filter_by(
+        affirmation_id=affirmation_id, category_id=category_id
+    )
+    # prevent double data
+    if affirmation_category:
+        return jsonify({"error": "Affirmation category already selected"}), 400
+
+    # Check if affirmation and category exists
+    affirmation = Affirmation.query.get(affirmation_id)
+    if not affirmation:
+        return jsonify({"error": "Affirmation not found"}), 404
+
+    if category_id not in (0, 1):
+        category = Category.query.filter_by(
+            category_id=category_id, user_id=current_user.user_id
+        )
+        if not category:
+            return jsonify({"error": "Category doesn't exists"}), 400
+
+    # Add affirmations_categories row
+    affirmation_category = AffirmationCategory(
+        affirmation_id=affirmation_id, category_id=category_id
+    )
+
+    db.session.add(affirmation_category)
+    db.session.commit()
+    return jsonify({"message": "category selected"}), 200
