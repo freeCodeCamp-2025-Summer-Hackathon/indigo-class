@@ -41,6 +41,7 @@
   font-size: 0.8rem;
   color: var(--purple-dark);
   text-decoration: none;
+  padding-bottom: 0.5em;
 }
 
 .form__link:hover{
