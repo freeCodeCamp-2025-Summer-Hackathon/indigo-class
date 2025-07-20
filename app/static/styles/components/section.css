@@ -118,3 +118,17 @@
     right: -3px;
     bottom: -3px;
 }
+
+.profile {
+    margin: 1em 0;
+    display: grid;
+    gap: 0.5em;
+}
+
+.profile dt {
+    font-weight: 700;
+}
+
+.profile dd {
+    margin-left: 2em;
+}
