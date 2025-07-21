@@ -63,5 +63,11 @@ CREATE TABLE saved_affirmations (
     affirmation_id INT NOT NULL REFERENCES affirmations(affirmation_id) ON DELETE CASCADE
 );
 
-ALTER TABLE affirmations
-ADD COLUMN action_type TEXT NULL;
+CREATE TABLE user_affirmations (
+    id SERIAL PRIMARY KEY,
+    user_id INT NOT NULL REFERENCES users(user_id) ON DELETE CASCADE,
+    affirmation_id INT NOT NULL REFERENCES affirmations(affirmation_id) ON DELETE CASCADE,
+    action_type TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT NOW(),
+    CONSTRAINT user_affirmation_uc UNIQUE(user_id, affirmation_id)
+);

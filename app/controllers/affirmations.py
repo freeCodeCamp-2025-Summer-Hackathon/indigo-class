@@ -1,11 +1,17 @@
-from datetime import datetime, timezone
 from flask import Blueprint, flash, jsonify, redirect, render_template, request, url_for
 from flask_login import current_user, login_required
 from typing import List
 from sqlalchemy import func
+from sqlalchemy.dialects.postgresql import insert
 
 from app import db
-from app.models import Affirmation, SavedAffirmation, Category, AffirmationCategory
+from app.models import (
+    Affirmation,
+    SavedAffirmation,
+    Category,
+    AffirmationCategory,
+    UserAffirmation,
+)
 
 affirmations_bp = Blueprint("affirmations", __name__)
 
@@ -183,31 +189,27 @@ ALLOWED_ACTION_TYPES = ["pin", "favorite"]
 
 @affirmations_bp.post("/affirmations/action/<action_type>")
 @login_required
-def update_affirmation_action_type(action_type):
+def add_user_affirmation_with_action_type(action_type):
     # validate action_type
     if action_type not in ALLOWED_ACTION_TYPES:
         return jsonify({"error": f"Invalid action type: {action_type}"}), 400
 
     data = request.get_json()
-    affirmation_id = data.get("affirmation_id")
+    affirmation_id = data.get("affirmationId")
 
-    # update action_type
+    # insert users_affirmations
     try:
-        updated_affirmation_count = (
-            db.session.query(Affirmation)
-            .filter(Affirmation.affirmation_id == affirmation_id)
-            .update(
-                {
-                    Affirmation.action_type: action_type,
-                    Affirmation.updated_at: datetime.now(timezone.utc),
-                }
+        insert_statement = (
+            insert(UserAffirmation)
+            .values(
+                affirmation_id=affirmation_id,
+                user_id=current_user.user_id,
+                action_type=action_type,
             )
+            .on_conflict_do_nothing(constraint="user_affirmation_uc")
         )
 
-        if updated_affirmation_count == 0:
-            db.session.rollback()
-            return jsonify({"error": "no affirmation need to be changed"}), 404
-
+        db.session.execute(insert_statement)
         db.session.commit()
     except Exception as e:
         db.session.rollback()

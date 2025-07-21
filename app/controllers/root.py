@@ -4,7 +4,7 @@ from typing import List
 from flask import Blueprint, render_template, redirect, url_for
 from flask_login import login_required, current_user
 
-from app.models import User, Affirmation, Category, AffirmationCategory
+from app.models import User, Affirmation, Category, AffirmationCategory, UserAffirmation
 
 from app import db
 
@@ -36,9 +36,13 @@ def dashboard():
     # get user's pinned affirmations
     pinned_affirmations = (
         db.session.query(Affirmation)
+        .join(
+            UserAffirmation,
+            UserAffirmation.affirmation_id == Affirmation.affirmation_id,
+        )
         .filter(
-            Affirmation.user_id == current_user.user_id,
-            Affirmation.action_type == "pin",
+            UserAffirmation.user_id == current_user.user_id,
+            UserAffirmation.action_type == "pin",
         )
         .all()
     )
@@ -46,9 +50,13 @@ def dashboard():
     # get user's favorite affirmations
     favorite_affirmations = (
         db.session.query(Affirmation)
+        .join(
+            UserAffirmation,
+            UserAffirmation.affirmation_id == Affirmation.affirmation_id,
+        )
         .filter(
-            Affirmation.user_id == current_user.user_id,
-            Affirmation.action_type == "favorite",
+            UserAffirmation.user_id == current_user.user_id,
+            UserAffirmation.action_type == "favorite",
         )
         .all()
     )
@@ -70,11 +78,11 @@ def dashboard():
     )
 
     user_affirmations_dict = {}
-    for user_affirmation in user_affirmations_by_categories:
-        category_name = user_affirmation.category_name
+    for affirmation in user_affirmations_by_categories:
+        category_name = affirmation.category_name
         if category_name not in user_affirmations_dict:
             user_affirmations_dict[category_name] = []
-        user_affirmations_dict[category_name].append(user_affirmation.affirmation_text)
+        user_affirmations_dict[category_name].append(affirmation.affirmation_text)
 
     return render_template(
         "home/dashboard.html",
