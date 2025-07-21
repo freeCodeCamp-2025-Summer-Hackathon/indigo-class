@@ -12,6 +12,7 @@
 @import './components/section.css';
 @import './components/icon-text.css';
 @import './components/affirmation.css';
+@import './components/alerts.css';
 /* Importing utility styles */
 @import './utilities/spacing.css';
 @import './utilities/colors.css';

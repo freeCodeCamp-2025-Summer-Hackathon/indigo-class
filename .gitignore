@@ -29,4 +29,4 @@ eggs/
 *.egg
 
 # database
-init_db.py
+instance/

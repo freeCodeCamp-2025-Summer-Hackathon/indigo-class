@@ -36,24 +36,6 @@ body {
   align-items: center;
 }
 
-.flash-msg {
-  width: 100%;
-  padding: 0.7em;
-  background-color: var(--red-important);
-  color: var(--white);
-  font-weight: 700;
-  display: flex;
-  gap: 1em;
-  align-items: center;
-  justify-content: center;
-}
-
-.flash-msg__btn {
-  border: none;
-  background-color: var(--red-important-hover);
-  color: var(--white);
-}
-
 .page-title {
   padding: 0.5em 0;
   font-size: 2.25rem;
