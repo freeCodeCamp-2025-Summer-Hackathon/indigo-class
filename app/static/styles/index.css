@@ -14,6 +14,7 @@
 @import './components/affirmation.css';
 /* Importing layout styles */
 @import './layout/grid.css';
+@import './components/alerts.css';
 /* Importing utility styles */
 @import './utilities/spacing.css';
 @import './utilities/colors.css';
