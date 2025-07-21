@@ -12,7 +12,8 @@ categories_bp = Blueprint("categories", __name__)
 @categories_bp.route("/categories")
 def list_categories():
     if current_user.is_authenticated:
-        # authenticated users can only see global or admin set categories and categories that they themselves made
+        # authenticated users can only see global or admin set
+        # categories and categories that they themselves made
         categories: List[Category] = Category.query.filter(
             or_(
                 Category.is_admin_set.is_(True)
@@ -44,7 +45,8 @@ def add_category():
             is_admin_set=True, name=category_name
         ).first()
 
-        # users can't add categories that already exists globally(admin created) or if the user already created a category of the same name
+        # users can't add categories that already exists globally(admin created)
+        # or if the user already created a category of the same name
         if user_has_category:
             flash("You have a category with the same name.", "error")
             return redirect(url_for("categories.add_category"))
