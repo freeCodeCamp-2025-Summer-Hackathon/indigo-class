@@ -1,8 +1,7 @@
 .alert {
   width: 100%;
-  padding: 0.7em;
-  background-color: var(--red-important);
-  color: var(--white);
+  padding: 0.5em;
+  margin-top: 0.7em;
   font-weight: 700;
   display: flex;
   gap: 1em;
@@ -10,8 +9,28 @@
   justify-content: center;
 }
 
-.alert__btn {
-  border: none;
-  background-color: var(--red-important-hover);
+.alert-error {
   color: var(--white);
+  background-color: var(--red-important);
+}
+
+.alert-danger {
+  color: var(--white);
+  background-color: var(--danger-alert);
+}
+
+.alert-warning {
+  color: var(--black);
+  background-color: var(--warning-alert);
+}
+
+.alert-info {
+  color: var(--white);
+  background-color: var(--info-alert);
+}
+
+.alert__btn {
+  border: 1px solid var(--white);
+  color: var(--white);
+  background-color: transparent;
 }

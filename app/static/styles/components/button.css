@@ -1,3 +1,7 @@
+button {
+  cursor: pointer;
+}
+
 .btn {
   padding: var(--space-md) var(--space-md);
   border: none;
