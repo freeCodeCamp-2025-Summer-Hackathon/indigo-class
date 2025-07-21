@@ -111,6 +111,8 @@ class Affirmation(db.Model):
         onupdate=datetime.now(timezone.utc),
     )
 
+    action_type = Column(Text, nullable=True)
+
     user = relationship("User", back_populates="affirmations")
     categories = relationship("AffirmationCategory", back_populates="affirmation")
     daily_history = relationship("DailyMailHistory", back_populates="affirmation")

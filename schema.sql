@@ -62,3 +62,6 @@ CREATE TABLE saved_affirmations (
     user_id INT NOT NULL REFERENCES users(user_id) ON DELETE CASCADE,
     affirmation_id INT NOT NULL REFERENCES affirmations(affirmation_id) ON DELETE CASCADE
 );
+
+ALTER TABLE affirmations
+ADD COLUMN action_type TEXT NULL;

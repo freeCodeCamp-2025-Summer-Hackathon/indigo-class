@@ -1,71 +1,142 @@
 {% extends "base.html" %} {% block title %}{{ title }}{% endblock %} {% block
 content %}
 <div class="page-header">
-    <h1 class="page-header__title">User Dashboard</h1>
+  <h1 class="page-header__title">User Dashboard</h1>
 </div>
 
 {% if current_user.is_authenticated %}
 <section class="affirms__pinned bg--white padding--lg">
-    <div class="icon-text icon-text--pinned">
-        <span class="icon-text__icon"></span>
-        <span class="icon-text__label">Pinned Affirmations</span>
-    </div>
-    <div class="affirm">
-      <figure class="affirm__wrapper">
-        <blockquote class="affirm__quote">
-          Lying can never save us from another lie.
-        </blockquote>
-        <!-- We may use Jinja for loop for displaying the categories of this affirmation -->
-        <figcaption class="affirm__cats">Self Care, Emotion</figcaption>
-      </figure>
-    </div>
-    <div class="icon-text icon-text--checkbox">
-        <span class="icon-text__icon"></span>
-        <span class="icon-text__label">Added to <b>Favorites</b>, <b>Self Worth</b>, <b>Pinned</b></span>
-    </div>
-    <div class="pagination">
-      <button class="btn btn--primary">&lt;</button>
-      <ul>
-        <li class="active"></li>
-        <li></li>
-        <li></li>
-      </ul>
-      <button class="btn btn--primary">&gt;</button>
-    </div>
+  <div class="icon-text icon-text--pinned">
+    <span class="icon-text__icon"></span>
+    <span class="icon-text__label">Pinned Affirmations</span>
+  </div>
+  {% for pinned in pinned_affirmations %}
+  <div class="affirm">
+    <figure class="affirm__wrapper">
+      <blockquote class="affirm__quote">
+        {{ pinned.affirmation_text}}
+      </blockquote>
+      <!-- We may use Jinja for loop for displaying the categories of this affirmation -->
+      <figcaption class="affirm__cats">Self Care, Emotion</figcaption>
+    </figure>
+  </div>
+  {% endfor %}
+  <div class="icon-text icon-text--checkbox">
+    <span class="icon-text__icon"></span>
+    <span class="icon-text__label"
+      >Added to <b>Favorites</b>, <b>Self Worth</b>, <b>Pinned</b></span
+    >
+  </div>
+  <div class="pagination">
+    <button class="btn btn--primary">&lt;</button>
+    <ul>
+      <li class="active"></li>
+      <li></li>
+      <li></li>
+    </ul>
+    <button class="btn btn--primary">&gt;</button>
+  </div>
 </section>
 
 <section class="cta-section bg--purple-outline">
-    <h2 class="cta-section__header">Your Affirmations</h2>
-    <div class="affirm">
-      <figure class="affirm__wrapper">
-        <blockquote class="affirm__quote">
-          Lying can never save us from another lie.
-        </blockquote>
-        <figcaption class="affirm__cats">Self Care, Emotion</figcaption>
-      </figure>
-    </div>
-    <a class="btn btn--primary btn--block" href="{{ url_for('affirmations.affirmations') }}">View Affirmations</a>
-    <a class="btn btn--primary btn--block" href="{{ url_for('affirmations.add_affirmation') }}">Submit Affirmations</a>
-    <a class="btn btn--primary btn--block" href="{{ url_for('categories.list_categories') }}">View Affirmation Categories</a>
+  <h2 class="cta-section__header">Your Affirmations</h2>
+  <div class="affirm">
+    <figure class="affirm__wrapper">
+      <blockquote class="affirm__quote">
+        Lying can never save us from another lie.
+      </blockquote>
+      <figcaption class="affirm__cats">Self Care, Emotion</figcaption>
+    </figure>
+  </div>
+  <a
+    class="btn btn--primary btn--block"
+    href="{{ url_for('affirmations.affirmations') }}"
+    >View Affirmations</a
+  >
+  <a
+    class="btn btn--primary btn--block"
+    href="{{ url_for('affirmations.add_affirmation') }}"
+    >Submit Affirmations</a
+  >
+  <a
+    class="btn btn--primary btn--block"
+    href="{{ url_for('categories.list_categories') }}"
+    >View Affirmation Categories</a
+  >
 </section>
 
 <section class="collections">
-    <div class="collections__header">
-      <div class="icon-text icon-text--collections">
-        <span class="icon-text__icon"></span>
-        <span class="icon-text__label">Collections</span>
-      </div>
+  <div class="collections__header">
+    <div class="icon-text icon-text--collections">
+      <span class="icon-text__icon"></span>
+      <span class="icon-text__label">Collections</span>
+    </div>
 
-      <div class="collections__header__actions">
-        <button class="btn btn--primary collections__header__actions--edit"></button>
-        <button class="btn btn--primary collections__header__actions--add"></button>
-      </div>
+    <div class="collections__header__actions">
+      <button
+        class="btn btn--primary collections__header__actions--edit"
+      ></button>
+      <button
+        class="btn btn--primary collections__header__actions--add"
+      ></button>
     </div>
-    <div class="collections__cats">
-      <button class="btn btn--primary">Favorites</button>
-      <button class="btn btn--primary opacity--50">Self-care reminders</button>
-      <button class="btn btn--dashed opacity--50"><i>&plus;</i> Create list...</button>
-    </div>
+  </div>
+  <div class="collections__cats">
+    <button class="btn btn--primary">Favorites</button>
+    <button class="btn btn--primary opacity--50">Self-care reminders</button>
+    <button class="btn btn--dashed opacity--50">
+      <i>&plus;</i> Create list...
+    </button>
+  </div>
+  <div class="pagination">
+    <button class="btn btn--primary">&lt;</button>
+    <ul>
+      <li class="active"></li>
+      <li></li>
+      <li></li>
+    </ul>
+    <button class="btn btn--primary">&gt;</button>
+  </div>
+  <div class="collections__list">
+    <ul class="collections__list__items">
+      <li class="collection__item">
+        <span class="collection__item__content"
+          >I trust in my inner wisdom.</span
+        >
+        <i class="collection__item--pinned"></i>
+        <a class="collection__item__edit btn btn--primary" href="#"></a>
+      </li>
+      <li class="collection__item">
+        <span class="collection__item__content"
+          >I cultivate an abundance mindset every day.</span
+        >
+        <a class="collection__item__edit btn btn--primary" href="#"></a>
+      </li>
+      <li class="collection__item">
+        <span class="collection__item__content"
+          >Lying can never save us from another lie.</span
+        >
+        <a class="collection__item__edit btn btn--primary" href="#"></a>
+      </li>
+      <li class="collection__item">
+        <span class="collection__item__content"
+          >Sint deserunt magnam soluta rerum.</span
+        >
+        <a class="collection__item__edit btn btn--primary" href="#"></a>
+      </li>
+      <li class="collection__item">
+        <span class="collection__item__content"
+          >Aperiam vitae assumenda consequatur.</span
+        >
+        <a class="collection__item__edit btn btn--primary" href="#"></a>
+      </li>
+      <li class="collection__item">
+        <span class="collection__item__content"
+          >Eaque laboriosam voluptates.</span
+        >
+        <a class="collection__item__edit btn btn--primary" href="#"></a>
+      </li>
+    </ul>
     <div class="pagination">
       <button class="btn btn--primary">&lt;</button>
       <ul>
@@ -75,44 +146,6 @@ content %}
       </ul>
       <button class="btn btn--primary">&gt;</button>
     </div>
-    <div class="collections__list">
-      <ul class="collections__list__items">
-        <li class="collection__item">
-          <span class="collection__item__content">I trust in my inner wisdom.</span>
-          <i class="collection__item--pinned"></i>
-          <a class="collection__item__edit btn btn--primary" href="#"></a>
-        </li>
-        <li class="collection__item">
-          <span class="collection__item__content">I cultivate an abundance mindset every day.</span>
-          <a class="collection__item__edit btn btn--primary" href="#"></a>
-        </li>
-        <li class="collection__item">
-          <span class="collection__item__content">Lying can never save us from another lie.</span>
-          <a class="collection__item__edit btn btn--primary" href="#"></a>
-        </li>
-        <li class="collection__item">
-          <span class="collection__item__content">Sint deserunt magnam soluta rerum.</span>
-          <a class="collection__item__edit btn btn--primary" href="#"></a>
-        </li>
-        <li class="collection__item">
-          <span class="collection__item__content">Aperiam vitae assumenda consequatur.</span>
-          <a class="collection__item__edit btn btn--primary" href="#"></a>
-        </li>
-        <li class="collection__item">
-          <span class="collection__item__content">Eaque laboriosam voluptates.</span>
-          <a class="collection__item__edit btn btn--primary" href="#"></a>
-        </li>
-      </ul>
-      <div class="pagination">
-        <button class="btn btn--primary">&lt;</button>
-        <ul>
-          <li class="active"></li>
-          <li></li>
-          <li></li>
-        </ul>
-        <button class="btn btn--primary">&gt;</button>
-      </div>
-    </div>
+  </div>
 </section>
-{% endif %}
-{% endblock %}
+{% endif %} {% endblock %}

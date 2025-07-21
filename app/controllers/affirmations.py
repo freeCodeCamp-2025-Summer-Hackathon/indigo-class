@@ -1,3 +1,4 @@
+from datetime import datetime, timezone
 from flask import Blueprint, flash, jsonify, redirect, render_template, request, url_for
 from flask_login import current_user, login_required
 from typing import List
@@ -175,3 +176,46 @@ def select_affirmation_category():
     db.session.add(affirmation_category)
     db.session.commit()
     return jsonify({"message": "category selected"}), 200
+
+
+ALLOWED_ACTION_TYPES = ["pin", "favorite"]
+
+
+@affirmations_bp.post("/affirmations/action/<str:action_type>")
+@login_required
+def update_affirmation_action_type(action_type):
+    # validate action_type
+    if action_type not in ALLOWED_ACTION_TYPES:
+        return jsonify({"error": f"Invalid action type: {action_type}"}), 400
+
+    data = request.get_json()
+    affirmation_id = data.get("affirmation_id")
+
+    # update action_type
+    try:
+        updated_affirmation_count = (
+            db.session.query(Affirmation)
+            .filter(Affirmation.affirmation_id == affirmation_id)
+            .update(
+                {
+                    Affirmation.action_type: action_type,
+                    Affirmation.updated_at: datetime.now(timezone.utc),
+                }
+            )
+        )
+
+        if updated_affirmation_count == 0:
+            db.session.rollback()
+            return jsonify({"error": "no affirmation need to be changed"}), 404
+
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": "an error occurred: {}".format(e)}), 500
+
+    # refresh page
+    request_referrer = request.referrer
+    if not request_referrer:
+        return redirect(url_for("root.index"))
+
+    return redirect(request_referrer)
