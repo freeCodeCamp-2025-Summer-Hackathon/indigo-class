@@ -47,6 +47,14 @@ cp .env.example .env
 uv sync
 ```
 
+
+
+### Seed the database
+> **Note:** This will add some sample data to the database.
+```bash
+uv run seed.py
+```
+
 ### Run the application
 
 ```bash
