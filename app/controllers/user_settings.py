@@ -24,7 +24,7 @@ def user_info():
         "lastname": last_name,
     }
     return render_template(
-        "user_settings.html", user_summary=user_summary
+        "auth/user_settings.html", user_summary=user_summary
     )  # profile.html?
 
 
