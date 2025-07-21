@@ -181,7 +181,7 @@ def select_affirmation_category():
 ALLOWED_ACTION_TYPES = ["pin", "favorite"]
 
 
-@affirmations_bp.post("/affirmations/action/<str:action_type>")
+@affirmations_bp.post("/affirmations/action/<action_type>")
 @login_required
 def update_affirmation_action_type(action_type):
     # validate action_type
