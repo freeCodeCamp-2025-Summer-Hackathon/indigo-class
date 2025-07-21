@@ -34,3 +34,8 @@
   color: var(--white);
   background-color: transparent;
 }
+
+.alert-warning.alert__btn {
+  border: 1px solid var(--black);
+  color: var(--black);
+}
