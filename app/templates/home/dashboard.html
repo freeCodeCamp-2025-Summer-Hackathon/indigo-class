@@ -16,8 +16,10 @@ content %}
       <blockquote class="affirm__quote">
         {{ pinned.affirmation_text}}
       </blockquote>
-      <!-- We may use Jinja for loop for displaying the categories of this affirmation -->
-      <figcaption class="affirm__cats">Self Care, Emotion</figcaption>
+      <figcaption class="affirm__cats">
+        {% for category in pinned.categories %} {{ category.category.name }} {%
+        endfor %}
+      </figcaption>
     </figure>
   </div>
   {% endfor %}

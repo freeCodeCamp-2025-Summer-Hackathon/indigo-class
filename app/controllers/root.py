@@ -4,7 +4,7 @@ from typing import List
 from flask import Blueprint, render_template, redirect, url_for
 from flask_login import login_required, current_user
 
-from app.models import User, Affirmation, Category, AffirmationCategory, UserAffirmation
+from app.models import User, Affirmation, UserAffirmation, Category
 
 from app import db
 
@@ -61,36 +61,20 @@ def dashboard():
         .all()
     )
 
-    # create user's affirmation dictionary
-    user_affirmations_by_categories = (
-        db.session.query(
-            Category.name.label("category_name"),
-            Affirmation.affirmation_text.label("affirmation_text"),
-        )
-        .select_from(AffirmationCategory)
-        .join(
-            Affirmation,
-            Affirmation.affirmation_id == AffirmationCategory.affirmation_id,
-        )
-        .join(Category, AffirmationCategory.category_id == Category.category_id)
-        .filter(Affirmation.user_id == current_user.user_id)
+    # get user's categories
+    user_categories = (
+        db.session.query(Category)
+        .filter(Category.user_id == current_user.user_id)
         .all()
     )
-
-    user_affirmations_dict = {}
-    for affirmation in user_affirmations_by_categories:
-        category_name = affirmation.category_name
-        if category_name not in user_affirmations_dict:
-            user_affirmations_dict[category_name] = []
-        user_affirmations_dict[category_name].append(affirmation.affirmation_text)
 
     return render_template(
         "home/dashboard.html",
         title="Dashboard",
         user=current_user,
-        user_affirmations_dict=user_affirmations_dict,
         pinned_affirmations=pinned_affirmations,
         favorite_affirmations=favorite_affirmations,
+        user_categories=user_categories,
     )
 
 
