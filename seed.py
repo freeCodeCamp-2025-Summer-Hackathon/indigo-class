@@ -1,3 +1,4 @@
+import bcrypt
 from app.models import (
     db,
     User,
@@ -7,7 +8,6 @@ from app.models import (
     AffirmationCategory,
     UserRole,
 )
-from werkzeug.security import generate_password_hash
 
 
 def seed_roles():
@@ -83,7 +83,9 @@ def seed_users():
                 name=user_data["name"],
                 username=user_data["username"],
                 email=user_data["email"],
-                password_hash=generate_password_hash(user_data["password"]),
+                password_hash=bcrypt.hashpw(
+                    user_data["password"].encode("utf-8"), bcrypt.gensalt()
+                ).decode("utf-8"),
                 is_email_opt_in=user_data["is_email_opt_in"],
             )
             db.session.add(user)
