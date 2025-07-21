@@ -1,4 +1,6 @@
-{% extends "base.html" %} {% block title %}User Setting{% endblock %} {% block content
+{% extends "base.html" %} {% block title %}User Setting{% endblock %} 
+<script src="{{ url_for('static', filename='scripts/user_settings.js') }}"></script>
+{% block content
 %}
 <span class="setting__bg">
     <h2 class="page-title">User Settings</h2>
