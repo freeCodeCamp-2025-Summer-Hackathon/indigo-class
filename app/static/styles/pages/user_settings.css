@@ -156,13 +156,12 @@
 }
 
 .content {
-    display: flex;
+    display: none;
     flex-direction: row;
     justify-content: space-between;
     background-color: var(--purple-dark);
     color: var(--white);
     width: 100%;
-    visibility: hidden;
     padding: 1rem;
     font-size: 2rem;
 }
@@ -172,7 +171,7 @@
 }
 
 .content.visible {
-    visibility: visible;
+    display: flex;
 }
 
 .input__row {
