@@ -9,7 +9,12 @@
   --edit-btn-clr: #008000;
   --delete-btn-clr: #c20000;
   --white: #fff;
+  --back: #000;
   --muted: #999;
+  --danger-alert: #d72d00;
+  --warning-alert: #ffc100;
+  --success-aleert: #008000;
+  --info-alert: #002bca;
 
   --font-base: 'Nunito', Arial, sans-serif;
 
