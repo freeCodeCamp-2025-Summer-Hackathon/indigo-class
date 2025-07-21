@@ -1,158 +1,160 @@
 {% extends "base.html" %} {% block title %}User Setting{% endblock %}  
 
 {% block content %}
-<span class="setting__bg">
-    <h2 class="page-title">User Settings</h2>
-</span>
+<section class="home__section">
+    <span class="setting__bg">
+        <h2 class="page-title">User Settings</h2>
+    </span>
 
-<span class="display__name">{{ user_summary.firstname }}</span>
-<img src="../static/images/edit_icon.svg" class="edit__icon name" data-type="change__dname">
+    <span class="display__name">{{ user_summary.firstname }}</span>
+    <img src="../static/images/edit_icon.svg" class="edit__icon name" data-type="change__dname">
 
-<div class="modal__bg">
-    <div class="modal__content">
+    <div class="modal__bg">
+        <div class="modal__content">
+        </div>
     </div>
-</div>
 
-<img src="../static/images/profile_img.svg" class="profile__pic">
-<img src="../static/images/edit_icon.svg" class="edit__icon pic" data-type="change__pic">
+    <img src="../static/images/profile_img.svg" class="profile__pic">
+    <img src="../static/images/edit_icon.svg" class="edit__icon pic" data-type="change__pic">
 
-<div class="dropdown">
-    <label>Change Email</label>
-    <input readonly placeholder="chloe@coolemail.com">
-</div>
+    <div class="dropdown">
+        <label for="sample__email">Change Email</label>
+        <input id="sample__email" readonly placeholder="chloe@coolemail.com">
+    </div>
 
-<div class="content">
-    <form class="form__group" method="POST" action="{{ url_for('user_settings.update_profile') }}">
-        <div class="input__row">
-            <label for="change__email">New Email:</label>
-            <input type="email" id="change__email" name="email" required>
-        </div>
+    <div class="content">
+        <form class="form__group" method="POST" action="{{ url_for('user_settings.update_profile') }}">
+            <div class="input__row">
+                <label for="change__email">New Email:</label>
+                <input type="email" id="change__email" name="email" required>
+            </div>
 
-        <div class="input__row">
-            <label for="password">Current Password:</label>
-            <input type="password" name="password" required>
-        </div>
+            <div class="input__row">
+                <label for="email__password">Current Password:</label>
+                <input type="password" id="email__password" name="password" required>
+            </div>
 
-        <div class="form__actions">
-            <button type="submit" class="submit">Submit</button>
-            <span class="close">&times;</span> <!--close button-->
-        </div>
+            <div class="form__actions">
+                <button type="submit" class="submit">Submit</button>
+                <span class="close">&times;</span> <!--close button-->
+            </div>
+        </form>
+    </div>
+
+    <form class="daily__affirmation" method="POST" action="{{ url_for('user_settings.toggle_email_subscription') }}">
+            <input type="checkbox" class="check__box" id="receive__email">
+            <label id="receive__email">Receive daily affirmation in email</label>
     </form>
-</div>
 
-<form class="daily__affirmation" method="POST" action="{{ url_for('user_settings.toggle_email_subscription') }}">
-        <input type="checkbox" class="check__box">
-        <label>Receive daily affirmation in email</label>
-</form>
+    <div class="dropdown">
+        <label for="sample__username">Change Username</label>
+        <input id="sample__username" readonly placeholder="NewUser">
+    </div>
 
-<div class="dropdown">
-    <label>Change Username</label>
-    <input readonly placeholder="NewUser">
-</div>
+    <div class="content">
+        <form class="form__group username" method="POST" action="{{ url_for('user_settings.update_profile') }}">
+            <div class="input__row">
+                <label for="change__username">New Username:</label>
+                <input type="text" id="change__username" name="username" required>
+            </div>
 
-<div class="content">
-    <form class="form__group username" method="POST" action="{{ url_for('user_settings.update_profile') }}">
-        <div class="input__row">
-            <label for="change__username">New Username:</label>
-            <input type="text" id="change__username" name="username" required>
-        </div>
+            <div class="input__row">
+                <label for="username__password">Current Password:</label>
+                <input type="password" id="username__password" name="password" required>
+            </div>
 
-        <div class="input__row">
-            <label for="password">Current Password:</label>
-            <input type="password" name="password" required>
-        </div>
+            <div class="form__actions">
+                <button type="submit" class="submit">Submit</button>
+                <span class="close">&times;</span>
+            </div>
+        </form>
+    </div>
 
-        <div class="form__actions">
-            <button type="submit" class="submit">Submit</button>
-            <span class="close">&times;</span>
-        </div>
-    </form>
-</div>
+    <div class="dropdown">
+        <label for="sample__password">Change Password</label>
+        <input id="sample__password" readonly placeholder="***************">
+    </div>
 
-<div class="dropdown">
-    <label>Change Password</label>
-    <input readonly placeholder="***************">
-</div>
+    <div class="content">
+        <form class="form__group password" method="POST" action="{{ url_for('user_settings.change_password') }}">
+            <div class="input__row">
+                <label for="change__password">Current Password:</label>
+                <input type="password" id="change__password" name="password" required>
+            </div>
 
-<div class="content">
-    <form class="form__group password" method="POST" action="{{ url_for('user_settings.change_password') }}">
-        <div class="input__row">
-            <label for="change__password">Current Password:</label>
-            <input type="password" name="password" required>
-        </div>
+            <div class="input__row">
+                <label for="new__password">New Password:</label>
+                <input type="password" id="new__password" name="new__password" required>
+            </div>
 
-        <div class="input__row">
-            <label for="new__password">New Password:</label>
-            <input type="password" id="new__password" name="new__password" required>
-        </div>
+            <div class="input__row">
+                <label for="confirm__password">Confirm New Password:</label>
+                <input type="password" id="confirm__password" name="confirm__password" required>
+            </div>
 
-        <div class="input__row">
-            <label for="confirm__password">Confirm New Password:</label>
-            <input type="password" id="confirm__password" name="confirm__password" required>
-        </div>
+            <div class="form__actions">
+                <button type="submit" class="submit">Submit</button>
+                <span class="close">&times;</span>
+            </div>
+        </form>
+    </div>
 
-        <div class="form__actions">
-            <button type="submit" class="submit">Submit</button>
-            <span class="close">&times;</span>
-        </div>
-    </form>
-</div>
+    <div class="dropdown">
+        <label for="sample__fname">Change First Name</label>
+        <input id="sample__fname" readonly placeholder="Chloe">
+    </div>
 
-<div class="dropdown">
-    <label>Change First Name</label>
-    <input readonly placeholder="Chloe">
-</div>
+    <div class="content">
+        <form class="form__group fname" method="POST" action="{{ url_for('user_settings.update_profile') }}">
+            <div class="input__row">
+                <label for="change__fname">New First Name:</label>
+                <input type="text" id="change__fname" name="first_name" required>
+            </div>
 
-<div class="content">
-    <form class="form__group fname" method="POST" action="{{ url_for('user_settings.update_profile') }}">
-        <div class="input__row">
-            <label for="change__fname">New First Name:</label>
-            <input type="text" id="change__fname" name="first_name" required>
-        </div>
+            <div class="input__row">
+                <label for="fname__password">Current Password:</label>
+                <input type="password" id="fname__password" name="password" required>
+            </div>
 
-        <div class="input__row">
-            <label for="password">Current Password:</label>
-            <input type="password" name="password" required>
-        </div>
+            <div class="form__actions">
+                <button type="submit" class="submit">Submit</button>
+                <span class="close">&times;</span>
+            </div>
+        </form>
+    </div>
 
-        <div class="form__actions">
-            <button type="submit" class="submit">Submit</button>
-            <span class="close">&times;</span>
-        </div>
-    </form>
-</div>
+    <div class="dropdown">
+        <label for="sample__lname">Change Last Name</label>
+        <input id="sample__lname" readonly placeholder="Smith">
+    </div>
 
-<div class="dropdown">
-    <label>Change Last Name</label>
-    <input readonly placeholder="Smith">
-</div>
+    <div class="content">
+        <form class="form__group lname" method="POST" action="{{ url_for('user_settings.update_profile') }}">
+            <div class="input__row">
+                <label for="change__lname">New Last Name:</label>
+                <input type="text" id="change__lname" name="last_name" required>
+            </div>
 
-<div class="content">
-    <form class="form__group lname" method="POST" action="{{ url_for('user_settings.update_profile') }}">
-        <div class="input__row">
-            <label for="change__fname">New Last Name:</label>
-            <input type="text" id="change__lname" name="last_name" required>
-        </div>
+            <div class="input__row">
+                <label for="lname__password">Current Password:</label>
+                <input type="password" id="lname__password" name="password" required>
+            </div>
 
-        <div class="input__row">
-            <label for="password">Current Password:</label>
-            <input type="password" name="password" required>
-        </div>
+            <div class="form__actions">
+                <button type="submit" class="submit">Submit</button>
+                <span class="close">&times;</span>
+            </div>
+        </form>
+    </div>
 
-        <div class="form__actions">
-            <button type="submit" class="submit">Submit</button>
-            <span class="close">&times;</span>
-        </div>
-    </form>
-</div>
+    <button type="button" class="logout__delete" id="log__out">
+        <span>Log out</span>
+    </button>
 
-<button type="button" class="logout__delete" id="log__out">
-    <span>Log out</span>
-</button>
-
-<button type="button" class="logout__delete" id="delete" data-type="delete">
-    <span>Delete</span>
-</button>
+    <button type="button" class="logout__delete" id="delete" data-type="delete">
+        <span>Delete</span>
+    </button>
+</section>
 
 <script>
     const urls = {

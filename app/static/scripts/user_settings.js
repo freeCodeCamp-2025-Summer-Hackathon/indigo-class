@@ -55,8 +55,8 @@ function generateModalContent(type) {
             <label for="change__dname">New Display Name:</label>
             <input type="text" id="change__dname" name="first_name" required>
 
-            <label for="password">Current Password:</label>
-            <input type="password" name="password" required>
+            <label for="dname__password">Current Password:</label>
+            <input type="password" id="dname__password" name="password" required>
 
             <button type="submit" class="submit">Submit</button>
         </form>
@@ -79,8 +79,8 @@ function generateModalContent(type) {
         <form class="form__group delete" method="POST" action="${urls.deleteUser}">
             <p class="paragraph">Are you sure you really want to delete your account?</p>
 
-            <label for="password">Current Password:</label>
-            <input type="password" name="password" required>
+            <label for="delete__account__password">Current Password:</label>
+            <input type="password" id="delete__account__password" name="password" required>
             
             <button type="submit" class="logout__delete">Yes</button>
             <button type="button" class="cancel">No</button>
