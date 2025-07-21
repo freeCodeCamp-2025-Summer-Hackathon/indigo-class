@@ -11,6 +11,8 @@ from werkzeug.security import generate_password_hash
 
 
 def seed_roles():
+    db.create_all()
+
     roles = [
         {"name": "admin", "description": "Administrator with full access"},
         {"name": "user", "description": "Regular user"},
