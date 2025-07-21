@@ -1,12 +1,13 @@
 {% extends "base.html" %} {% block title %}User Setting{% endblock %} 
-<script src="{{ url_for('static', filename='scripts/user_settings.js') }}"></script>
-{% block content
-%}
+
+{% block head %}<script src="{{ url_for('static', filename='scripts/user_settings.js') }}"></script>{% endblock %} 
+
+{% block content %}
 <span class="setting__bg">
     <h2 class="page-title">User Settings</h2>
 </span>
 
-<span class="display__name">{{ auth.username }}</span>
+<span class="display__name">{{ user_summary.username }}</span>
 <img src="../static/images/edit_icon.svg" class="edit__icon name" data-type="change__dname">
 
 <div class="modal__bg">
