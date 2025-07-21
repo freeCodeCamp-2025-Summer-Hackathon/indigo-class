@@ -34,6 +34,73 @@ def verify_reset_token(token: str, expiration=3600) -> Union[str, None]:
     return email
 
 
+email_body = """
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {{
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }}
+        .container {{
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }}
+        .header {{
+            text-align: center;
+            margin-bottom: 30px;
+        }}
+        .button {{
+            display: inline-block;
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 4px;
+            margin: 20px 0;
+        }}
+        .footer {{
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 30px;
+            text-align: center;
+        }}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>Password Reset Request</h2>
+        </div>
+        
+        <p>Hello,</p>
+        
+        <p>We received a request to reset your password. To proceed with the password reset, please click the button below:</p>
+        
+        <div style="text-align: center;">
+            <a href="{reset_url}" class="button">Reset Password</a>
+        </div>
+        
+        <p>If you did not request a password reset, please ignore this email and ensure your account is secure.</p>
+        
+        <div class="footer">
+            <p>This link will expire in 1 hour for security purposes.</p>
+            <p>If you're having trouble clicking the button, copy and paste this URL into your browser:</p>
+            <p style="word-break: break-all;">{reset_url}</p>
+        </div>
+    </div>
+</body>
+</html>
+"""
+
+
 @auth_bp.route("/login", methods=["GET", "POST"])
 def login() -> Union[str, Response]:
     if current_user.is_authenticated:
@@ -157,25 +224,17 @@ def reset_password_request():
         email = request.form.get("email")
         if not email:
             flash("Please enter your email address.", "error")
-            return render_template(
-                "auth/reset_password_request.html"
-            )  # TODO: make reset password request page
+            return render_template("auth/reset_password_request.html")
         user = User.query.filter_by(email=email).first()
         if user:
             token = generate_reset_token(user.email)
-            reset_url = url_for(
-                "auth.reset_password_token", token=token, _external=True
-            )
+            reset_url = url_for("auth.new_password", token=token, _external=True)
             msg = Message(
                 subject="Password Reset Request",
                 recipients=[user.email],
                 sender=current_app.config.get("MAIL_DEFAULT_SENDER"),
             )
-            msg.body = f"""To reset your password, click the following link: {reset_url}
-                        \n\n
-                        If you did not request a password reset,
-                        please ignore this email.
-                       """
+            msg.html = email_body.format(reset_url=reset_url)
             mail.send(msg)
         # Always flash the same message to prevent user enumeration
         flash(
@@ -183,13 +242,11 @@ def reset_password_request():
             "info",
         )
         return redirect(url_for("auth.login"))
-    return render_template(
-        "auth/reset_password_request.html"
-    )  # TODO: make reset password request page
+    return render_template("auth/reset_password_request.html")
 
 
-@auth_bp.route("/reset_password/<token>", methods=["GET", "POST"])
-def reset_password_token(token):
+@auth_bp.route("/new_password/<token>", methods=["GET", "POST"])
+def new_password(token):
     if current_user.is_authenticated:
         return redirect(url_for("root.index"))
     email = verify_reset_token(token)
@@ -199,20 +256,16 @@ def reset_password_token(token):
         return redirect(url_for("auth.reset_password_request"))
 
     if request.method == "POST":
-        password = request.form.get("password")
-        password2 = request.form.get("password2")
+        password = request.form.get("new__password")
+        password2 = request.form.get("confirm__password")
 
         if not password or not password2:
             flash("Please fill out both password fields.", "error")
-            return render_template(
-                "auth/reset_password.html", token=token
-            )  # TODO: make reset password page
+            return render_template("auth/new_password.html", token=token)
 
         if password != password2:
             flash("Passwords do not match.", "error")
-            return render_template(
-                "auth/reset_password.html", token=token
-            )  # TODO: make reset password page
+            return render_template("auth/new_password.html", token=token)
         user = User.query.filter_by(email=email).first()
 
         if not user:
@@ -227,9 +280,7 @@ def reset_password_token(token):
 
         flash("Your password has been reset. Please log in.", "success")
         return redirect(url_for("auth.login"))
-    return render_template(
-        "auth/reset_password.html", token=token  # TODO: make reset password page
-    )
+    return render_template("auth/new_password.html", token=token)
 
 
 # use this to send a reset password email
