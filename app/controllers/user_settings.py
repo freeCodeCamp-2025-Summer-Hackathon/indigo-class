@@ -28,11 +28,14 @@ def user_info():
     )  # profile.html?
 
 
-# Edit user first_name, last_name, username, email
+# Edit user first_name, last_name, username, email, email_subscription_toggle, password
 @usersettings_bp.route("/profile", methods=["POST"])
 @login_required
 def update_profile():
     user = current_user
+
+    # email subscription toggle
+    user.is_email_opt_in = "email_subscription_toggle" in request.form
 
     if "first_name" in request.form or "last_name" in request.form:
         first = request.form.get("first_name", "").strip()
@@ -71,47 +74,29 @@ def update_profile():
             return redirect(url_for("usersettings.user_info"))
         user.email = email
 
+    # If there's a password change, it'll logout the user
+    if "password" in request.form:
+        password = request.form.get("password")
+
+        if not password:
+            flash("Password is required.", "error")
+            return redirect(url_for("usersettings.user_info"))
+
+        password_hash: str = bcrypt.hashpw(
+            password.encode("utf-8"), bcrypt.gensalt()
+        ).decode("utf-8")
+
+        user.password_hash = password_hash
+        db.session.commit()
+        flash(
+            "Password updated successfully. Please log in with the new password.",
+            "success",
+        )
+        logout_user()
+        return redirect(url_for("auth.login"))
+
     db.session.commit()
     flash("Update successfully.", "success")
-    return redirect(url_for("usersettings.user_info"))
-
-
-# Change password
-@usersettings_bp.route("/password", methods=["POST"])
-@login_required
-def change_password():
-    user = current_user
-    password = request.form.get("password")
-
-    if not password:
-        flash("Password is required.", "error")
-        return redirect(url_for("usersettings.user_info"))
-
-    password_hash: str = bcrypt.hashpw(
-        password.encode("utf-8"), bcrypt.gensalt()
-    ).decode("utf-8")
-
-    user.password_hash = password_hash
-    db.session.commit()
-    flash(
-        "Password updated successfully. Please log in with the new password.",
-        "success",
-    )
-    logout_user()
-    return redirect(url_for("auth.login"))
-
-
-# Change email toggle
-@usersettings_bp.route("/toggle-email-optin", methods=["POST"])
-@login_required
-def toggle_email_subscription():
-    user = current_user
-    user.is_email_opt_in = not user.is_email_opt_in
-    db.session.commit()
-    flash(
-        f"Email subscription {'enabled' if user.is_email_opt_in else 'disabled'}.",
-        "info",
-    )
     return redirect(url_for("usersettings.user_info"))
 
 
