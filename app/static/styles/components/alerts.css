@@ -9,6 +9,11 @@
   justify-content: center;
 }
 
+.alert-success {
+  color: var(--white);
+  background-color: var(--success-alert);
+}
+
 .alert-error {
   color: var(--white);
   background-color: var(--red-important);
