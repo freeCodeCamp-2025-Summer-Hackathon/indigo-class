@@ -15,5 +15,6 @@ content %}
   <dd>{{ "Yes" if user.is_email_opt_in else "No" }}</dd>
 </dl>
 
+<a href="{{ url_for('user_settings.user_info') }}" class="form__button btn">Settings</a>
 <a href="{{ url_for('auth.logout') }}" class="form__button btn">Logout</a>
 {% endblock %}

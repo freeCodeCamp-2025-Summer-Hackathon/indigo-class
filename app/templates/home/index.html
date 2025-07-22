@@ -12,11 +12,11 @@ content %}
     >View Profile</a
   >
 
-  {% if current_user.is_admin %}
-  <a class="affirm__action" href="{{ url_for('root.admin_dashboard') }}"
-    >Go to Admin Dashboard</a
-  >
-  {% endif %} {% else %}
+  {% if current_user.is_admin() %}
+  <a class="affirm__action" href="{{ url_for('root.admin_dashboard') }}">Go to Admin Dashboard</a>
+  {% endif %}
+  {% else %}
+  
   <h1>Welcome to DailyDose</h1>
   <h2>Your Personal Affirmation Journey</h2>
   <p>

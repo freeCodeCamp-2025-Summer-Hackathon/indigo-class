@@ -52,15 +52,17 @@ def create_app():
 
     from .controllers.root import root_bp
     from .controllers.auth import auth_bp
-    from .controllers.user import user_bp
+    from .controllers.admin_user import user_bp
     from .controllers.affirmations import affirmations_bp
     from .controllers.categories import categories_bp
+    from .controllers.user_settings import usersettings_bp
 
     app.register_blueprint(root_bp)
     app.register_blueprint(auth_bp)
     app.register_blueprint(user_bp)
     app.register_blueprint(affirmations_bp)
     app.register_blueprint(categories_bp)
+    app.register_blueprint(usersettings_bp)
 
     @app.route("/health")
     def health_check():
