@@ -10,7 +10,7 @@ content %}
   >
   <a class="affirm__action" href="{{ url_for('auth.profile') }}">View Profile</a>
 
-  {% if current_user.is_admin %}
+  {% if current_user.is_admin() %}
   <a class="affirm__action" href="{{ url_for('root.admin_dashboard') }}">Go to Admin Dashboard</a>
   {% endif %}
   {% else %}
