@@ -35,7 +35,7 @@ def update_profile():
     user = current_user
 
     # email subscription toggle
-    user.is_email_opt_in = "receive__email" in request.form
+    user.is_email_opt_in = "receive_email" in request.form
 
     if "first_name" in request.form or "last_name" in request.form:
         first = request.form.get("first_name", "").strip()
