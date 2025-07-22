@@ -2,7 +2,7 @@
     --modal-bg: rgba(0, 0, 0, 0.6);
 }
 
-body{
+.user__setting_font__size{
     font-size: 1.5rem;
 }
 
@@ -134,32 +134,8 @@ body{
     border-radius: 50%;
 }
 
-.dropdown {
-    background-color: var(--purple-dark);
-    color: var(--white);
-    font-size: 1rem;
-    margin: 1rem 0 0; /*0 bottom margin for the seamless dropdown*/
-    padding: 0.3rem;
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    cursor: pointer;
-}
-
-.dropdown input {
-    background-color: var(--purple-dark);
-    color: var(--purple-outline);
-    border: none;
-    cursor: pointer;
-}
-.dropdown label {
-    pointer-events: auto;
-    cursor: pointer;
-}
-
 .content {
-    display: none;
+    display: flex;
     flex-direction: row;
     justify-content: space-between;
     background-color: var(--purple-dark);
@@ -167,10 +143,7 @@ body{
     font-size: 1rem;
     width: 100%;
     padding: 0.2rem;
-}
-
-.content.visible {
-    display: flex;
+    margin-bottom: 1rem;
 }
 
 .input__row {

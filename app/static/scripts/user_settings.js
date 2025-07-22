@@ -1,26 +1,6 @@
 const modal = document.querySelector(".modal__bg");
 const modalContent = document.querySelector(".modal__content");
 
-document.addEventListener("DOMContentLoaded", function() {
-    document.querySelectorAll(".dropdown").forEach(dropdown => {
-        const content = dropdown.nextElementSibling;
-
-        if (content && content.classList.contains("content")) {
-            const closeBtn = content.querySelector(".close");
-
-            if (closeBtn) {
-                closeBtn.addEventListener("click", function () {
-                    content.classList.remove("visible");
-                });
-            }
-
-            dropdown.addEventListener("click", function () {
-                content.classList.toggle("visible");
-            });
-        }
-    });
-});
-
 document.querySelectorAll("[data-type]").forEach(trigger => {
     trigger.addEventListener("click", function(event) {
         const type = event.currentTarget.getAttribute("data-type");
