@@ -160,6 +160,14 @@
     width: 100%;
 }
 
+.form__actions {
+    display:flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
 .submit {
     display: flex;
     justify-content: center;
