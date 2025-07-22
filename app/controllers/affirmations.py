@@ -184,18 +184,33 @@ def select_affirmation_category():
     return jsonify({"message": "category selected"}), 200
 
 
-ALLOWED_ACTION_TYPES = ["pin", "favorite"]
+ACTION_TYPES_LIMIT_DICT = {"pin": 3, "favorite": 15}
 
 
 @affirmations_bp.post("/affirmations/action/<action_type>")
 @login_required
 def add_user_affirmation_with_action_type(action_type):
     # validate action_type
-    if action_type not in ALLOWED_ACTION_TYPES:
+    if action_type not in ACTION_TYPES_LIMIT_DICT.keys():
         return jsonify({"error": f"Invalid action type: {action_type}"}), 400
 
     data = request.get_json()
     affirmation_id = data.get("affirmationId")
+
+    # check if action type already reach limit
+    affirmation_count = (
+        db.session.query(UserAffirmation)
+        .filter(
+            UserAffirmation.user_id == current_user.user_id,
+            UserAffirmation.action_type == action_type,
+        )
+        .count()
+    )
+    print(
+        f"affirmation_count: {affirmation_count}, limit: {ACTION_TYPES_LIMIT_DICT[action_type]}"
+    )
+    if affirmation_count >= ACTION_TYPES_LIMIT_DICT[action_type]:
+        return jsonify({"error": f"{action_type} already limited"}), 400
 
     # insert users_affirmations
     try:

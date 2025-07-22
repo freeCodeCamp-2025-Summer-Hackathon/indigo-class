@@ -8,12 +8,15 @@ content %}
   <a class="affirm__action" href="{{ url_for('root.dashboard') }}"
     >Go to User Dashboard</a
   >
-  <a class="affirm__action" href="{{ url_for('auth.profile') }}">View Profile</a>
+  <a class="affirm__action" href="{{ url_for('auth.profile') }}"
+    >View Profile</a
+  >
 
   {% if current_user.is_admin %}
-  <a class="affirm__action" href="{{ url_for('root.admin_dashboard') }}">Go to Admin Dashboard</a>
-  {% endif %}
-  {% else %}
+  <a class="affirm__action" href="{{ url_for('root.admin_dashboard') }}"
+    >Go to Admin Dashboard</a
+  >
+  {% endif %} {% else %}
   <h1>Welcome to DailyDose</h1>
   <h2>Your Personal Affirmation Journey</h2>
   <p>
@@ -33,23 +36,23 @@ content %}
           {{ affirmation.affirmation_text }}
         </blockquote>
         <figcaption class="affirm__cats">
-          {% for category in affirmation.categories %}
-            {{ category.category.name }}
-          {% endfor %}
+          {% for category in affirmation.categories %} {{ category.category.name
+          }} {% endfor %}
         </figcaption>
       </figure>
       <div class="affirm__btn--wrapper">
         {% if current_user.is_authenticated %}
         <button
           class="affirm__btn"
-          aria-label="Save affirmation"
-          onclick="saveAffirmation('{{ affirmation.affirmation_id }}')"
+          aria-label="Pin"
+          onclick="updateActionType('{{ affirmation.affirmation_id }}', 'pin')"
         >
           +
         </button>
         {% endif %}
         <p>
-          {% if current_user.is_authenticated %} Save this affirmation {% else %}
+          {% if current_user.is_authenticated %} Save this affirmation {% else
+          %}
           <a href="{{ url_for('auth.login') }}">Log in</a> to save this
           affirmation {% endif %}
         </p>
@@ -63,8 +66,14 @@ content %}
   {% if current_user.is_authenticated %}
   <div class="home__section">
     <h2>Keep words that matter to you here.</h2>
-    <a class="affirm__action" href="{{ url_for('affirmations.affirmations') }}">View Affirmations</a>
-    <a class="affirm__action" href="{{ url_for('affirmations.add_affirmation') }}">Add Affirmation</a>
+    <a class="affirm__action" href="{{ url_for('affirmations.affirmations') }}"
+      >View Affirmations</a
+    >
+    <a
+      class="affirm__action"
+      href="{{ url_for('affirmations.add_affirmation') }}"
+      >Add Affirmation</a
+    >
   </div>
   {% endif %}
   <div class="home__section">
