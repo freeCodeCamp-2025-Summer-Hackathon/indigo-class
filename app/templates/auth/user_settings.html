@@ -1,21 +1,29 @@
-{% extends "base.html" %} {% block title %}User Setting{% endblock %}  
+{% extends "base.html" %} {% block title %}User Settings{% endblock %}  
 
 {% block content %}
 <section class="user__setting_font__size">
-    <h2 class="setting__bg">User Settings</h2>
+    <h1 class="setting__bg">User Settings</h1>
 
-    <span class="display__name">{{ user_summary.firstname }}</span>
-    <img src="../static/images/edit_icon.svg" class="edit__icon name" data-type="change__dname">
+    <section class="user__setting--user">
+        <h2 class="display__name">{{ user_summary.firstname }}</h2>
+        <button data-type="change__dname" class="edit__btn">
+            <img src="{{ url_for('static', filename='images/edit_icon.svg') }}" class="edit__icon name" alt="Edit username">
+        </button>
+    </section>
 
     <div class="modal__bg">
         <div class="modal__content">
         </div>
     </div>
 
-    <img src="../static/images/profile_img.svg" class="profile__pic">
-    <img src="../static/images/edit_icon.svg" class="edit__icon pic" data-type="change__pic">
+    <section class="user__setting__profile-pic">
+        <img src="{{ url_for('static', filename='images/profile_img.svg') }}" class="profile__pic" alt="User profile image">
+        <button class="edit__btn pic" data-type="change__pic">
+            <img src="{{ url_for('static', filename='images/edit_icon.svg') }}" class="edit__icon"  alt="Change user profile picture">
+        </button>
+    </section>
 
-    <div class="content">
+    <section class="content">
         <form class="form__group" method="POST" action="{{ url_for('user_settings.update_profile') }}">
             <div class="input__row">
                 <label for="change__email">New Email:</label>
@@ -31,14 +39,14 @@
                 <button type="submit" class="submit">Submit</button>
             </div>
         </form>
-    </div>
+    </section>
 
     <form class="daily__affirmation" method="POST" action="{{ url_for('user_settings.toggle_email_subscription') }}">
             <input type="checkbox" class="check__box" id="receive__email">
             <label for="receive__email" class="checkbox__label">Receive daily affirmation in email</label>
     </form>
 
-    <div class="content">
+    <section class="content">
         <form class="form__group username" method="POST" action="{{ url_for('user_settings.update_profile') }}">
             <div class="input__row">
                 <label for="change__username">New Username:</label>
@@ -54,9 +62,9 @@
                 <button type="submit" class="submit">Submit</button>
             </div>
         </form>
-    </div>
+    </section>
 
-    <div class="content">
+    <section class="content">
         <form class="form__group password" method="POST" action="{{ url_for('user_settings.change_password') }}">
             <div class="input__row">
                 <label for="change__password">Current Password:</label>
@@ -77,9 +85,9 @@
                 <button type="submit" class="submit">Submit</button>
             </div>
         </form>
-    </div>
+    </section>
 
-    <div class="content">
+    <section class="content">
         <form class="form__group fname" method="POST" action="{{ url_for('user_settings.update_profile') }}">
             <div class="input__row">
                 <label for="change__fname">New First Name:</label>
@@ -95,9 +103,9 @@
                 <button type="submit" class="submit">Submit</button>
             </div>
         </form>
-    </div>
+    </section>
 
-    <div class="content">
+    <section class="content">
         <form class="form__group lname" method="POST" action="{{ url_for('user_settings.update_profile') }}">
             <div class="input__row">
                 <label for="change__lname">New Last Name:</label>
@@ -113,14 +121,14 @@
                 <button type="submit" class="submit">Submit</button>
             </div>
         </form>
-    </div>
+    </section>
 
     <button type="button" class="logout__delete" id="log__out">
         <a href="{{ url_for('auth.logout') }}" class="log__out__link">Log out</a>
     </button>
 
     <button type="button" class="logout__delete" id="delete" data-type="delete">
-        <span>Delete</span>
+        <span>Delete Account</span>
     </button>
 </section>
 

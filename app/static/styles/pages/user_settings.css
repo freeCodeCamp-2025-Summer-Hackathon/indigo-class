@@ -16,10 +16,19 @@
     background-color: var(--purple-outline);
 }
 
-.display__name {
-    display: block;
-    text-align: center;
-    margin: 1rem 0;
+.user__setting--user {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3em;
+    align-items: center;
+    justify-content: center;
+}
+
+.edit__btn {
+    border: none;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    background-color: transparent;
 }
 
 .edit__icon {
@@ -27,13 +36,7 @@
     cursor: pointer;
 }
 
-.edit__icon.name {
-    position: relative;
-    left: 14rem;
-    bottom: 3.1rem;
-}
-
-.edit__icon.pic {
+.edit__btn.pic {
     position: relative;
     left: 11.5rem;
     bottom: 3rem;
