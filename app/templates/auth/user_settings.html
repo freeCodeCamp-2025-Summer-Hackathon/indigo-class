@@ -4,8 +4,8 @@
 <section class="user__setting_font__size">
     <h1 class="setting__bg">User Settings</h1>
 
-    <div class="user_setting--user">
-        <span class="display__name">{{ user_summary.firstname }}</span>
+    <div class="user__setting--user">
+        <h2 class="display__name">{{ user_summary.firstname }}</h2>
         <img src="../static/images/edit_icon.svg" class="edit__icon name" data-type="change__dname" alt="Edit username">
     </div>
 
@@ -14,8 +14,10 @@
         </div>
     </div>
 
-    <img src="../static/images/profile_img.svg" class="profile__pic" alt="User profile image">
-    <img src="../static/images/edit_icon.svg" class="edit__icon pic" data-type="change__pic" alt="Change user profile picture">
+    <div class="user__setting__profile-pic">
+        <img src="../static/images/profile_img.svg" class="profile__pic" alt="User profile image">
+        <img src="../static/images/edit_icon.svg" class="edit__icon pic" data-type="change__pic" alt="Change user profile picture">
+    </div>
 
     <div class="content">
         <form class="form__group" method="POST" action="{{ url_for('user_settings.update_profile') }}">
