@@ -24,12 +24,19 @@
     justify-content: center;
 }
 
+.edit__btn {
+    border: none;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    background-color: transparent;
+}
+
 .edit__icon {
     height: 2rem;
     cursor: pointer;
 }
 
-.edit__icon.pic {
+.edit__btn.pic {
     position: relative;
     left: 11.5rem;
     bottom: 3rem;
