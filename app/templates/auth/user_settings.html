@@ -7,7 +7,7 @@
     <section class="user__setting--user">
         <h2 class="display__name">{{ user_summary.firstname }}</h2>
         <button data-type="change__dname" class="edit__btn">
-            <img src="../static/images/edit_icon.svg" class="edit__icon name" alt="Edit username">
+            <img src="{{ url_for('static', filename='images/edit_icon.svg') }}" class="edit__icon name" alt="Edit username">
         </button>
     </section>
 
@@ -17,9 +17,9 @@
     </div>
 
     <section class="user__setting__profile-pic">
-        <img src="../static/images/profile_img.svg" class="profile__pic" alt="User profile image">
+        <img src="{{ url_for('static', filename='images/profile_img.svg') }}" class="profile__pic" alt="User profile image">
         <button class="edit__btn pic" data-type="change__pic">
-            <img src="../static/images/edit_icon.svg" class="edit__icon"  alt="Change user profile picture">
+            <img src="{{ url_for('static', filename='images/edit_icon.svg') }}" class="edit__icon"  alt="Change user profile picture">
         </button>
     </section>
 
