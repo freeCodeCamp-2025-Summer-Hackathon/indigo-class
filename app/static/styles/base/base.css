@@ -74,12 +74,13 @@ h2 {
 
 .nav {
   display: flex;
-  justify-content: center;
   background-color: var(--purple-dark);
   color: white;
   width: 100%;
   height: 3.5rem;
   text-align: center;
+  justify-content: center;
+  align-items: center;
   font-size: 0.8rem;
   overflow: visible;
   padding: 0.3rem;
@@ -87,8 +88,18 @@ h2 {
 }
 
 .nav__logo {
-  display: flex;
-  align-items: center;
+  position: absolute;
+  top: 0.5rem;
+  left: 1.5rem;
+}
+
+/* Centralize nav logo on user's desktop */
+@media (min-width: 600px) {
+  .nav__logo {
+    position: relative;
+    top: auto;
+    left: auto;
+  }
 }
 
 .nav__logo img,
@@ -99,6 +110,7 @@ h2 {
 .nav__menu > button {
   background-color: inherit;
   border: none;
+  flex-shrink: 0;
 }
 
 .nav__name {
@@ -142,8 +154,12 @@ h2 {
 }
 
 a.nav__menu--button.active {
-  background-color: #8B66C6;
+  background-color: var(--purple-light);
   font-weight: bold;
+}
+
+.nav__menu--invisible {
+  display: none;
 }
 
 .logout {
@@ -154,8 +170,8 @@ a.nav__menu--button.active {
   background-color: var(--red-important-hover);
 }
 
-/* Desktop: user and admin headers differ */
-@media (min-width: 1000px) {
+/* Desktop: admin header/menu differs from user header/menu */
+@media (min-width: 600px) {
   .header__admin {
     width: 20%;
     height: 100%;
@@ -168,38 +184,72 @@ a.nav__menu--button.active {
     z-index: 10;
   }
 
-  .header__admin > .nav {
-    display: flex;
+  .header__admin .nav {
     justify-content: center;
+    height: inherit;
     background-color: inherit;
-    color: white;
-    text-align: center;
     font-size: 0.8rem;
-    overflow: visible;
-    padding: 0.3rem;
-    position: relative;
   }
 
-  .header__admin > .nav > .nav__logo {
-    padding-top: 30%;
-  }
-
-  .header__admin > .nav > .nav__menu {
+  .header__admin .nav__logo {
     display: flex;
-    position: relative;
-    cursor: none;
+    position: absolute;
+    padding: 0 10%;
+    top: 7rem;
   }
 
-  .header__admin > .nav__dropdown {
+  .header__admin .nav__logo img {
+    width: 9rem;
+  }
+
+  .header__admin .nav__menu {
+    width: inherit;
+    padding: 0 0 1.5rem 0;
+    top: 1rem;
+    justify-content: center;
+    cursor: none;
+    border-bottom: white 1px solid;
+  }
+
+  .header__admin #nav__dropdown {
+    visibility: visible;
     display: flex;
     flex-direction: column;
-    background-color: inherit;
-    width: 100%;
+    justify-content: space-between;
+    align-content: stretch;
+    width: inherit;
+    max-width: inherit;
+    height: auto;
+    text-align: left;
+    top: 12rem;
   }
 
-  .header__admin > .nav__dropdown > .logout__admin {
-    align-self: flex-end;
+  .header__admin #nav__dropdown > .nav__menu--button {
+    border: none;
+    font-size: 1.1rem;
+    padding-left: 3vw;
+    line-height: 4rem;
   }
+  
+  .header__admin #nav__dropdown > .nav__menu--button:hover {
+    background-color: var(--purple-light);
+    text-decoration: none;
+  }
+
+  .header__admin #nav__dropdown > a.nav__menu--button.active {
+    background-color: var(--purple-light);
+    font-weight: bold;
+  }
+
+  .header__admin .nav__menu--invisible {
+    display: inline-block;
+    
+  }
+
+  .header__admin #nav__dropdown .logout:hover {
+    background-color: var(--red-important-hover);
+  }
+
 }
 
 footer {
