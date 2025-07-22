@@ -31,6 +31,7 @@ class User(db.Model, UserMixin):
     daily_mail_history = relationship("DailyMailHistory", back_populates="user")
     saved_affirmations = relationship("SavedAffirmation", back_populates="user")
     categories = relationship("Category", back_populates="user")
+    user_affirmations = relationship("UserAffirmation", back_populates="user")
 
     def get_id(self):
         """Return the user ID as a string for Flask-Login."""
@@ -115,6 +116,7 @@ class Affirmation(db.Model):
     categories = relationship("AffirmationCategory", back_populates="affirmation")
     daily_history = relationship("DailyMailHistory", back_populates="affirmation")
     saved_affirmations = relationship("SavedAffirmation", back_populates="affirmation")
+    user_affirmations = relationship("UserAffirmation", back_populates="affirmation")
 
 
 class AffirmationCategory(db.Model):
@@ -175,3 +177,26 @@ class SavedAffirmation(db.Model):
 
     user = relationship("User", back_populates="saved_affirmations")
     affirmation = relationship("Affirmation", back_populates="saved_affirmations")
+
+
+class UserAffirmation(db.Model):
+    __tablename__ = "user_affirmations"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    user_id = Column(
+        Integer, ForeignKey("users.user_id", ondelete="CASCADE"), nullable=False
+    )
+    affirmation_id = Column(
+        Integer,
+        ForeignKey("affirmations.affirmation_id", ondelete="CASCADE"),
+        nullable=False,
+    )
+    action_type = Column(Text, nullable=False)
+    created_at = Column(DateTime, default=datetime.now(timezone.utc))
+
+    __table_args__ = (
+        UniqueConstraint("user_id", "affirmation_id", name="user_affirmation_uc"),
+    )
+
+    user = relationship("User", back_populates="user_affirmations")
+    affirmation = relationship("Affirmation", back_populates="user_affirmations")

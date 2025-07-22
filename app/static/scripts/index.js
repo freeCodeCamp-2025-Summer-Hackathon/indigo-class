@@ -39,3 +39,23 @@ function getRandomAffirmation() {
       });
   }
 }
+
+function selectAffirmationCategory(affirmationId, categoryId) {
+  fetch(`/affirmations/select-category`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ affirmationId, categoryId })
+  })
+}
+
+function updateActionType(affirmationId, actionType) {
+  fetch(`/affirmations/action/${actionType}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ affirmationId })
+  })
+}
