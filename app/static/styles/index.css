@@ -19,3 +19,4 @@
 @import './utilities/alignment.css';
 /* Importing page-specific styles */
 @import './pages/home.css';
+@import './pages/user_settings.css';
