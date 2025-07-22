@@ -40,7 +40,7 @@
 
 <form class="daily__affirmation" method="POST" action="{{ url_for('user_settings.toggle_email_subscription') }}">
         <input type="checkbox" class="check__box" id="receive__email">
-        <label id="receive__email">Receive daily affirmation in email</label>
+        <label for="receive__email" class="checkbox__label">Receive daily affirmation in email</label>
 </form>
 
 <div class="dropdown">
@@ -145,7 +145,7 @@
 </div>
 
 <button type="button" class="logout__delete" id="log__out">
-    <span>Log out</span>
+    <a href="{{ url_for('auth.logout') }}" class="log__out__link">Log out</a>
 </button>
 
 <button type="button" class="logout__delete" id="delete" data-type="delete">

@@ -6,13 +6,9 @@ body{
     font-size: 1.5rem;
 }
 
-* {
-    outline: 1px solid red;
-}
-/*get back here later*/
 .setting__bg {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     height: 3.5rem;
     padding: 0.3rem;
@@ -200,17 +196,18 @@ body{
 }
 
 .submit {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-weight: bold;
     background-color: var(--white);
     color: var(--purple-dark);
     border: 3px solid var(--white);
     border-radius: 5px;
     padding: 0;
-    width: 2rem;
+    width: 5rem;
     height: 3rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
 }
 
 .submit:hover {
@@ -220,6 +217,7 @@ body{
 .close {
     color: var(--white);
     background-color: var(--red-important);
+    font-size: 2rem;
     border-radius: 8px;
     padding: 0;
     width: 2rem;
@@ -236,15 +234,17 @@ body{
 
 .daily__affirmation {
     display: flex;
+    justify-content: space-evenly;
     align-items: center;
     gap: 1rem;
-    margin: 1em auto;
+    margin: 1em 0;
+    padding: 0 1rem;
     color: var(--purple-dark);
 }
 
 .check__box {
-    width: 2em;
-    height: 3em;
+    width: 2rem;
+    height: 2rem;
     appearance: none;
     border-radius: 4px;
     background-color: var(--purple-dark);
@@ -253,10 +253,14 @@ body{
     position: relative;
 }
 
+.checkbox__label {
+    font-size: 1rem;
+}
+
 .check__box:checked::after {
     content: "✔";
     color: var(--white);
-    font-size: 2em;
+    font-size: 2rem;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -268,7 +272,7 @@ body{
     flex-direction: row;
     justify-content: center;
     width: 98%;
-    padding: 1rem;
+    padding: 0.5rem;
     color: var(--white);
     background-color: var(--red-important);
     border-radius: 10px;
@@ -279,4 +283,8 @@ body{
 .logout__delete:hover {
     background-color: var(--red-important-hover);
     text-decoration: underline;
+}
+
+.log__out__link {
+    color: var(--white);
 }
