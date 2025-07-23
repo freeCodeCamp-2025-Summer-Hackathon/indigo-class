@@ -4,6 +4,7 @@ content %}
 <h1>Edit Affirmation Category</h1>
 
 <form method="POST" action="{{ url_for("categories.edit_category", category_id=category.category_id) }}">
+    <input type="hidden" name="page" value="{{ page }}">
     <p><label for="category-name">Category Name:</label></p>
     <input type="text" name="name" id="category-name" class="form__input">
     <button type="submit" class="affirm__edit">Edit</button>
