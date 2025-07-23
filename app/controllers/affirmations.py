@@ -1,6 +1,5 @@
 from flask import Blueprint, flash, jsonify, redirect, render_template, request, url_for
 from flask_login import current_user, login_required
-from typing import List
 from sqlalchemy import func
 from sqlalchemy.dialects.postgresql import insert
 
@@ -21,7 +20,11 @@ def affirmations():
     """
     Affirmations page.
     """
-    all_affirmations: List[Affirmation] = Affirmation.query.all()
+
+    page_num = request.args.get("page", 1, type=int)
+    all_affirmations = Affirmation.query.paginate(
+        per_page=20, page=page_num, error_out=True
+    )
     return render_template(
         "affirmations/index.html", all_affirmations=all_affirmations, user=current_user
     )
