@@ -71,6 +71,16 @@ For easier deployment and environment consistency, you can run this application 
 cp .env.example .env
 ```
 
+Then, open the .env file and make sure the following variables are set correctly:
+
+```
+FLASK_DEBUG=True
+POSTGRES_DB=dailydose_db
+POSTGRES_USER=dailydose_user
+POSTGRES_PASSWORD=dailydose_password
+DATABASE_URL=postgresql://dailydose_user:dailydose_password@db:5432/dailydose_db
+```
+
 ### Prerequisites for Docker
 
 - **Docker Desktop**: Make sure you have Docker Desktop installed on your system. You can download it from https://www.docker.com/products/docker-desktop/ or https://docs.docker.com/engine/install/ for linux.
