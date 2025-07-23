@@ -156,7 +156,8 @@ class DailyMailHistory(db.Model):
         nullable=False,
     )
     sent_email_at = Column(DateTime)
-    scheduled_for = Column(DateTime)
+    success = Column(Boolean, default=False)
+    error_message = Column(Text)
 
     user = relationship("User", back_populates="daily_mail_history")
     affirmation = relationship("Affirmation", back_populates="daily_history")
