@@ -20,13 +20,25 @@ def affirmations():
     """
     Affirmations page.
     """
-
+    MAX_PER_PAGE = 20
     page_num = request.args.get("page", 1, type=int)
-    all_affirmations = Affirmation.query.paginate(
-        per_page=20, page=page_num, error_out=True
-    )
+    category = request.args.get("category")
+
+    if category:
+        paginated_affirmations = (
+            Affirmation.query.join(AffirmationCategory)
+            .join(Category)
+            .filter(Category.name == category)
+            .paginate(per_page=MAX_PER_PAGE, page=page_num, error_out=True)
+        )
+    else:
+        paginated_affirmations = Affirmation.query.paginate(
+            per_page=MAX_PER_PAGE, page=page_num, error_out=True
+        )
     return render_template(
-        "affirmations/index.html", all_affirmations=all_affirmations, user=current_user
+        "affirmations/index.html",
+        all_affirmations=paginated_affirmations,
+        user=current_user,
     )
 
 
