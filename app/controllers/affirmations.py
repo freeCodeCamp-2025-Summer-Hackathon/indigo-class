@@ -35,10 +35,13 @@ def affirmations():
         paginated_affirmations = Affirmation.query.paginate(
             per_page=MAX_PER_PAGE, page=page_num, error_out=True
         )
+
+    categories = Category.query.all()
     return render_template(
         "affirmations/index.html",
         all_affirmations=paginated_affirmations,
         user=current_user,
+        categories=categories,
     )
 
 
