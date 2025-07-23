@@ -2,65 +2,49 @@
 content %}
 <h1>Affirmations</h1>
 
-<!-- dummy page navigation -->
 <section>
-  <ul>
+  <!-- dummy page navigation -->
+  <nav>
     {% if all_affirmations.has_prev %}
-    <li>
-      <a
-        href="{{ url_for('affirmations.affirmations', page=all_affirmations.prev_num, category=request.args.get('category')) }}"
-        >Previous</a
-      >
-    </li>
+    <a
+      href="{{ url_for('affirmations.affirmations', page=all_affirmations.prev_num, category=request.args.get('category')) }}"
+      >Previous</a
+    >
+    {% endif %} {% for p_num in all_affirmations.iter_pages() %} {% if p_num %}
+    {% if p_num == all_affirmations.page %}
+    <strong>{{ p_num }}</strong>
     {% else %}
-    <li>
-      <span>Previous</span>
-      {% endif %}
-    </li>
+    <a
+      href="{{ url_for('affirmations.affirmations', page=p_num, category=request.args.get('category')) }}"
+      >{{ p_num }}</a
+    >
+    {% endif %} {% else %} ... {% endif %} {% endfor %} {% if
+    all_affirmations.has_next %}
+    <a
+      href="{{ url_for('affirmations.affirmations', page=all_affirmations.next_num, category=request.args.get('category')) }}"
+      >Next</a
+    >
+    {% endif %}
+  </nav>
+  <hr />
+  <!-- dummy category filtering -->
+  <form action="{{ url_for('affirmations.affirmations') }}" method="get">
+    <input type="hidden" name="page" value="{{ request.args.get('page', 1) }}">
 
-    {% for page in all_affirmations.iter_pages(left_edge=3, right_edge=3) %} {%
-    if page %}
-    <li>
-      <a
-        href="{{ url_for('affirmations.affirmations', page=page, category=request.args.get('category')) }}"
-        >{{ page }}</a
-      >
-    </li>
-    {% else %}
-    <li>
-      <a href="#">…</a>
-    </li>
-    {% endif %} {% endfor %} {% if all_affirmations.has_next %}
-    <li>
-      <a
-        href="{{ url_for('affirmations.affirmations', page=all_affirmations.next_num, category=request.args.get('category')) }}"
-        >Next</a
-      >
-    </li>
-    {% else %}
-    <li>
-      <span>Next</span>
-      {% endif %}
-    </li>
-  </ul>
-</section>
-<hr />
-<!-- dummy category filtering -->
-<section>
-  Category <br />
-  <ul>
-    {% for category in categories %}
-    <li>
-      <a
-        href="{{ url_for('affirmations.affirmations', page=1, category=category.name) }}"
+    <label for="category_select">Select Category:</label>
+    <select name="category" id="category_select" onchange="this.form.submit()">
+      <option value="">All Categories</option>
+      {% for category in categories %}
+      <option value="{{ category.name }}"
+        {% if request.args.get('category') == category.name %}selected{% endif %}
       >
         {{ category.name }}
-      </a>
-    </li>
-    {% endfor %}
-  </ul>
+      </option>
+      {% endfor %}
+    </select>
+    <noscript><button type="submit">Apply Filter</button></noscript>
+  </form>
 </section>
-<hr />
 
 <section class="affirms__wrapper">
   {% for affirmation in all_affirmations %}
