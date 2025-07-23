@@ -4,55 +4,119 @@ content %}
 <p>Welcome to the admin dashboard, {{ current_user.name }}!</p>
 <p>You are logged in as: {{ current_user.username }}</p>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Username</th>
-      <th>Email</th>
-      <th>Roles</th>
-      <th>Is Email Opt In</th>
-      <th>Created At</th>
-      <th>Updated At</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for user in all_users %}
-    <tr>
-      <td>{{ user.name }}</td>
-      <td>{{ user.username }}</td>
-      <td>{{ user.email }}</td>
-      <td>{% for role in user.roles %} {{ role.name }} {% endfor %}</td>
-      <td>{{ user.is_email_opt_in }}</td>
-      <td>{{ user.created_at }}</td>
-      <td>{{ user.updated_at }}</td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
+<div class="dashboard-tabs">
+  <button class="dashboard-tab active" data-tab="users">Users</button>
+  <button class="dashboard-tab" data-tab="affirmations">Affirmations</button>
+  <button class="dashboard-tab" data-tab="categories">Categories</button>
+  <button class="dashboard-tab" data-tab="daily-mail-history">
+    Mail History
+  </button>
+</div>
 
-<table>
-  <thead>
-    <tr>
-      <th>Affirmation</th>
-      <th>Categories</th>
-      <th>Created At</th>
-      <th>Updated At</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for affirmation in all_affirmations %}
-    <tr>
-      <td>{{ affirmation.affirmation_text }}</td>
-      <td>
-        {% for category in affirmation.categories %} {{ category.category.name
-        }} {% endfor %}
-      </td>
-      <td>{{ affirmation.created_at }}</td>
-      <td>{{ affirmation.updated_at }}</td>
+<div class="dashboard-tab-content" id="tab-users">
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Roles</th>
+        <th>Is Email Opt In</th>
+        <th>Created At</th>
+        <th>Updated At</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for user in all_users %}
+      <tr>
+        <td>{{ user.name }}</td>
+        <td>{{ user.username }}</td>
+        <td>{{ user.email }}</td>
+        <td>{% for role in user.roles %} {{ role.name }} {% endfor %}</td>
+        <td>{{ user.is_email_opt_in }}</td>
+        <td>{{ user.created_at }}</td>
+        <td>{{ user.updated_at }}</td>
+      </tr>
       {% endfor %}
-    </tr>
-  </tbody>
-</table>
+    </tbody>
+  </table>
+</div>
 
+<div class="dashboard-tab-content" id="tab-affirmations" style="display: none">
+  <table>
+    <thead>
+      <tr>
+        <th>Affirmation</th>
+        <th>Categories</th>
+        <th>Created At</th>
+        <th>Updated At</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for affirmation in all_affirmations %}
+      <tr>
+        <td>{{ affirmation.affirmation_text }}</td>
+        <td>
+          {% for category in affirmation.categories %} {{ category.category.name
+          }} {% endfor %}
+        </td>
+        <td>{{ affirmation.created_at }}</td>
+        <td>{{ affirmation.updated_at }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<div
+  class="dashboard-tab-content"
+  id="tab-daily-mail-history"
+  style="display: none"
+>
+  <table>
+    <thead>
+      <tr>
+        <th>User</th>
+        <th>Affirmation</th>
+        <th>Sent Email At</th>
+        <th>Success</th>
+        <th>Error Message</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for history in daily_mail_history %}
+      <tr>
+        <td>{{ history.user.name }}</td>
+        <td>{{ history.affirmation.affirmation_text }}</td>
+        <td>{{ history.sent_email_at }}</td>
+        <td>{{ history.success }}</td>
+        <td>{{ history.error_message }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<div class="dashboard-tab-content" id="tab-categories" style="display: none">
+  <table>
+    <thead>
+      <tr>
+        <th>Category</th>
+        <th>Created At</th>
+        <th>Updated At</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for category in all_categories %}
+      <tr>
+        <td>{{ category.name }}</td>
+        <td>{{ category.created_at }}</td>
+        <td>{{ category.updated_at }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<script src="{{ url_for('static', filename='scripts/dashboard.js') }}"></script>
 {% endblock %}
