@@ -28,13 +28,13 @@ def user_info():
     )  # profile.html?
 
 
-# Edit user first_name, last_name, username, email, email_subscription_toggle, password
+# Edit user first_name, last_name, username, email, email_subscription, password
 @usersettings_bp.route("/profile", methods=["POST"])
 @login_required
 def update_profile():
     user = current_user
 
-    # email subscription toggle
+    # email subscription
     user.is_email_opt_in = "receive_email" in request.form
 
     if "first_name" in request.form or "last_name" in request.form:
