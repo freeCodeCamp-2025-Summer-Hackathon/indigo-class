@@ -1,3 +1,14 @@
+.para {
+  margin: 1rem;
+  text-align: center;
+  color: var(--purple-dark);
+}
+
+.affirm__section--top {
+  margin-bottom: 3rem;
+  padding: 0.8rem;
+}
+
 .affirms__wrapper {
   display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(min(100%/1, max(15rem, 100%/4)), 1fr));
@@ -22,6 +33,7 @@
 
 .affirm__btn--wrapper {
   display: flex;
+  justify-content: flex-end;
   flex-wrap: wrap;
   gap: 0.5em;
   align-items: center;
@@ -69,15 +81,25 @@ form .affirm__edit {
 }
 
 .affirm__edit {
-  background-color: var(--edit-btn-clr);
+  background-color: var(--purple-dark);
+  padding: 0.5erm 0.7rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
+}
+
+.white__pen {
+  height: 0.8rem;
+  vertical-align: middle;
+  margin-left: 0.3em;
 }
 
 .affirm__delete {
-  background-color: var(--delete-btn-clr);
+  background-color: var(--red-important);
 }
 
-.affirm__section--bottom {
-  margin-top: 3em;
+.affirm__delete:hover {
+  background-color: var(--red-important-hover);
 }
 
 .pagination {
@@ -85,40 +107,28 @@ form .affirm__edit {
   justify-content: center;
   align-items: center;
   gap: 11px;
+  margin-top: 1rem;
 }
 
-.pagination .btn {
-  margin: 0;
-  width: 32px;
-  height: 32px;
-  padding: 0;
-  border-radius: 10px;
+.page.prev, .page.next {
+  background-color: var(--purple-dark);
+  color: var(--white);
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 0.5em;
+  text-decoration: none;
 }
 
-.pagination ul {
-  display: flex;
-  flex-direction: row;
-  gap: 8px;
-  list-style: none;
-  padding: 0;
-  margin: 0;
+.page {
+  background-color: var(--purple-dark);
+  color: var(--white);
+  font-size: 1rem;
+  padding: 0.5rem;
 }
 
-.pagination ul li {
-	border-radius: 50%;
-	display: inline-block;
-	width: 18px;
-	height: 18px;
-	font-size: 13px;
-	text-align: center;
-	align-content: center;
-	color: var(--purple-dark);
-	font-weight: bold;
-}
-
-.pagination ul li.active {
-	background-color: var(--purple-dark);
-	color: white;
+.page.current {
+  background-color: var(--purple-light);
+  font-size: 1.2rem;
 }
 
 .category {

@@ -1,32 +1,16 @@
 {% extends "base.html" %} {% block title %} Affirmations {% endblock %} {% block
 content %}
-<h1>Affirmations</h1>
+<h1 class="setting__bg">Affirmations</h1>
+
+<p class="para">Keep words that matter to you here.</p>
+
+<section class="affirm__section--top">
+  <a href="{{ url_for('affirmations.add_affirmation') }}" class="affirm__action"
+    >Submit an Affirmation</a
+  >
+</section>
 
 <section>
-  <!-- dummy page navigation -->
-  <nav>
-    {% if all_affirmations.has_prev %}
-    <a
-      href="{{ url_for('affirmations.affirmations', page=all_affirmations.prev_num, category=request.args.get('category')) }}"
-      >Previous</a
-    >
-    {% endif %} {% for p_num in all_affirmations.iter_pages() %} {% if p_num %}
-    {% if p_num == all_affirmations.page %}
-    <strong>{{ p_num }}</strong>
-    {% else %}
-    <a
-      href="{{ url_for('affirmations.affirmations', page=p_num, category=request.args.get('category')) }}"
-      >{{ p_num }}</a
-    >
-    {% endif %} {% else %} ... {% endif %} {% endfor %} {% if
-    all_affirmations.has_next %}
-    <a
-      href="{{ url_for('affirmations.affirmations', page=all_affirmations.next_num, category=request.args.get('category')) }}"
-      >Next</a
-    >
-    {% endif %}
-  </nav>
-  <hr />
   <!-- dummy category filtering -->
   <form action="{{ url_for('affirmations.affirmations') }}" method="get">
     <input type="hidden" name="page" value=1>
@@ -50,36 +34,59 @@ content %}
   {% for affirmation in all_affirmations %}
   <div class="affirm">
     <figure class="affirm__wrapper">
+      <div class="affirm__btn--wrapper">
+        <a
+          href="{{ url_for('affirmations.edit_affirmation', affirmation_id=affirmation.affirmation_id)}}"
+          class="affirm__edit"
+        >
+          Edit <img src="{{ url_for('static', filename='images/pen_white.svg') }}" class="white__pen" alt="pen icon">
+        </a>
+
+        {% if affirmation.user_id == user.user_id %}
+        <form
+          method="POST"
+          action="{{ url_for('affirmations.delete_affirmation', affirmation_id=affirmation.affirmation_id) }}"
+        >
+          <button class="affirm__delete" type="submit">&times;</button>
+        </form>
+        {% endif %}
+      </div>
       <blockquote class="affirm__quote">
         {{ affirmation.affirmation_text }}
       </blockquote>
       <figcaption class="affirm__cats">
-        {% for category in affirmation.categories %} {{ category.category.name
-        }} {% endfor %}
+        {% for category in affirmation.categories %}
+          {{ category.category.name }}
+        {% endfor %}
       </figcaption>
     </figure>
-    <div class="affirm__btn--wrapper">
-      <a
-        href="{{ url_for('affirmations.edit_affirmation', affirmation_id=affirmation.affirmation_id)}}"
-        class="affirm__edit"
-        >Edit
-      </a>
-      {% if affirmation.user_id == user.user_id %}
-      <form
-        method="POST"
-        action="{{ url_for('affirmations.delete_affirmation', affirmation_id=affirmation.affirmation_id) }}"
-      >
-        <button class="affirm__delete" type="submit">Delete</button>
-      </form>
-    </div>
-    {% endif %}
   </div>
   {% endfor %}
 </section>
 
-<section class="affirm__section--bottom">
-  <a href="{{ url_for('affirmations.add_affirmation') }}" class="affirm__action"
-    >Add affirmation</a
-  >
+<section class="pagination">
+  <!-- dummy page navigation -->
+  <nav>
+    {% if all_affirmations.has_prev %}
+    <a
+      href="{{ url_for('affirmations.affirmations', page=all_affirmations.prev_num, category=request.args.get('category')) }}" class="page prev"
+      >&lt;</a
+    >
+    {% endif %} {% for p_num in all_affirmations.iter_pages() %} {% if p_num %}
+    {% if p_num == all_affirmations.page %}
+    <strong class="page current">{{ p_num }}</strong>
+    {% else %}
+    <a
+      href="{{ url_for('affirmations.affirmations', page=p_num, category=request.args.get('category')) }}" class="page"
+      >{{ p_num }}</a
+    >
+    {% endif %} {% else %} ... {% endif %} {% endfor %} {% if
+    all_affirmations.has_next %}
+    <a
+      href="{{ url_for('affirmations.affirmations', page=all_affirmations.next_num, category=request.args.get('category')) }}" class="page next"
+      >&gt;</a
+    >
+    {% endif %}
+  </nav>
 </section>
 {% endblock %}
