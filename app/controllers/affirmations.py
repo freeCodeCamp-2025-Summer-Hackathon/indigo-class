@@ -1,10 +1,16 @@
 from flask import Blueprint, flash, jsonify, redirect, render_template, request, url_for
 from flask_login import current_user, login_required
-from typing import List
 from sqlalchemy import func
+from sqlalchemy.dialects.postgresql import insert
 
 from app import db
-from app.models import Affirmation, SavedAffirmation
+from app.models import (
+    Affirmation,
+    SavedAffirmation,
+    Category,
+    AffirmationCategory,
+    UserAffirmation,
+)
 
 affirmations_bp = Blueprint("affirmations", __name__)
 
@@ -14,9 +20,28 @@ def affirmations():
     """
     Affirmations page.
     """
-    all_affirmations: List[Affirmation] = Affirmation.query.all()
+    MAX_PER_PAGE = 20
+    page_num = request.args.get("page", 1, type=int)
+    category = request.args.get("category")
+
+    if category:
+        paginated_affirmations = (
+            Affirmation.query.join(AffirmationCategory)
+            .join(Category)
+            .filter(Category.name == category)
+            .paginate(per_page=MAX_PER_PAGE, page=page_num, error_out=True)
+        )
+    else:
+        paginated_affirmations = Affirmation.query.paginate(
+            per_page=MAX_PER_PAGE, page=page_num, error_out=True
+        )
+
+    categories = Category.query.all()
     return render_template(
-        "affirmations/index.html", all_affirmations=all_affirmations, user=current_user
+        "affirmations/index.html",
+        all_affirmations=paginated_affirmations,
+        user=current_user,
+        categories=categories,
     )
 
 
@@ -134,3 +159,98 @@ def unsave_affirmation():
     db.session.delete(saved)
     db.session.commit()
     return jsonify({"message": "Affirmation unsaved"}), 200
+
+
+@affirmations_bp.post("/affirmations/select-category")
+@login_required
+def select_affirmation_category():
+    # Get affirmation and category id
+    data = request.get_json()
+    affirmation_id = data.get("affirmationId")
+    category_id = data.get("categoryId")
+
+    if not (affirmation_id or category_id):
+        return jsonify({"error": "No affirmation or category ID provided"}), 400
+
+    # Check if affirmations_categories row have already existed
+    affirmation_category = AffirmationCategory.query.filter_by(
+        affirmation_id=affirmation_id, category_id=category_id
+    )
+    # prevent double data
+    if affirmation_category:
+        return jsonify({"error": "Affirmation category already selected"}), 400
+
+    # Check if affirmation and category exists
+    affirmation = Affirmation.query.get(affirmation_id)
+    if not affirmation:
+        return jsonify({"error": "Affirmation not found"}), 404
+
+    if category_id not in (0, 1):
+        category = Category.query.filter_by(
+            category_id=category_id, user_id=current_user.user_id
+        )
+        if not category:
+            return jsonify({"error": "Category doesn't exists"}), 400
+
+    # Add affirmations_categories row
+    affirmation_category = AffirmationCategory(
+        affirmation_id=affirmation_id, category_id=category_id
+    )
+
+    db.session.add(affirmation_category)
+    db.session.commit()
+    return jsonify({"message": "category selected"}), 200
+
+
+ACTION_TYPES_LIMIT_DICT = {"pin": 3, "favorite": 15}
+
+
+@affirmations_bp.post("/affirmations/action/<action_type>")
+@login_required
+def add_user_affirmation_with_action_type(action_type):
+    # validate action_type
+    if action_type not in ACTION_TYPES_LIMIT_DICT.keys():
+        return jsonify({"error": f"Invalid action type: {action_type}"}), 400
+
+    data = request.get_json()
+    affirmation_id = data.get("affirmationId")
+
+    # check if action type already reach limit
+    affirmation_count = (
+        db.session.query(UserAffirmation)
+        .filter(
+            UserAffirmation.user_id == current_user.user_id,
+            UserAffirmation.action_type == action_type,
+        )
+        .count()
+    )
+    print(
+        f"affirmation_count: {affirmation_count}, limit: {ACTION_TYPES_LIMIT_DICT[action_type]}"
+    )
+    if affirmation_count >= ACTION_TYPES_LIMIT_DICT[action_type]:
+        return jsonify({"error": f"{action_type} already limited"}), 400
+
+    # insert users_affirmations
+    try:
+        insert_statement = (
+            insert(UserAffirmation)
+            .values(
+                affirmation_id=affirmation_id,
+                user_id=current_user.user_id,
+                action_type=action_type,
+            )
+            .on_conflict_do_nothing(constraint="user_affirmation_uc")
+        )
+
+        db.session.execute(insert_statement)
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": "an error occurred: {}".format(e)}), 500
+
+    # refresh page
+    request_referrer = request.referrer
+    if not request_referrer:
+        return redirect(url_for("root.index"))
+
+    return redirect(request_referrer)
