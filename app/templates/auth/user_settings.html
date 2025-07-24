@@ -26,46 +26,30 @@
     <section class="content">
         <form class="form__group" method="POST" action="{{ url_for('user_settings.update_profile') }}">
             <div class="input__row">
-                <label for="change__email">New Email:</label>
-                <input type="email" id="change__email" name="email" placeholder="chloe@coolemail.com" required>
-            </div>
-
-            <div class="input__row">
-                <label for="email__password">Current Password:</label>
-                <input type="password" id="email__password" name="password" required>
-            </div>
-
-            <div class="form__actions">
-                <button type="submit" class="submit">Submit</button>
-            </div>
-        </form>
-    </section>
-
-    <form class="daily__affirmation" method="POST" action="{{ url_for('user_settings.toggle_email_subscription') }}">
-            <input type="checkbox" class="check__box" id="receive__email">
-            <label for="receive__email" class="checkbox__label">Receive daily affirmation in email</label>
-    </form>
-
-    <section class="content">
-        <form class="form__group username" method="POST" action="{{ url_for('user_settings.update_profile') }}">
-            <div class="input__row">
                 <label for="change__username">New Username:</label>
                 <input type="text" id="change__username" name="username" placeholder="NewUser" required>
             </div>
 
             <div class="input__row">
-                <label for="username__password">Current Password:</label>
-                <input type="password" id="username__password" name="password" required>
+                <label for="change__fname">New First Name:</label>
+                <input type="text" id="change__fname" name="first_name" placeholder="Chloe" required>
             </div>
 
-            <div class="form__actions">
-                <button type="submit" class="submit">Submit</button>
+            <div class="input__row">
+                <label for="change__lname">New Last Name:</label>
+                <input type="text" id="change__lname" name="last_name" placeholder="Smith" required>
             </div>
-        </form>
-    </section>
 
-    <section class="content">
-        <form class="form__group password" method="POST" action="{{ url_for('user_settings.change_password') }}">
+            <div class="input__row">
+                <label for="change__email">New Email:</label>
+                <input type="email" id="change__email" name="email" placeholder="chloe@coolemail.com" required>
+            </div>
+
+            <div class="checkbox__wrapper">
+                <input type="checkbox" class="check__box" id="receive__email">
+                <label for="receive__email" class="checkbox__label">Receive daily affirmation in email</label>
+            </div>
+
             <div class="input__row">
                 <label for="change__password">Current Password:</label>
                 <input type="password" id="change__password" name="password" placeholder="***************" required>
@@ -79,42 +63,6 @@
             <div class="input__row">
                 <label for="confirm__password">Confirm New Password:</label>
                 <input type="password" id="confirm__password" name="confirm__password" required>
-            </div>
-
-            <div class="form__actions">
-                <button type="submit" class="submit">Submit</button>
-            </div>
-        </form>
-    </section>
-
-    <section class="content">
-        <form class="form__group fname" method="POST" action="{{ url_for('user_settings.update_profile') }}">
-            <div class="input__row">
-                <label for="change__fname">New First Name:</label>
-                <input type="text" id="change__fname" name="first_name" placeholder="Chloe" required>
-            </div>
-
-            <div class="input__row">
-                <label for="fname__password">Current Password:</label>
-                <input type="password" id="fname__password" name="password" required>
-            </div>
-
-            <div class="form__actions">
-                <button type="submit" class="submit">Submit</button>
-            </div>
-        </form>
-    </section>
-
-    <section class="content">
-        <form class="form__group lname" method="POST" action="{{ url_for('user_settings.update_profile') }}">
-            <div class="input__row">
-                <label for="change__lname">New Last Name:</label>
-                <input type="text" id="change__lname" name="last_name" placeholder="Smith" required>
-            </div>
-
-            <div class="input__row">
-                <label for="lname__password">Current Password:</label>
-                <input type="password" id="lname__password" name="password" required>
             </div>
 
             <div class="form__actions">
