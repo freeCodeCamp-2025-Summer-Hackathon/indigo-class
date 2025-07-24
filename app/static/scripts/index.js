@@ -8,9 +8,9 @@ function navDropdown() {
   }
 }
 
-// Logout button in admin desktop
+// Logout button in admin desktop sidebar
 function navAdminDesktopLogOut() {
-  const navLogoutAdminDesktopMenu = document.getElementById("nav__logout--desktopadmin");
+  const navLogoutAdminDesktopMenu = document.getElementById("nav__sidebar--logout");
   if (navLogoutAdminDesktopMenu.style.visibility === "visible") {
     navLogoutAdminDesktopMenu.style.visibility = "hidden";
   } else {
@@ -18,7 +18,10 @@ function navAdminDesktopLogOut() {
   }
 }
 
-// To top button in footer
+// Force menu to be visible in admin desktop sidebar when resizing
+
+
+// To top button
 function toTop() {
   window.scrollTo(0, 0);
 }

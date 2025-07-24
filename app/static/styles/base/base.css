@@ -124,7 +124,7 @@ h2 {
 
 .nav__img {
   height: 2.5rem;
-  margin: 0 0.5rem;
+  margin: 0 0.3rem;
   position: relative;
 }
 
@@ -173,17 +173,26 @@ a.nav__menu--button.active {
   background-color: var(--red-important-hover);
 }
 
+.header__admin .nav__sidebar--button {
+  visibility: hidden;
+  display: none;
+}
+
+.header__admin #nav__sidebar--logout {
+  visibility: hidden;
+  display: none;
+}
+
 /* Desktop: admin header/menu differs from user header/menu */
-@media (min-width: 1000px) {
+@media (min-width: 600px) {
   .header__admin {
-    width: 20%;
+    width: 25%;
     height: 100%;
     max-width: 500px;
     position: fixed;
     top: 0;
     left: 0;
     background-color: var(--purple-dark);
-    align-items: center;
     z-index: 10;
   }
 
@@ -196,6 +205,7 @@ a.nav__menu--button.active {
 
   .header__admin .nav__logo {
     top: 1.5rem;
+    padding: 0 10px;
     z-index: 10;
   }
 
@@ -205,12 +215,21 @@ a.nav__menu--button.active {
 
   .header__admin .nav__menu {
     width: inherit;
-    padding: 1rem 50% 1rem 15%;
+    padding: 1rem 0;
     bottom: 0;
-    justify-content: center;
     border-top: var(--purple-light) 1px solid;
-    flex-direction: row-reverse;
     z-index: 10;
+  }
+
+  .header__admin .nav__name {
+    order: 1;
+  }
+
+  .header__admin .nav__img--button {
+    padding-left: 2.5vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .header__admin #nav__dropdown {
@@ -244,18 +263,32 @@ a.nav__menu--button.active {
     display: none;
   }
 
-  .header__admin .nav__button--desktopadmin {
-    padding: 20px;
-    background-color: green;
+  .header__admin .nav__sidebar--button {
+    visibility: visible;
+    display: inline-block;
+    position: absolute;
+    left: 0;
+    width: inherit;
+    padding: 1rem 0;
     z-index: 11;
   }
 
-  .header__admin #nav__logout--desktopadmin {
-    visibility: hidden;
-    z-index: 11;
+  .header__admin .nav__sidebar--img {
+    left: 20vw;
   }
 
-
+  .header__admin #nav__sidebar--logout {
+    position: absolute;
+    display: inline-block;
+    left: 25vw;
+    z-index: 11;
+    text-decoration: none;
+    color: white;
+    padding: 0.8rem;
+    border-radius: 0 10px 10px 0;
+    font-size: 1rem;
+    height: inherit;
+  }
 }
 
 .footer {
