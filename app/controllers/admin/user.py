@@ -11,11 +11,19 @@ from flask_login import current_user, login_required
 from app.models import db, User
 from sqlalchemy import and_
 from sqlalchemy.orm import joinedload
-from .auth import generate_reset_token
+from ..auth import generate_reset_token
 from flask_mail import Message
 from app import mail
 
 user_bp = Blueprint("user", __name__, url_prefix="/admin/user")
+
+
+def split_name(full_name: str):
+    """Split full name into first and last names."""
+    name_parts = full_name.strip().split()
+    first_name = name_parts[0] if name_parts else ""
+    last_name = name_parts[1]
+    return first_name, last_name
 
 
 # View user list
@@ -40,6 +48,8 @@ def user_list():
         {
             "user_id": user.user_id,
             "name": user.name,
+            "first_name": split_name(user.name)[0],
+            "last_name": split_name(user.name)[1],
             "username": user.username,
             "email": user.email,
             "is_email_opt_in": user.is_email_opt_in,
@@ -64,15 +74,19 @@ def edit_user(user_id: int):
 
     user = User.query.get_or_404(user_id)
     if request.method == "POST":
+        first_name = request.form.get("first_name").strip()
+        last_name = request.form.get("last_name").strip()
         current_form = {
-            "name": request.form.get("name"),
+            "first_name": first_name,
+            "last_name": last_name,
+            "name": f"{first_name} {last_name}",
             "username": request.form.get("username"),
             "email": request.form.get("email"),
             "is_email_opt_in": request.form.get("is_email_opt_in") == "on",
         }
 
         # validate required fields
-        required_fields: list[str] = ["name", "username", "email"]
+        required_fields: list[str] = ["first_name", "last_name", "username", "email"]
         for field in required_fields:
             if not current_form[field]:
                 flash(f"Missing required field: {field}", "error")

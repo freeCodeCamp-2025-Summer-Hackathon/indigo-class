@@ -42,7 +42,7 @@ def update_profile():
         last = request.form.get("last_name", "").strip()
         if not first or not last:
             flash("Both first and last names are required", "error")
-            return redirect(url_for("usersettings.user_info"))
+            return redirect(url_for("user_settings.user_info"))
         name = f"{first} {last}".strip()
         user.name = name
 
@@ -50,28 +50,28 @@ def update_profile():
         username = request.form.get("username", "").strip()
         if not username:
             flash("Username is required.", "error")
-            return redirect(url_for("usersettings.user_info"))
+            return redirect(url_for("user_settings.user_info"))
 
         user_username = User.query.filter(
             and_(User.username == username, User.user_id != user.user_id)
         ).first()
         if user_username:
             flash(f"Username: {username} already exists", "error")
-            return redirect(url_for("usersettings.user_info"))
+            return redirect(url_for("user_settings.user_info"))
         user.username = username
 
     if "email" in request.form:
         email = request.form.get("email", "").strip()
         if not email:
             flash("Email is required.", "error")
-            return redirect(url_for("usersettings.user_info"))
+            return redirect(url_for("user_settings.user_info"))
 
         user_email = User.query.filter(
             and_(User.email == email, User.user_id != user.user_id)
         ).first()
         if user_email:
             flash(f"Email: {email} already exists", "error")
-            return redirect(url_for("usersettings.user_info"))
+            return redirect(url_for("user_settings.user_info"))
         user.email = email
 
     # If there's a password change, it'll logout the user
@@ -80,7 +80,7 @@ def update_profile():
 
         if not password:
             flash("Password is required.", "error")
-            return redirect(url_for("usersettings.user_info"))
+            return redirect(url_for("user_settings.user_info"))
 
         password_hash: str = bcrypt.hashpw(
             password.encode("utf-8"), bcrypt.gensalt()
@@ -97,7 +97,7 @@ def update_profile():
 
     db.session.commit()
     flash("Update successfully.", "success")
-    return redirect(url_for("usersettings.user_info"))
+    return redirect(url_for("user_settings.user_info"))
 
 
 # Delete user
