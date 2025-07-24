@@ -30,12 +30,9 @@ content %}
   </div>
   <div class="collections__cats">
     <ul class="collections__cats__list">
-      <li>Calm</li>
-      <li>Confidence</li>
-      <li>Diet</li>
-      <li>Health</li>
-      <li>Prosperity</li>
-      <li>Purpose</li>
+      {% for category in admin_categories %}
+        <li>{{ category.name }}</li>
+      {% endfor %}
     </ul>
   </div>
   <div class="pagination">
@@ -60,10 +57,11 @@ content %}
   </div>
   <div class="collections__cats">
     <ul class="collections__cats__list">
-      <li>For My Career</li>
-      <li>Reminders</li>
-      <li>Notes To Self</li>
-      <li>Reasons</li>
+      {% for category in user_categories %}
+        {% if not category.is_admin_set %}
+          <li>{{ category.name }}</li>
+        {% endif %}
+      {% endfor %}
     </ul>
   </div>
   <div class="pagination">

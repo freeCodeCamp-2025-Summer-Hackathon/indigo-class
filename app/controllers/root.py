@@ -68,6 +68,10 @@ def dashboard():
         .all()
     )
 
+    admin_categories = (
+        db.session.query(Category).filter(Category.is_admin_set.is_(True)).all()
+    )
+
     return render_template(
         "home/dashboard.html",
         title="Dashboard",
@@ -75,6 +79,7 @@ def dashboard():
         pinned_affirmations=pinned_affirmations,
         favorite_affirmations=favorite_affirmations,
         user_categories=user_categories,
+        admin_categories=admin_categories,
     )
 
 
