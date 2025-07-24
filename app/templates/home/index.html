@@ -10,6 +10,7 @@ content %}
   {% endif %}
 </section>
 
+{% if current_user.is_authenticated %}
 <section class="home__section home__affirms">
   <h2>Today's Affirmation</h2>
   <div class="affirms__wrapper">
@@ -25,7 +26,6 @@ content %}
         </figcaption>
       </figure>
       <div class="affirm__btn--wrapper">
-        {% if current_user.is_authenticated %}
         <button
           class="affirm__btn"
           aria-label="Pin"
@@ -33,19 +33,12 @@ content %}
         >
           +
         </button>
-        {% endif %}
-        <p>
-          {% if current_user.is_authenticated %} Save this affirmation {% else
-          %}
-          <a href="{{ url_for('auth.login') }}">Log in</a> to save this
-          affirmation {% endif %}
-        </p>
+        <p>Save this affirmation</p>
       </div>
     </div>
     {% endfor %}
   </div>
 
-  {% if current_user.is_authenticated %}
   <a class="affirm__action" href="{{ url_for('root.dashboard') }}"
     >Go to User Dashboard</a
   >
@@ -58,8 +51,8 @@ content %}
   <a class="affirm__action" href="#affirmation-generator"
     >Affirmation Generator</a
   >
-  {% endif %}
 </section>
+{% endif %}
 
 {% if current_user.is_authenticated %}
 <section class="home__section">
