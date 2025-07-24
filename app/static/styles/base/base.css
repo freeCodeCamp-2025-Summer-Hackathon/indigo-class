@@ -96,7 +96,6 @@ h2 {
 /* Centralize nav logo on user's desktop */
 @media (min-width: 600px) {
   .nav__logo {
-    position: relative;
     top: auto;
     left: auto;
   }
@@ -171,7 +170,7 @@ a.nav__menu--button.active {
 }
 
 /* Desktop: admin header/menu differs from user header/menu */
-@media (min-width: 600px) {
+@media (min-width: 1000px) {
   .header__admin {
     width: 20%;
     height: 100%;
@@ -192,10 +191,8 @@ a.nav__menu--button.active {
   }
 
   .header__admin .nav__logo {
-    display: flex;
-    position: absolute;
-    padding: 0 10%;
-    top: 7rem;
+    top: 1.5rem;
+    z-index: 10;
   }
 
   .header__admin .nav__logo img {
@@ -204,31 +201,29 @@ a.nav__menu--button.active {
 
   .header__admin .nav__menu {
     width: inherit;
-    padding: 0 0 1.5rem 0;
-    top: 1rem;
+    padding: 1rem 50% 1rem 15%;
+    bottom: 0;
     justify-content: center;
-    cursor: none;
-    border-bottom: white 1px solid;
+    border-top: var(--purple-light) 1px solid;
+    flex-direction: row-reverse;
+    z-index: 10;
   }
 
   .header__admin #nav__dropdown {
     visibility: visible;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-content: stretch;
+    top: 20%;
     width: inherit;
     max-width: inherit;
-    height: auto;
+    height: 75vh;
     text-align: left;
-    top: 12rem;
   }
 
   .header__admin #nav__dropdown > .nav__menu--button {
     border: none;
-    font-size: 1.1rem;
+    font-size: 1rem;
     padding-left: 3vw;
-    line-height: 4rem;
+    line-height: 3rem;
+    height: 4rem;
   }
   
   .header__admin #nav__dropdown > .nav__menu--button:hover {
@@ -241,18 +236,25 @@ a.nav__menu--button.active {
     font-weight: bold;
   }
 
-  .header__admin .nav__menu--invisible {
-    display: inline-block;
-    
+  .header__admin #nav__dropdown .logout {
+    display: none;
   }
 
-  .header__admin #nav__dropdown .logout:hover {
-    background-color: var(--red-important-hover);
+  .header__admin .nav__button--desktopadmin {
+    padding: 20px;
+    background-color: green;
+    z-index: 11;
   }
+
+  .header__admin #nav__logout--desktopadmin {
+    visibility: hidden;
+    z-index: 11;
+  }
+
 
 }
 
-footer {
+.footer {
   background-color: var(--purple-dark);
   width: 100%;
   padding: 1.8rem 5vw;
@@ -260,6 +262,10 @@ footer {
   position: relative;
   bottom: 0;
   margin-top: auto;
+}
+
+.footer__none {
+  display: none;
 }
 
 .footer__top {

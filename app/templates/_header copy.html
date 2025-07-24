@@ -1,0 +1,21 @@
+<header class="header header__admin">
+  <nav class="nav">
+    <a class="nav__logo" href="{{ url_for('root.index') }}"><img src="{{ url_for('static', filename='images/logo_white.svg') }}" alt="DailyDose logo"></a>
+    {# if current_user.is_admin() #}
+    <div class="nav__menu">
+      <button onclick="navAdminDesktopLogOut()" class="nav__button--desktopadmin"></button>
+      <a href="{{ url_for('auth.logout') }}" class="nav__menu--button logout nav__logout--desktopadmin">Logout</a>
+      <button onclick="navDropdown()" class="nav__name">Admin</button>
+      <button onclick="navDropdown()">
+        <img src="{{ url_for('static', filename='images/profile_img.svg') }}" alt="User profile" class="nav__img">
+      </button>
+    </div>
+    <nav id="nav__dropdown">
+      <a href="{{ url_for('root.admin_dashboard') }}" class="nav__menu--button{% if request.path == url_for('root.admin_dashboard') %} active{% endif %}">Dashboard</a>
+      <a href="{{ url_for('root.admin_dashboard') }}" class="nav__menu--button{% if request.path == url_for('root.admin_dashboard') %} active{% endif %}">Users</a>
+      <a href="{{ url_for('root.admin_dashboard') }}" class="nav__menu--button{% if request.path == url_for('root.admin_dashboard') %} active{% endif %}">Affirmations</a>
+      <a href="{{ url_for('root.admin_dashboard') }}" class="nav__menu--button{% if request.path == url_for('root.admin_dashboard') %} active{% endif %}">Categories</a>
+      <a href="{{ url_for('auth.logout') }}" class="nav__menu--button logout">Logout</a>
+    </nav>
+  </nav>
+</header>

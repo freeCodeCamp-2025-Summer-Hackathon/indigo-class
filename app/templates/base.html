@@ -16,7 +16,8 @@
     <script src="{{ url_for('static', filename='scripts/index.js') }}"></script>
   </head>
   <body>
-    {%- include "_header.html" -%}
+    {# {%- include "_header.html" -%} #}
+    {%- include "_header copy.html" -%}
     <main>
       {% with messages = get_flashed_messages(with_categories=true) %} {% if
       messages %} {% for category, message in messages %}
@@ -27,5 +28,6 @@
       {% endfor %} {% endif %} {% endwith %} {% block content %}{% endblock %}
     </main>
   </body>
-  <!-- {# {%- include "_footer.html" -%} #} -->
+  {# {%- include "_footer.html" -%} #}
+  {%- include "_footer copy.html" -%}
 </html>

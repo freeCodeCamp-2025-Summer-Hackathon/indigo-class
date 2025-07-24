@@ -1,8 +1,4 @@
-<footer class="footer
-  {% if current_user.is_authenticated and current_user.is_admin %}
-    footer__none
-  {% endif %}
-">
+<footer class="footer footer__none">
   {% if current_user.is_authenticated 
     or request.path == url_for('auth.login') 
     or request.path == url_for('auth.register')

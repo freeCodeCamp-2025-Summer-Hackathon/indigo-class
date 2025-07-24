@@ -8,6 +8,16 @@ function navDropdown() {
   }
 }
 
+// Logout button in admin desktop
+function navAdminDesktopLogOut() {
+  const navLogoutAdminDesktopMenu = document.getElementById("nav__logout--desktopadmin");
+  if (navLogoutAdminDesktopMenu.style.visibility === "visible") {
+    navLogoutAdminDesktopMenu.style.visibility = "hidden";
+  } else {
+    navLogoutAdminDesktopMenu.style.visibility = "visible";
+  }
+}
+
 // To top button in footer
 function toTop() {
   window.scrollTo(0, 0);
