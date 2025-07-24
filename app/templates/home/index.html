@@ -61,9 +61,11 @@ content %}
   {% endif %}
 </section>
 
+{% if current_user.is_authenticated %}
 <section class="home__section">
   <h2>Pinned Affirmations</h2>
-</section>
+</section>  
+{% endif %}
 
 <section class="home__section" id="affirmation-generator">
   <h2>Affirmation Generator</h2>
@@ -79,4 +81,26 @@ content %}
     Get Affirmation
   </button>
 </section>
+
+{% if not current_user.is_authenticated %}
+<section class="home__section">
+  <h2>Default Categories</h2>
+    <div class="collections__cats">
+    <ul class="collections__cats__list">
+      {% for category in admin_categories %}
+        <li>{{ category.name }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+  <div class="pagination">
+    <button class="btn btn--primary opacity--50">&lt;</button>
+    <ul>
+      <li class="active">1</li>
+      <li>2</li>
+      <li>3</li>
+    </ul>
+    <button class="btn btn--primary">&gt;</button>
+  </div>
+</section>
+{% endif %}
 {% endblock %}

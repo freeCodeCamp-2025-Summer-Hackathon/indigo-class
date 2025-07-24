@@ -18,12 +18,17 @@ def index():
     """
     all_affirmations: List[Affirmation] = Affirmation.query.all()
 
+    admin_categories = (
+        db.session.query(Category).filter(Category.is_admin_set.is_(True)).all()
+    )
+
     return render_template(
         "home/index.html",
         title="DailyDose",
         current_time=datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
         user=current_user,
         all_affirmations=all_affirmations,
+        admin_categories=admin_categories,
     )
 
 
