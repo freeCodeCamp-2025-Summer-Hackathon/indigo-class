@@ -1,7 +1,6 @@
 from flask import Blueprint, flash, render_template, redirect, request, url_for
 from flask_login import current_user, login_required
-from sqlalchemy import or_
-from typing import List
+from sqlalchemy import or_, select
 
 from app import db
 from app.models import Category
@@ -11,19 +10,26 @@ categories_bp = Blueprint("categories", __name__)
 
 @categories_bp.route("/categories")
 def list_categories():
+    page = request.args.get("page", 1, type=int)
+    per_page = request.args.get("per_page", 10, type=int)
+
     if current_user.is_authenticated:
         # authenticated users can only see global or admin set
         # categories and categories that they themselves made
-        categories: List[Category] = Category.query.filter(
+        query = select(Category).where(
             or_(
                 Category.is_admin_set.is_(True)
                 | (Category.user_id == current_user.user_id)
             )
-        ).all()
+        )
     else:
         # non-authenticated users can only see global or admin set categories
-        categories = Category.query.filter_by(is_admin_set=True).all()
-    return render_template("categories/list.html", categories=categories)
+        query = select(Category).where(Category.is_admin_set.is_(True))
+
+    pagination = db.paginate(query, page=page, per_page=per_page)
+    return render_template(
+        "categories/list.html", categories=pagination.items, pagination=pagination
+    )
 
 
 @categories_bp.route("/categories/add", methods=["GET", "POST"])
@@ -72,10 +78,12 @@ def add_category():
 @login_required
 def edit_category(category_id):
     category = Category.query.get_or_404(category_id)
+    # pass page to return the user to the page where he/she did the action
+    page = request.args.get("page") or request.form.get("page", 1)
 
     if category.user_id != current_user.user_id or category.is_admin_set:
         flash("You can only edit your own categories.", "danger")
-        return redirect(url_for("categories.list_categories"))
+        return redirect(url_for("categories.list_categories", page=page))
 
     if request.method == "POST":
         category_name = request.form["name"]
@@ -96,27 +104,29 @@ def edit_category(category_id):
         category.name = category_name
         db.session.commit()
         flash("You have successfully updated your category", "success")
-        return redirect(url_for("categories.list_categories"))
+        return redirect(url_for("categories.list_categories", page=page))
 
-    return render_template("categories/edit.html", category=category)
+    return render_template("categories/edit.html", category=category, page=page)
 
 
 @categories_bp.route("/categories/delete/<int:category_id>", methods=["GET", "POST"])
 @login_required
 def delete_category(category_id):
     category = Category.query.get_or_404(category_id)
+    # pass page to return the user to the page where he/she did the action
+    page = request.args.get("page") or request.form.get("page", 1)
 
     # prevent deletion if its a global(admin set) category
     if category.is_admin_set:
         flash("You cannot delete categories made by admins.")
-        return redirect(url_for("categories.list_categories"))
+        return redirect(url_for("categories.list_categories", page=page))
 
     # prevents deletion if the current user doesn't own the category
     if category.user_id != current_user.user_id:
         flash("You can only delete your own categories.", "error")
-        return redirect(url_for("categories.list_categories"))
+        return redirect(url_for("categories.list_categories", page=page))
 
     db.session.delete(category)
     db.session.commit()
     flash("Category is successfully deleted", "success")
-    return redirect(url_for("categories.list_categories"))
+    return redirect(url_for("categories.list_categories", page=page))

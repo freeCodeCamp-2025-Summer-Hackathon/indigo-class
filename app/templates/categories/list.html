@@ -4,15 +4,36 @@ content %}
 <h1>Affirmation Categories</h1>
 
 <section class="affirms__wrapper">
+    <a href="{{ url_for('categories.add_category' )}}">Add</a>
     {% for category in categories %}
     <div class="category">
         <p class="category__name">{{ category.name }}</p>
         <div class="category__btns">
-            <a class="affirm__edit" href="{{ url_for('categories.edit_category', category_id=category.category_id )}}">Edit</a>
-            <a class="affirm__delete" href="{{ url_for('categories.delete_category', category_id=category.category_id )}}">Delete</a>
+            <a class="affirm__edit" href="{{ url_for('categories.edit_category', category_id=category.category_id, page=pagination.page )}}">Edit</a>
+            <a class="affirm__delete" href="{{ url_for('categories.delete_category', category_id=category.category_id, page=pagination.page )}}">Delete</a>
         </div>
     <div>
     {% endfor %}
+    <nav aria-label="Pagination">
+        <ul class="pagination">
+            {% if pagination.has_prev %}
+            <li class="page-item">
+                <a class="page-link" href="{{ url_for('categories.list_categories', page=pagination.prev_num, per_page=pagination.per_page) }}">&larr;</a>
+            </li>
+            {% endif %}
+
+            {% for page_num in range(1, pagination.pages + 1) %}
+                <li class="page-item active">
+                    <a class="page-link" href="{{ url_for('categories.list_categories', page=page_num, per_page=pagination.per_page)}}"> {{ page_num }} </a>
+                </li>
+            {% endfor %}
+
+            {% if pagination.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="{{ url_for('categories.list_categories', page=pagination.next_num, per_page=pagination.per_page) }}">&rarr;</a>
+            </li>
+            {% endif %}
+    </nav>
 </section>
 
 {% endblock %}
