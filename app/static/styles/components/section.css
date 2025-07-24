@@ -45,6 +45,7 @@
     background-position: center center;
     background-repeat: no-repeat;
     background-size: auto;
+    padding: var(--space-md);
 }
 
 .collections__header__actions--add {
@@ -117,6 +118,30 @@
     position: absolute;
     right: -3px;
     bottom: -3px;
+}
+
+.collections__cats__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(100px, 1fr));
+    gap: var(--space-md);
+}
+
+.collections__cats__list li {
+	background-color: var(--purple-dark);
+	color: var(--white);
+	font-weight: bold;
+	font-size: 1rem;
+	min-height: 100px;
+	padding: var(--space-sm);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: var(--radius-md);
+	text-align: center;
 }
 
 .profile {

@@ -36,6 +36,10 @@ body {
   align-items: center;
 }
 
+hr {
+	border-color: var(--purple-dark);
+}
+
 .page-title {
   padding: 0.5em 0;
   font-size: 2.25rem;
