@@ -29,7 +29,7 @@ content %}
   <hr />
   <!-- dummy category filtering -->
   <form action="{{ url_for('affirmations.affirmations') }}" method="get">
-    <input type="hidden" name="page" value="{{ request.args.get('page', 1) }}">
+    <input type="hidden" name="page" value=1>
 
     <label for="category_select">Select Category:</label>
     <select name="category" id="category_select" onchange="this.form.submit()">
