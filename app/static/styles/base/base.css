@@ -186,9 +186,8 @@ a.nav__menu--button.active {
 /* Desktop: admin header/menu differs from user header/menu */
 @media (min-width: 600px) {
   .header__admin {
-    width: 25%;
+    width: 20%;
     height: 100%;
-    max-width: 500px;
     position: fixed;
     top: 0;
     left: 0;
@@ -267,24 +266,31 @@ a.nav__menu--button.active {
     visibility: visible;
     display: inline-block;
     position: absolute;
-    left: 0;
+    padding-left: 13vw;
     width: inherit;
     padding: 1rem 0;
     z-index: 11;
   }
 
   .header__admin .nav__sidebar--img {
-    left: 20vw;
+    visibility: hidden;
+    left: 15vw;
+  }
+
+  @media (min-width: 850px) {
+    .header__admin .nav__sidebar--img {
+      visibility: visible;
+    }
   }
 
   .header__admin #nav__sidebar--logout {
     position: absolute;
     display: inline-block;
-    left: 25vw;
+    left: 20vw;
     z-index: 11;
     text-decoration: none;
     color: white;
-    padding: 0.8rem;
+    padding: 1.5rem;
     border-radius: 0 10px 10px 0;
     font-size: 1rem;
     height: inherit;
