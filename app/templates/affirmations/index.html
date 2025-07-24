@@ -2,17 +2,60 @@
 content %}
 <h1>Affirmations</h1>
 
+<section>
+  <!-- dummy page navigation -->
+  <nav>
+    {% if all_affirmations.has_prev %}
+    <a
+      href="{{ url_for('affirmations.affirmations', page=all_affirmations.prev_num, category=request.args.get('category')) }}"
+      >Previous</a
+    >
+    {% endif %} {% for p_num in all_affirmations.iter_pages() %} {% if p_num %}
+    {% if p_num == all_affirmations.page %}
+    <strong>{{ p_num }}</strong>
+    {% else %}
+    <a
+      href="{{ url_for('affirmations.affirmations', page=p_num, category=request.args.get('category')) }}"
+      >{{ p_num }}</a
+    >
+    {% endif %} {% else %} ... {% endif %} {% endfor %} {% if
+    all_affirmations.has_next %}
+    <a
+      href="{{ url_for('affirmations.affirmations', page=all_affirmations.next_num, category=request.args.get('category')) }}"
+      >Next</a
+    >
+    {% endif %}
+  </nav>
+  <hr />
+  <!-- dummy category filtering -->
+  <form action="{{ url_for('affirmations.affirmations') }}" method="get">
+    <input type="hidden" name="page" value=1>
+
+    <label for="category_select">Select Category:</label>
+    <select name="category" id="category_select" onchange="this.form.submit()">
+      <option value="">All Categories</option>
+      {% for category in categories %}
+      <option value="{{ category.name }}"
+        {% if request.args.get('category') == category.name %}selected{% endif %}
+      >
+        {{ category.name }}
+      </option>
+      {% endfor %}
+    </select>
+    <noscript><button type="submit">Apply Filter</button></noscript>
+  </form>
+</section>
+
 <section class="affirms__wrapper">
   {% for affirmation in all_affirmations %}
   <div class="affirm">
     <figure class="affirm__wrapper">
       <blockquote class="affirm__quote">
-        {{ affirmation.affirmation_text }} 
+        {{ affirmation.affirmation_text }}
       </blockquote>
       <figcaption class="affirm__cats">
-        {% for category in affirmation.categories %}
-          {{ category.category.name }}
-        {% endfor %}
+        {% for category in affirmation.categories %} {{ category.category.name
+        }} {% endfor %}
       </figcaption>
     </figure>
     <div class="affirm__btn--wrapper">
@@ -35,6 +78,8 @@ content %}
 </section>
 
 <section class="affirm__section--bottom">
-  <a href="{{ url_for('affirmations.add_affirmation') }}" class="affirm__action">Add affirmation</a>
+  <a href="{{ url_for('affirmations.add_affirmation') }}" class="affirm__action"
+    >Add affirmation</a
+  >
 </section>
 {% endblock %}
