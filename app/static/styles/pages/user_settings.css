@@ -218,24 +218,32 @@
     color: var(--purple-dark);
 }
 
+.checkbox__wrapper {
+    display: flex;
+    gap: 0.7em;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
 .check__box {
     width: 2rem;
     height: 2rem;
     appearance: none;
     border-radius: 4px;
-    background-color: var(--purple-dark);
+    background-color: var(--white);
     cursor: pointer;
     display: inline-block;
     position: relative;
 }
 
 .checkbox__label {
-    font-size: 1rem;
+    font-size: 1em;
 }
 
 .check__box:checked::after {
     content: "✔";
-    color: var(--white);
+    color: var(--purple-dark);
     font-size: 2rem;
     position: absolute;
     top: 50%;
