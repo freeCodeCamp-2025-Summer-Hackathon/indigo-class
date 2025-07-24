@@ -66,6 +66,15 @@ h2{
   color: var(--purple-dark);
 }
 
+.totop__button {
+  background-color: #8B66C6;
+  border-radius: 10px;
+  border: none;
+  font-size: 0.8rem;
+  color: white;
+  padding: 20px;
+}
+
 /* Mobile-first design - minimum 300px screen width */
 .nav__top {
   display: flex;
@@ -219,16 +228,8 @@ footer {
 }
 
 .footer__logo {
-    display: inline-block;
-}
-
-.footer__totop--button {
-  background-color: #8B66C6;
-  border-radius: 10px;
-  border: none;
-  font-size: 0.8rem;
-  color: white;
-  padding: 0.8rem;
+  display: inline-block;
+  height: 2.5rem;
 }
 
 address {
