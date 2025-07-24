@@ -18,9 +18,9 @@
     </div>
     <nav id="nav__dropdown">
       <a href="{{ url_for('root.admin_dashboard') }}" class="nav__menu--button{% if request.path == url_for('root.admin_dashboard') %} active{% endif %}">Dashboard</a>
-      <a href="{{ url_for('root.admin_dashboard') }}" class="nav__menu--button{% if request.path == url_for('root.admin_dashboard') %} active{% endif %}">Users</a>
-      <a href="{{ url_for('root.admin_dashboard') }}" class="nav__menu--button{% if request.path == url_for('root.admin_dashboard') %} active{% endif %}">Affirmations</a>
-      <a href="{{ url_for('root.admin_dashboard') }}" class="nav__menu--button{% if request.path == url_for('root.admin_dashboard') %} active{% endif %}">Categories</a>
+      <a href="#" class="nav__menu--button{% if request.path == url_for('root.admin_dashboard') %} active{% endif %}">Users</a>
+      <a href="#" class="nav__menu--button{% if request.path == url_for('root.admin_dashboard') %} active{% endif %}">Affirmations</a>
+      <a href="#" class="nav__menu--button{% if request.path == url_for('root.admin_dashboard') %} active{% endif %}">Categories</a>
       <a href="{{ url_for('auth.logout') }}" class="nav__menu--button logout">Logout</a>
     </nav>
     {% elif current_user.is_authenticated %}
