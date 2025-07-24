@@ -66,15 +66,6 @@ h2{
   color: var(--purple-dark);
 }
 
-.totop__button {
-  background-color: #8B66C6;
-  border-radius: 10px;
-  border: none;
-  font-size: 0.8rem;
-  color: white;
-  padding: 20px;
-}
-
 /* Mobile-first design - minimum 300px screen width */
 .nav__top {
   display: flex;
@@ -266,4 +257,25 @@ address a {
   .nav__logo {
     
   }
+}
+
+.totop__button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  text-decoration: none;
+  width: 60px;
+  height: 60px;
+  color: white;
+  background-color: var(--purple-light);
+  border-radius: 60px;
+  border: 2px solid white;
+  z-index: 20;
+  transition: 0.5s;
+  display: none;
+}
+
+.totop__button:hover {
+  color: var(--purple-dark);
+  background-color: white;
 }

@@ -17,8 +17,8 @@
   </head>
   <body>
     {%- include "_header.html" -%}
-    <button class="totop__button">
-      <img>
+    <button onclick="toTop()" class="totop__button">
+      &#8593;
     </button>
     <main>
       {% with messages = get_flashed_messages(with_categories=true) %} {% if
