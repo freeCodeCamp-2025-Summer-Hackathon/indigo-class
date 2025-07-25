@@ -46,13 +46,16 @@ function saveAffirmation(affirmationId) {
 
 function getRandomAffirmation() {
   const affirmationElement = document.getElementById("random-affirmation");
+  const affirmCatElement = document.getElementById("rand-affirm-cat");
   if (affirmationElement) {
     affirmationElement.textContent = "Loading...";
     fetch("/affirmations/random")
       .then((response) => response.json())
       .then((data) => {
+        console.log("Affirmation Data:", data);
         const affirmation = data.affirmation;
         affirmationElement.textContent = affirmation;
+        affirmCatElement.textContent = affirmation.categories;
       })
       .catch(() => {
         affirmationElement.textContent = "Failed to load affirmation.";
