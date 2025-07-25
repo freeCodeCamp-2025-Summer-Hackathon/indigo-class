@@ -15,6 +15,8 @@ dotenv.load_dotenv()
 mail = Mail()
 scheduler = BackgroundScheduler()
 
+daily_affirmations = ""
+
 
 def send_daily_emails():
     with current_app.app_context():
@@ -26,6 +28,7 @@ def send_daily_emails():
             already_sent = DailyMailHistory.query.filter(
                 DailyMailHistory.user_id == user.user_id,
                 db.func.date(DailyMailHistory.sent_email_at) == today,
+                DailyMailHistory.success,
             ).first()
 
             if already_sent:
@@ -52,6 +55,7 @@ def send_daily_emails():
             db.session.flush()  # Ensures history gets an ID if needed
 
             try:
+                mail.connect()
                 mail.send(msg)
                 history.success = True
             except Exception as e:
