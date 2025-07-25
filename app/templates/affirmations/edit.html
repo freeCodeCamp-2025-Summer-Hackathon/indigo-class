@@ -19,8 +19,27 @@ content %}
   {{ affirmation.affirmation_text }}</textarea
     >
 
+    <span class="affirm__text">Assign Category</span>
+    <div class="category__dropdown">
+      <button class="toggle__dropdown"><span class="dropdown__triangle"></span> Categories</button>
+      <div class="dropdown__menu">
+        <button type="button" class="categories">Self-care</button>
+        <button type="button" class="categories">Diet</button>
+        <button type="button" class="categories">Emotion</button>
+        <button type="button" class="categories">Health</button>
+        <button type="button" class="categories">Goals</button>
+        <button type="button" class="categories">Career</button>
+      </div>
+    </div>
+
+    <div class="current__categories">
+      <p class="given__cats">Self-care</p>
+      <button class="affirm__close">&times;</button>
+    </div>
+
     <button type="submit" class="affirm__submit__edit">Submit</button>
   </form>
+
 </section>
 
 {% endblock %}

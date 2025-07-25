@@ -147,7 +147,7 @@ form .affirm__edit {
 
 .edit__wrapper {
   border: 0.3rem solid var(--purple-dark);
-  border-radius: 5px;
+  border-radius: 10px;
   display: flex;
   flex-direction: column;
   padding: 0.3rem;
@@ -186,18 +186,39 @@ form .affirm__edit {
 }
 
 .affirm__text {
-  font-size: 1rem;
+  font-weight: 700;
+  font-size: 1.25rem;
 }
 
 .user__affirm {
   font-size: 1rem;
-  color: var(--purple-light);
+  color: var(--purple-dark);
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
   padding: 0.3rem;
+  margin-top: 1em;
   margin-bottom: 1rem; 
   border-radius: 6px;
   border: 1px solid var(--purple-light);
   resize: vertical;
+}
+
+.toggle__dropdown {
+  background-color: var(--purple-dark);
+  color: var(--white);
+  width: 100%;
+  font-size: 1rem;
+  padding: 0.3rem;
+  margin: 1rem 0;
+}
+
+.dropdown__triangle {
+  display: inline-block;
+  margin-left: 0.5em;
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 10px solid var(--white);
 }
