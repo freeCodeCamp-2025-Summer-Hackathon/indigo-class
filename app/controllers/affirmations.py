@@ -1,6 +1,5 @@
 from flask import Blueprint, flash, jsonify, redirect, render_template, request, url_for
 from flask_login import current_user, login_required
-from typing import List
 from sqlalchemy import func
 from sqlalchemy.dialects.postgresql import insert
 
@@ -21,9 +20,28 @@ def affirmations():
     """
     Affirmations page.
     """
-    all_affirmations: List[Affirmation] = Affirmation.query.all()
+    MAX_PER_PAGE = 20
+    page_num = request.args.get("page", 1, type=int)
+    category = request.args.get("category")
+
+    if category:
+        paginated_affirmations = (
+            Affirmation.query.join(AffirmationCategory)
+            .join(Category)
+            .filter(Category.name == category)
+            .paginate(per_page=MAX_PER_PAGE, page=page_num, error_out=True)
+        )
+    else:
+        paginated_affirmations = Affirmation.query.paginate(
+            per_page=MAX_PER_PAGE, page=page_num, error_out=True
+        )
+
+    categories = Category.query.all()
     return render_template(
-        "affirmations/index.html", all_affirmations=all_affirmations, user=current_user
+        "affirmations/index.html",
+        all_affirmations=paginated_affirmations,
+        user=current_user,
+        categories=categories,
     )
 
 
@@ -33,7 +51,12 @@ def random_affirmation():
     Affirmations page.
     """
     random_affirmation: Affirmation = Affirmation.query.order_by(func.random()).first()
-    return jsonify({"affirmation": random_affirmation.affirmation_text})
+    return jsonify(
+        {
+            "affirmation": random_affirmation.affirmation_text,
+            "categories": random_affirmation.categories,
+        }
+    )
 
 
 @affirmations_bp.route("/affirmations/add", methods=["GET", "POST"])

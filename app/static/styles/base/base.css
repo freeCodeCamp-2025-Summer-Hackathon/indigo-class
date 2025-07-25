@@ -36,6 +36,10 @@ body {
   align-items: center;
 }
 
+hr {
+	border-color: var(--purple-dark);
+}
+
 .page-title {
   padding: 0.5em 0;
   font-size: 2.25rem;
@@ -44,7 +48,18 @@ body {
   color: #4d317a;
 }
 
-.header__top {
+h1 {
+  font-size: 3rem;
+  margin-bottom: 0.5em;
+}
+
+h2 {
+  color: var(--purple-dark);
+}
+
+/* Mobile-first design - minimum 300px screen width */
+/* Mobile: User & Admin headers similar */
+.header {
   width: 100%;
   position: fixed;
   top: 0;
@@ -53,24 +68,23 @@ body {
   z-index: 10;
 }
 
-h1 {
-  font-size: 3rem;
-  margin-bottom: 0.5em;
-}
-
-h2{
-  color: var(--purple-dark);
-}
-
-/* Mobile-first design - minimum 300px screen width */
-.nav__top {
+.nav__menu {
+  position: absolute;
+  right: 0;
   display: flex;
-  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.nav {
+  display: flex;
   background-color: var(--purple-dark);
   color: white;
   width: 100%;
   height: 3.5rem;
   text-align: center;
+  justify-content: center;
+  align-items: center;
   font-size: 0.8rem;
   overflow: visible;
   padding: 0.3rem;
@@ -78,8 +92,17 @@ h2{
 }
 
 .nav__logo {
-    display: flex;
-    align-items: center;
+  position: absolute;
+  top: 0.5rem;
+  left: 1.5rem;
+}
+
+/* Centralize nav logo on user's desktop */
+@media (min-width: 600px) {
+  .nav__logo {
+    top: auto;
+    left: auto;
+  }
 }
 
 .nav__logo img,
@@ -87,19 +110,10 @@ h2{
   width: 102px;
 }
 
-.nav__menu {
-  position: absolute;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-}
-
 .nav__menu > button {
   background-color: inherit;
   border: none;
+  flex-shrink: 0;
 }
 
 .nav__name {
@@ -110,7 +124,7 @@ h2{
 
 .nav__img {
   height: 2.5rem;
-  margin: 0 0.5rem;
+  margin: 0 0.3rem;
   position: relative;
 }
 
@@ -143,8 +157,12 @@ h2{
 }
 
 a.nav__menu--button.active {
-  background-color: #8B66C6;
+  background-color: var(--purple-light);
   font-weight: bold;
+}
+
+.nav__menu--invisible {
+  display: none;
 }
 
 .logout {
@@ -155,7 +173,131 @@ a.nav__menu--button.active {
   background-color: var(--red-important-hover);
 }
 
-footer {
+.header__admin .nav__sidebar--button {
+  visibility: hidden;
+  display: none;
+}
+
+.header__admin #nav__sidebar--logout {
+  visibility: hidden;
+  display: none;
+}
+
+/* Desktop: admin header/menu differs from user header/menu */
+@media (min-width: 600px) {
+  .header__admin {
+    width: 20%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: var(--purple-dark);
+    z-index: 10;
+  }
+
+  .header__admin .nav {
+    justify-content: center;
+    height: inherit;
+    background-color: inherit;
+    font-size: 0.8rem;
+  }
+
+  .header__admin .nav__logo {
+    top: 1.5rem;
+    padding: 0 10px;
+    z-index: 10;
+  }
+
+  .header__admin .nav__logo img {
+    width: 9rem;
+  }
+
+  .header__admin .nav__menu {
+    width: inherit;
+    padding: 1rem 0;
+    bottom: 0;
+    border-top: var(--purple-light) 1px solid;
+    z-index: 10;
+  }
+
+  .header__admin .nav__name {
+    order: 1;
+  }
+
+  .header__admin .nav__img--button {
+    padding-left: 2.5vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .header__admin #nav__dropdown {
+    visibility: visible;
+    top: 20%;
+    width: inherit;
+    max-width: inherit;
+    height: 75vh;
+    text-align: left;
+  }
+
+  .header__admin #nav__dropdown > .nav__menu--button {
+    border: none;
+    font-size: 1rem;
+    padding-left: 3vw;
+    line-height: 3rem;
+    height: 4rem;
+  }
+  
+  .header__admin #nav__dropdown > .nav__menu--button:hover {
+    background-color: var(--purple-light);
+    text-decoration: none;
+  }
+
+  .header__admin #nav__dropdown > a.nav__menu--button.active {
+    background-color: var(--purple-light);
+    font-weight: bold;
+  }
+
+  .header__admin #nav__dropdown .logout {
+    display: none;
+  }
+
+  .header__admin .nav__sidebar--button {
+    visibility: visible;
+    display: inline-block;
+    position: absolute;
+    padding-left: 13vw;
+    width: inherit;
+    padding: 1rem 0;
+    z-index: 11;
+  }
+
+  .header__admin .nav__sidebar--img {
+    visibility: hidden;
+    left: 15vw;
+  }
+
+  @media (min-width: 850px) {
+    .header__admin .nav__sidebar--img {
+      visibility: visible;
+    }
+  }
+
+  .header__admin #nav__sidebar--logout {
+    position: absolute;
+    display: inline-block;
+    left: 20vw;
+    z-index: 11;
+    text-decoration: none;
+    color: white;
+    padding: 1.5rem;
+    border-radius: 0 10px 10px 0;
+    font-size: 1rem;
+    height: inherit;
+  }
+}
+
+.footer {
   background-color: var(--purple-dark);
   width: 100%;
   padding: 1.8rem 5vw;
@@ -163,6 +305,10 @@ footer {
   position: relative;
   bottom: 0;
   margin-top: auto;
+}
+
+.footer__none {
+  display: none;
 }
 
 .footer__top {
@@ -215,7 +361,8 @@ footer {
 }
 
 .footer__logo {
-    display: inline-block;
+  display: inline-block;
+  height: 2rem;
 }
 
 .footer__totop--button {
@@ -253,12 +400,5 @@ address a {
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
-  }
-}
-
-/* Small devices (portrait tablets and large phones, 600px and up) */
-@media only screen and (min-width: 600px) {
-  .nav__logo {
-    
   }
 }

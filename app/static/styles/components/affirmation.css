@@ -105,15 +105,20 @@ form .affirm__edit {
 }
 
 .pagination ul li {
-  background-color: var(--muted);
-  border-radius: 50%;
-  display: inline-block;
-  width: 7px;
-  height: 7px;
+	border-radius: 50%;
+	display: inline-block;
+	width: 18px;
+	height: 18px;
+	font-size: 13px;
+	text-align: center;
+	align-content: center;
+	color: var(--purple-dark);
+	font-weight: bold;
 }
 
 .pagination ul li.active {
-  background-color: var(--purple-dark);
+	background-color: var(--purple-dark);
+	color: white;
 }
 
 .category {

@@ -1,9 +1,20 @@
-FROM python:3.13.5
+FROM python:3.12-slim-bookworm
 
 WORKDIR /app
 
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    gcc \
+    python3-dev \
+    libpq-dev && \
+    rm -rf /var/lib/apt/lists/*
+
 RUN pip install uv
 
-CMD ["bash", "-c", "uv sync && uv run main.py"]
+COPY pyproject.toml ./
+
+RUN uv sync
+
+COPY . .
 
 EXPOSE 8000

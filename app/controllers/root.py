@@ -18,12 +18,28 @@ def index():
     """
     all_affirmations: List[Affirmation] = Affirmation.query.all()
 
+    pinned_affirmations = None
+    if current_user.is_authenticated:
+        pinned_affirmations = (
+            db.session.query(Affirmation)
+            .join(
+                UserAffirmation,
+                UserAffirmation.affirmation_id == Affirmation.affirmation_id,
+            )
+            .filter(
+                UserAffirmation.user_id == current_user.user_id,
+                UserAffirmation.action_type == "pin",
+            )
+            .all()
+        )
+
     return render_template(
         "home/index.html",
         title="DailyDose",
         current_time=datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
         user=current_user,
         all_affirmations=all_affirmations,
+        pinned_affirmations=pinned_affirmations,
     )
 
 
@@ -68,6 +84,10 @@ def dashboard():
         .all()
     )
 
+    admin_categories = (
+        db.session.query(Category).filter(Category.is_admin_set.is_(True)).all()
+    )
+
     return render_template(
         "home/dashboard.html",
         title="Dashboard",
@@ -75,6 +95,7 @@ def dashboard():
         pinned_affirmations=pinned_affirmations,
         favorite_affirmations=favorite_affirmations,
         user_categories=user_categories,
+        admin_categories=admin_categories,
     )
 
 

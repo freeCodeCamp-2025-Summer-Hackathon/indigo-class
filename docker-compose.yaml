@@ -1,10 +1,32 @@
 services:
   dailydose:
-    build:
-      context: .
+    build: .
     ports:
       - "8000:8000"
-    working_dir: /app
     volumes:
       - .:/app
-    command: bash -c "uv sync && uv run main.py"
+    env_file:
+      - ./.env
+    # Ensure the Flask app waits for the database to be ready
+    depends_on:
+      db:
+        condition: service_healthy
+    command: bash -c "uv sync && uv run seed.py && uv run main.py"
+  db:
+    image: postgres:16-alpine # Using a specific, stable PostgreSQL version and a smaller image
+    ports:
+      - "5432:5432" # Optional: Map PostgreSQL port to your host for local tools (e.g., DBeaver, pgAdmin)
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - db_data:/var/lib/postgresql/data # Persist database data to a named volume
+    healthcheck: # Healthcheck for the database service
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  db_data: # Define the named volume for PostgreSQL data persistence

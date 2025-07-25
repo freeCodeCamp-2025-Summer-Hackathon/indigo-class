@@ -28,18 +28,21 @@ def user_info():
     )  # profile.html?
 
 
-# Edit user first_name, last_name, username, email
+# Edit user first_name, last_name, username, email, email_subscription, password
 @usersettings_bp.route("/profile", methods=["POST"])
 @login_required
 def update_profile():
     user = current_user
+
+    # email subscription
+    user.is_email_opt_in = "receive_email" in request.form
 
     if "first_name" in request.form or "last_name" in request.form:
         first = request.form.get("first_name", "").strip()
         last = request.form.get("last_name", "").strip()
         if not first or not last:
             flash("Both first and last names are required", "error")
-            return redirect(url_for("usersettings.user_info"))
+            return redirect(url_for("user_settings.user_info"))
         name = f"{first} {last}".strip()
         user.name = name
 
@@ -47,72 +50,54 @@ def update_profile():
         username = request.form.get("username", "").strip()
         if not username:
             flash("Username is required.", "error")
-            return redirect(url_for("usersettings.user_info"))
+            return redirect(url_for("user_settings.user_info"))
 
         user_username = User.query.filter(
             and_(User.username == username, User.user_id != user.user_id)
         ).first()
         if user_username:
             flash(f"Username: {username} already exists", "error")
-            return redirect(url_for("usersettings.user_info"))
+            return redirect(url_for("user_settings.user_info"))
         user.username = username
 
     if "email" in request.form:
         email = request.form.get("email", "").strip()
         if not email:
             flash("Email is required.", "error")
-            return redirect(url_for("usersettings.user_info"))
+            return redirect(url_for("user_settings.user_info"))
 
         user_email = User.query.filter(
             and_(User.email == email, User.user_id != user.user_id)
         ).first()
         if user_email:
             flash(f"Email: {email} already exists", "error")
-            return redirect(url_for("usersettings.user_info"))
+            return redirect(url_for("user_settings.user_info"))
         user.email = email
+
+    # If there's a password change, it'll logout the user
+    if "password" in request.form:
+        password = request.form.get("password")
+
+        if not password:
+            flash("Password is required.", "error")
+            return redirect(url_for("user_settings.user_info"))
+
+        password_hash: str = bcrypt.hashpw(
+            password.encode("utf-8"), bcrypt.gensalt()
+        ).decode("utf-8")
+
+        user.password_hash = password_hash
+        db.session.commit()
+        flash(
+            "Password updated successfully. Please log in with the new password.",
+            "success",
+        )
+        logout_user()
+        return redirect(url_for("auth.login"))
 
     db.session.commit()
     flash("Update successfully.", "success")
-    return redirect(url_for("usersettings.user_info"))
-
-
-# Change password
-@usersettings_bp.route("/password", methods=["POST"])
-@login_required
-def change_password():
-    user = current_user
-    password = request.form.get("password")
-
-    if not password:
-        flash("Password is required.", "error")
-        return redirect(url_for("usersettings.user_info"))
-
-    password_hash: str = bcrypt.hashpw(
-        password.encode("utf-8"), bcrypt.gensalt()
-    ).decode("utf-8")
-
-    user.password_hash = password_hash
-    db.session.commit()
-    flash(
-        "Password updated successfully. Please log in with the new password.",
-        "success",
-    )
-    logout_user()
-    return redirect(url_for("auth.login"))
-
-
-# Change email toggle
-@usersettings_bp.route("/toggle-email-optin", methods=["POST"])
-@login_required
-def toggle_email_subscription():
-    user = current_user
-    user.is_email_opt_in = not user.is_email_opt_in
-    db.session.commit()
-    flash(
-        f"Email subscription {'enabled' if user.is_email_opt_in else 'disabled'}.",
-        "info",
-    )
-    return redirect(url_for("usersettings.user_info"))
+    return redirect(url_for("user_settings.user_info"))
 
 
 # Delete user
