@@ -57,6 +57,10 @@ h2 {
   color: var(--purple-dark);
 }
 
+.text-bg {
+    background-color: var(--purple-outline);
+}
+
 /* Mobile-first design - minimum 300px screen width */
 /* Mobile: User & Admin headers similar */
 .header {
