@@ -144,3 +144,14 @@ form .affirm__edit {
   border-radius: 0.3em;
   background-color: var(--white);
 }
+
+.edit__wrapper {
+  border: 0.3rem solid var(--purple-dark);
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+}
+
+.affirm__close {
+  font-size: 1.rem;
+}
