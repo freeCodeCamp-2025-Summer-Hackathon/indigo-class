@@ -184,7 +184,7 @@ a.nav__menu--button.active {
 }
 
 /* Desktop: admin header/menu differs from user header/menu */
-@media (min-width: 800px) {
+@media (min-width: 1000px) {
   .header__admin {
     width: 20%;
     height: 100%;
@@ -277,7 +277,7 @@ a.nav__menu--button.active {
     left: 15vw;
   }
 
-  @media (min-width: 850px) {
+  @media (min-width: 1000px) {
     .header__admin .nav__sidebar--img {
       visibility: visible;
     }
@@ -365,15 +365,6 @@ a.nav__menu--button.active {
   height: 2rem;
 }
 
-.footer__totop--button {
-  background-color: #8B66C6;
-  border-radius: 10px;
-  border: none;
-  font-size: 0.8rem;
-  color: white;
-  padding: 0.8rem;
-}
-
 address {
   font-size: 0.6rem;
   color: var(--purple-outline);
@@ -402,6 +393,7 @@ address a {
     scroll-behavior: auto;
   }
 }
+
 .totop__button {
   position: fixed;
   bottom: 20px;
@@ -418,7 +410,7 @@ address a {
   display: none;
 }
 
-.totop__button:hover {
-  color: var(--purple-dark);
-  background-color: white;
+.totop__icon {
+  width: 30px;
+  margin: auto;
 }

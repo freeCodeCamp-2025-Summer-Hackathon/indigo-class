@@ -18,7 +18,7 @@
   <body>
     {%- include "_header.html" -%}
     <button onclick="toTop()" class="totop__button">
-      &#8593;
+      <img src="{{ url_for('static', filename='images/icon_arrow.svg') }}" alt="To top button" class="totop__icon">
     </button>
     <main>
       {% with messages = get_flashed_messages(with_categories=true) %} {% if

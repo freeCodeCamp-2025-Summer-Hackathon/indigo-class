@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Show/hide button on scroll
   window.addEventListener("scroll", function () {
-    scrollToTopBtn.style.display = window.scrollY > 20 ? "block" : "none";
+    scrollToTopBtn.style.display = window.scrollY > 50 ? "block" : "none";
   });
 });
 
