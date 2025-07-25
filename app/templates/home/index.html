@@ -57,7 +57,22 @@ content %}
 {% if current_user.is_authenticated %}
 <section class="home__section">
   <h2>Pinned Affirmations</h2>
-</section>  
+  <div class="affirms__wrapper">
+    {% for affirmation in pinned_affirmations %}
+    <div class="affirm">
+      <figure class="affirm__wrapper">
+        <blockquote class="affirm__quote">
+          {{ affirmation.affirmation_text }}
+        </blockquote>
+        <figcaption class="affirm__cats">
+          {% for category in affirmation.categories %} {{ category.category.name
+          }} {% endfor %}
+        </figcaption>
+      </figure>
+    </div>
+    {% endfor %}
+  </div>
+</section>
 {% endif %}
 
 <section class="home__section" id="affirmation-generator">
