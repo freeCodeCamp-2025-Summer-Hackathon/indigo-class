@@ -7,7 +7,7 @@ content %}
     method="POST"
     action="{{ url_for('affirmations.edit_affirmation', affirmation_id=affirmation.affirmation_id) }}"
   >
-    <p><label for="affirmation_text" class="affirm__text">Affirmation Text</label></p>
+    <label for="affirmation_text" class="affirm__text">Affirmation Text</label>
     <textarea
       id="affirmation_text"
       name="affirmation_text"
