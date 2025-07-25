@@ -35,14 +35,13 @@ content %}
   <div class="affirm">
     <figure class="affirm__wrapper">
       <div class="affirm__btn--wrapper">
+      {% if affirmation.user_id == user.user_id %}
         <a
           href="{{ url_for('affirmations.edit_affirmation', affirmation_id=affirmation.affirmation_id)}}"
           class="affirm__edit"
         >
           Edit <img src="{{ url_for('static', filename='images/pen_white.svg') }}" class="white__pen" alt="pen icon">
         </a>
-
-        {% if affirmation.user_id == user.user_id %}
         <form
           method="POST"
           action="{{ url_for('affirmations.delete_affirmation', affirmation_id=affirmation.affirmation_id) }}"
