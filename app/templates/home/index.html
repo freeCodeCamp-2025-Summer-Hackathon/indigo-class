@@ -67,7 +67,11 @@ content %}
     <blockquote class="affirm__quote" id="random-affirmation">
       {{ affirmation.affirmation_text }}
     </blockquote>
-    <figcaption class="affirm__cats">Self Worth</figcaption>
+    <figcaption class="affirm__cats" id="rand-affirm-cat">
+      {% for category in affirmation.categories %}
+        {{ category.category.name }}
+      {% endfor %}
+    </figcaption>
   </figure>
   {% endfor %}
   <button class="affirm__action" onclick="getRandomAffirmation()">
