@@ -2,13 +2,12 @@
 content %}
 <section class="edit__wrapper">
   <span class="affirm__close">&times;</span>
-  <h1>Edit Affirmation</h1>
 
   <form
     method="POST"
     action="{{ url_for('affirmations.edit_affirmation', affirmation_id=affirmation.affirmation_id) }}"
   >
-    <p><label for="affirmation_text">Affirmation:</label></p>
+    <p><label for="affirmation_text" class="affirm__text">Affirmation Text</label></p>
     <textarea
       id="affirmation_text"
       name="affirmation_text"
@@ -20,7 +19,7 @@ content %}
   {{ affirmation.affirmation_text }}</textarea
     >
 
-    <button type="submit" class="affirm__edit">Edit</button>
+    <button type="submit" class="affirm__submit__edit">Submit</button>
   </form>
 </section>
 

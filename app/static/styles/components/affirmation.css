@@ -153,5 +153,31 @@ form .affirm__edit {
 }
 
 .affirm__close {
-  font-size: 1.rem;
+  font-weight: ;
+  font-size: 1.5rem;
+  background-color: var(--red-important);
+  border-radius: 5px;
+  color: var(--white);
+  align-self: flex-end;
+  padding: 0.2rem 0.5rem;
+  margin: 0.3rem 0.3rem;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.affirm__close:hover {
+  background-color: var(--red-important-hover);
+}
+
+.affirm__submit__edit {
+  font-size: 1.5rem;
+  background-color: var(--purple-dark);
+  color: var(--white);
+  align-self: center;
+  padding: 0.3rem 0.5rem;
+  margin: 0.5rem;
+}
+
+.affirm__text {
+  font-size: 1.5rem;
 }
