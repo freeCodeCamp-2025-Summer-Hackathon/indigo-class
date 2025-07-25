@@ -51,7 +51,12 @@ def random_affirmation():
     Affirmations page.
     """
     random_affirmation: Affirmation = Affirmation.query.order_by(func.random()).first()
-    return jsonify({"affirmation": random_affirmation.affirmation_text})
+    return jsonify(
+        {
+            "affirmation": random_affirmation.affirmation_text,
+            "categories": random_affirmation.categories,
+        }
+    )
 
 
 @affirmations_bp.route("/affirmations/add", methods=["GET", "POST"])
