@@ -150,10 +150,10 @@ form .affirm__edit {
   border-radius: 5px;
   display: flex;
   flex-direction: column;
+  padding: 0.3rem;
 }
 
 .affirm__close {
-  font-weight: ;
   font-size: 1.5rem;
   background-color: var(--red-important);
   border-radius: 5px;
@@ -172,12 +172,32 @@ form .affirm__edit {
 .affirm__submit__edit {
   font-size: 1.5rem;
   background-color: var(--purple-dark);
+  border-radius: 10px;
   color: var(--white);
   align-self: center;
   padding: 0.3rem 0.5rem;
-  margin: 0.5rem;
+  margin: 0.5rem auto;
+  display: block;
+}
+
+.affirm__submit__edit:hover {
+  background-color: var(--purple-light);
+  text-decoration: underline;
 }
 
 .affirm__text {
-  font-size: 1.5rem;
+  font-size: 1rem;
+}
+
+.user__affirm {
+  font-size: 1rem;
+  color: var(--purple-light);
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  padding: 0.3rem;
+  margin-bottom: 1rem; 
+  border-radius: 6px;
+  border: 1px solid var(--purple-light);
+  resize: vertical;
 }
