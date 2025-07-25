@@ -1,4 +1,4 @@
-from flask import Blueprint, flash, render_template, redirect, request, url_for
+from flask import Blueprint, request, render_template, flash, redirect, url_for
 from flask_login import current_user, login_required
 from sqlalchemy import or_, select
 
@@ -10,25 +10,43 @@ categories_bp = Blueprint("categories", __name__)
 
 @categories_bp.route("/categories")
 def list_categories():
-    page = request.args.get("page", 1, type=int)
-    per_page = request.args.get("per_page", 10, type=int)
+    # per_page = request.args.get("per_page", 10, type=int)
 
     if current_user.is_authenticated:
-        # authenticated users can only see global or admin set
-        # categories and categories that they themselves made
-        query = select(Category).where(
+        """Queries to be use for filtering and pagination
+        authenticated users can only see global or admin set categories and categories that they made
+        """
+        all_categories = select(Category).where(
             or_(
                 Category.is_admin_set.is_(True)
                 | (Category.user_id == current_user.user_id)
             )
         )
-    else:
-        # non-authenticated users can only see global or admin set categories
-        query = select(Category).where(Category.is_admin_set.is_(True))
 
-    pagination = db.paginate(query, page=page, per_page=per_page)
+        user_categories = select(Category).where(
+            (
+                Category.is_admin_set.is_(False)
+                & (Category.user_id == current_user.user_id)
+            )
+        )
+
+        admin_categories = select(Category).where(Category.is_admin_set.is_(True))
+
+        filter_by = request.args.get("filter", "all_categories")
+        page = request.args.get("page", 1, type=int)
+
+        if filter_by == "user_categories":
+            pagination = db.paginate(user_categories, page=page, per_page=5)
+        elif filter_by == "admin_categories":
+            pagination = db.paginate(admin_categories, page=page, per_page=5)
+        else:
+            pagination = db.paginate(all_categories, page=page, per_page=5)
+
     return render_template(
-        "categories/list.html", categories=pagination.items, pagination=pagination
+        "categories/list.html",
+        categories=pagination.items,
+        pagination=pagination,
+        filter_by=filter_by,
     )
 
 
