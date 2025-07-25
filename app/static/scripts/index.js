@@ -18,10 +18,6 @@ function navAdminDesktopLogOut() {
   }
 }
 
-// Force menu to be visible in admin desktop sidebar when resizing
-
-
-// To top button
 // To top button
 document.addEventListener("DOMContentLoaded", function () {
   const scrollToTopBtn = document.querySelector(".totop__button");

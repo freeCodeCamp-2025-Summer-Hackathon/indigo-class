@@ -184,7 +184,7 @@ a.nav__menu--button.active {
 }
 
 /* Desktop: admin header/menu differs from user header/menu */
-@media (min-width: 600px) {
+@media (min-width: 800px) {
   .header__admin {
     width: 20%;
     height: 100%;
