@@ -1,10 +1,30 @@
 {% extends "base.html" %} {% block title %} Categories {% endblock %} {% block
 content %}
 
-<h1>Affirmation Categories</h1>
+<h2>Categories</h2>
+
+<form method="GET" action="{{ url_for('categories.list_categories') }}">
+    <label for="filter"> Filter by:</label>
+    <select name="filter" id="category-filter" onchange="this.form.submit()">
+        <option value="all_categories" 
+            {% if filter_by == 'all_categories'%} 
+            selected
+            {% endif %}>All Categories
+        </option>
+        <option value="admin_categories" 
+            {% if filter_by == 'admin_categories'%} 
+            selected
+            {% endif %}>Default Categories
+        </option>
+        <option value="user_categories" 
+            {% if filter_by == 'user_categories'%} 
+            selected
+            {% endif %}>Custom Categories
+        </option>
+    </select>
+</form>
 
 <section class="affirms__wrapper">
-    <a href="{{ url_for('categories.add_category' )}}">Add</a>
     {% for category in categories %}
     <div class="category">
         <p class="category__name">{{ category.name }}</p>
@@ -18,22 +38,23 @@ content %}
         <ul class="pagination">
             {% if pagination.has_prev %}
             <li class="page-item">
-                <a class="page-link" href="{{ url_for('categories.list_categories', page=pagination.prev_num, per_page=pagination.per_page) }}">&larr;</a>
+                <a class="page-link" href="{{ url_for('categories.list_categories', page=pagination.prev_num, per_page=pagination.per_page, filter=filter_by) }}">&lt;</a>
             </li>
             {% endif %}
 
             {% for page_num in range(1, pagination.pages + 1) %}
                 <li class="page-item active">
-                    <a class="page-link" href="{{ url_for('categories.list_categories', page=page_num, per_page=pagination.per_page)}}"> {{ page_num }} </a>
+                    <a class="page-link" href="{{ url_for('categories.list_categories', page=page_num, per_page=pagination.per_page, filter=filter_by) }}"> {{ page_num }} </a>
                 </li>
             {% endfor %}
 
             {% if pagination.has_next %}
             <li class="page-item">
-                <a class="page-link" href="{{ url_for('categories.list_categories', page=pagination.next_num, per_page=pagination.per_page) }}">&rarr;</a>
+                <a class="page-link" href="{{ url_for('categories.list_categories', page=pagination.next_num, per_page=pagination.per_page, filter=filter_by) }}">&gt;</a>
             </li>
             {% endif %}
     </nav>
 </section>
-
+<a class="affirm__action" href="{{ url_for('categories.add_category' )}}">Create New Category</a>
+<a class="affirm__action" href="{{ url_for('root.dashboard' )}}">Back</a>
 {% endblock %}

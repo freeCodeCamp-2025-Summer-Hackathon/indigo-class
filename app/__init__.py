@@ -112,6 +112,7 @@ def create_app():
     from .controllers.affirmations import affirmations_bp
     from .controllers.categories import categories_bp
     from .controllers.user_settings import usersettings_bp
+    from .controllers.admin.dashboard import dashboard_bp
 
     app.register_blueprint(root_bp)
     app.register_blueprint(auth_bp)
@@ -119,6 +120,7 @@ def create_app():
     app.register_blueprint(affirmations_bp)
     app.register_blueprint(categories_bp)
     app.register_blueprint(usersettings_bp)
+    app.register_blueprint(dashboard_bp)
 
     # Start scheduler only if not already running
     if not scheduler.running:
