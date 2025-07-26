@@ -1,18 +1,78 @@
 from datetime import datetime
 import os
 
-from flask import Flask, jsonify
+from apscheduler.schedulers.background import BackgroundScheduler
+import dotenv
+from flask import Flask, current_app, jsonify
 from flask_login import LoginManager
-from flask_mail import Mail
+from flask_mail import Mail, Message
 from sqlalchemy import text
 
-from app.models import User, db
-
-import dotenv
+from app.models import Affirmation, DailyMailHistory, User, db
+from . import globals
 
 dotenv.load_dotenv()
 
 mail = Mail()
+scheduler = BackgroundScheduler()
+
+
+def daily_tasks():
+    with current_app.app_context():
+        users = User.query.all()
+        today = datetime.now().date()
+
+        for user in users:
+            affirmation = Affirmation.query.order_by(db.func.random()).first()
+            if not affirmation:
+                continue
+
+            # Set daily affirmation
+            globals.daily_affirmation_data = {
+                "id": affirmation.affirmation_id,
+                "content": affirmation.affirmation_text,
+                "category": affirmation.categories[0].category.name,
+            }
+
+            # Check if user want email
+            if not user.is_email_opt_in:
+                continue
+
+            # Check if email already sent today
+            already_sent = DailyMailHistory.query.filter(
+                DailyMailHistory.user_id == user.user_id,
+                db.func.date(DailyMailHistory.sent_email_at) == today,
+                DailyMailHistory.success,
+            ).first()
+
+            if already_sent:
+                continue
+
+            # Send email
+            msg = Message(
+                subject="Your Daily Affirmation",
+                recipients=[user.email],
+                body=f"Hello {user.name},\n\nYour affirmation for today:\n\n{affirmation.affirmation_text}\n\nHave a great day!",
+            )
+            history = DailyMailHistory(
+                user_id=user.user_id,
+                affirmation_id=affirmation.affirmation_id,
+                sent_email_at=datetime.now(),
+                success=False,  # Assume failure by default
+                error_message=None,
+            )
+            db.session.add(history)
+            db.session.flush()  # Ensures history gets an ID if needed
+
+            try:
+                mail.connect()
+                mail.send(msg)
+                history.success = True
+            except Exception as e:
+                history.error_message = str(e)
+                print(f"Failed to send email to {user.email}: {e}")
+            finally:
+                db.session.commit()
 
 
 def create_app():
@@ -65,6 +125,26 @@ def create_app():
     app.register_blueprint(categories_bp)
     app.register_blueprint(usersettings_bp)
     app.register_blueprint(dashboard_bp)
+
+    # Start scheduler only if not already running
+    if not scheduler.running:
+        scheduler.add_job(daily_tasks, "cron", hour=7, minute=0)  # 7:00 AM daily
+        scheduler.start()
+
+    # Set daily_affirmations if schedule hasn't triggered
+    if not globals.daily_affirmation_data:
+        with app.app_context():
+            affirmation = Affirmation.query.order_by(db.func.random()).first()
+            globals.daily_affirmation_data = {
+                "id": affirmation.affirmation_id,
+                "content": affirmation.affirmation_text,
+                "category": affirmation.categories[0].category.name,
+            }
+
+    @app.route("/test-daily")
+    def test_daily_task():
+        daily_tasks()
+        return jsonify({"message": "Email sent, daily_affirmation set"}), 200
 
     @app.route("/health")
     def health_check():
