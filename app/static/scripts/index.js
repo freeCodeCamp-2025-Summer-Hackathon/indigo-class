@@ -18,13 +18,20 @@ function navAdminDesktopLogOut() {
   }
 }
 
-// Force menu to be visible in admin desktop sidebar when resizing
-
-
 // To top button
+document.addEventListener("DOMContentLoaded", function () {
+  const scrollToTopBtn = document.querySelector(".totop__button");
+
+  // Show/hide button on scroll
+  window.addEventListener("scroll", function () {
+    scrollToTopBtn.style.display = window.scrollY > 50 ? "block" : "none";
+  });
+});
+
+// Scroll to top on click
 function toTop() {
   window.scrollTo(0, 0);
-}
+};
 
 function saveAffirmation(affirmationId) {
   fetch(`/affirmations/save`, {

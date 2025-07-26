@@ -9,7 +9,6 @@
     or request.path == url_for('auth.reset_password_request') %}
   <section class="footer__top">
     <a class="footer__logo" href="{{ url_for('root.index') }}"><img src="{{ url_for('static', filename='images/logo_white.svg') }}" alt="DailyDose logo"></a>
-    <button class="footer__totop--button" type="button" onclick="toTop()">Back to top</button>
   </section>
   <address>Developed by <a href="https://github.com/freeCodeCamp-2025-Summer-Hackathon/indigo-class">indigo-class</a>, team of <a href="https://github.com/freeCodeCamp-2025-Summer-Hackathon">freeCodeCamp 2025 Summer Hackathon</a>.</address>
   {% else %}
@@ -21,7 +20,6 @@
   </section>
   <section>
     <a href="{{ url_for('root.index') }}"><img src="{{ url_for('static', filename='images/logo_white.svg') }}" alt="DailyDose logo" class="footer__logo"></a>
-    <button class="footer__totop--button" type="button" onclick="toTop()">Back to top</button>
   </section>
   <address>Developed by <a href="https://github.com/freeCodeCamp-2025-Summer-Hackathon/indigo-class">indigo-class</a>, team of <a href="https://github.com/freeCodeCamp-2025-Summer-Hackathon">freeCodeCamp 2025 Summer Hackathon</a>.</address>
   {% endif %}
