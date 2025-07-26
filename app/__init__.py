@@ -134,12 +134,17 @@ def create_app():
     # Set daily_affirmations if schedule hasn't triggered
     if not globals.daily_affirmation_data:
         with app.app_context():
-            affirmation = Affirmation.query.order_by(db.func.random()).first()
-            globals.daily_affirmation_data = {
-                "id": affirmation.affirmation_id,
-                "content": affirmation.affirmation_text,
-                "category": affirmation.categories[0].category.name,
-            }
+            try:
+                affirmation = Affirmation.query.order_by(db.func.random()).first()
+                if affirmation and affirmation.categories:
+                    globals.daily_affirmation_data = {
+                        "id": affirmation.affirmation_id,
+                        "content": affirmation.affirmation_text,
+                        "category": affirmation.categories[0].category.name,
+                    }
+            except Exception:
+                # Tables might not exist yet (e.g., during seeding)
+                pass
 
     @app.route("/test-daily")
     def test_daily_task():
