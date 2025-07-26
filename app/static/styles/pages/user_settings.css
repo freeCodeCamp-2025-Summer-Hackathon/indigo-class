@@ -124,13 +124,15 @@
   text-decoration: underline;
 }
 
-
 .profile__pic {
-  margin: 1rem auto;
   height: 6rem;
   background-color: var(--purple-outline);
   border: 5px solid var(--purple-dark);
   border-radius: 50%;
+}
+
+.pic__settings {
+    margin: 1rem auto;
 }
 
 .submit {
