@@ -30,6 +30,7 @@ def affirmations():
             Affirmation.query.join(AffirmationCategory)
             .join(Category)
             .filter(Category.name == category)
+            .distinct(Affirmation.affirmation_id)
             .paginate(per_page=MAX_PER_PAGE, page=page_num, error_out=True)
         )
     else:
@@ -137,53 +138,55 @@ def add_affirmation():
     """
     Add an affirmation
     """
+    if not current_user.is_authenticated:
+        return redirect(url_for("root.index"))
+
     if request.method == "POST":
         text: str | None = request.form.get("affirmation_text")
+        category_id_str = request.form.get("category_id")
+        category_id = (
+            int(category_id_str) if category_id_str and category_id_str != "" else None
+        )
 
         if text is None or text.strip() == "":
             flash("Please type your affirmation", "error")
             return render_template("affirmations/add.html")
 
-        affirmation = Affirmation(affirmation_text=text, user_id=current_user.user_id)
+        # Create the affirmation first
+        affirmation = Affirmation(
+            affirmation_text=text,
+            user_id=current_user.user_id,
+        )
 
         db.session.add(affirmation)
+        db.session.flush()  # Flush to get the affirmation ID
+
+        # Add category if provided
+        if category_id:
+            category = Category.query.get(category_id)
+            if not category:
+                flash("Category not found", "error")
+                db.session.rollback()
+                return render_template("affirmations/add.html")
+
+            # Create the relationship through AffirmationCategory
+            affirmation_category = AffirmationCategory(
+                affirmation_id=affirmation.affirmation_id,
+                category_id=category.category_id,
+            )
+            db.session.add(affirmation_category)
+
         db.session.commit()
 
         flash("Your affirmation has been added", "success")
         return redirect(url_for("affirmations.affirmations"))
 
-    if current_user.is_authenticated:
-        # Get both user's own categories and admin categories, excluding duplicates
-        from sqlalchemy import distinct
-
-        # First get all category names that the user should see
-        category_names = (
-            db.session.query(distinct(Category.name))
-            .filter(
-                (Category.user_id == current_user.user_id)
-                | (Category.is_admin_set.is_(True))
-            )
-            .order_by(Category.name)
-            .all()
-        )
-
-        # Then get the actual category objects, preferring admin categories over user categories
-        categories = []
-        for (name,) in category_names:
-            # Try to get admin category first, then user category
-            category = (
-                Category.query.filter(
-                    Category.name == name, Category.is_admin_set.is_(True)
-                ).first()
-                or Category.query.filter(
-                    Category.name == name, Category.user_id == current_user.user_id
-                ).first()
-            )
-            if category:
-                categories.append(category)
+        # Get categories based on user role
+    if current_user.is_admin():
+        categories = Category.query.all()
     else:
-        # For non-authenticated users, only show admin categories
-        categories = Category.query.filter(Category.is_admin_set.is_(True)).all()
+        categories = Category.query.filter_by(user_id=current_user.user_id).all()
+
     return render_template("affirmations/add.html", categories=categories)
 
 
