@@ -15,11 +15,12 @@ dotenv.load_dotenv()
 mail = Mail()
 scheduler = BackgroundScheduler()
 
-daily_affirmations = ""
+daily_affirmation = ""
 
 
-def send_daily_emails():
+def daily_tasks():
     with current_app.app_context():
+        # Daily email delivery
         users = User.query.filter_by(is_email_opt_in=True).all()
         today = datetime.now().date()
 
@@ -63,6 +64,12 @@ def send_daily_emails():
                 print(f"Failed to send email to {user.email}: {e}")
             finally:
                 db.session.commit()
+
+        # Set daily affirmation
+        global daily_affirmation
+        daily_affirmation = Affirmation.query.order_by(db.func.random()).first()
+        if daily_affirmation:
+            daily_affirmation = ""
 
 
 def create_app():
@@ -116,13 +123,18 @@ def create_app():
 
     # Start scheduler only if not already running
     if not scheduler.running:
-        scheduler.add_job(send_daily_emails, "cron", hour=7, minute=0)  # 7:00 AM daily
+        scheduler.add_job(daily_tasks, "cron", hour=7, minute=0)  # 7:00 AM daily
         scheduler.start()
 
-    @app.route("/test-email")
-    def test_email():
-        send_daily_emails()
-        return jsonify({"message": "Email sent"}), 200
+    # Set daily_affirmations if schedule hasn't triggered
+    if not daily_affirmation:
+        global daily_affirmation
+        daily_affirmation = Affirmation.query.order_by(db.func.random()).first()
+
+    @app.route("/test-daily")
+    def test_daily_task():
+        daily_tasks()
+        return jsonify({"message": "Email sent, daily_affirmation set"}), 200
 
     @app.route("/health")
     def health_check():
