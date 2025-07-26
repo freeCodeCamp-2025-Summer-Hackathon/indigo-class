@@ -70,7 +70,7 @@ def add_affirmation():
     if request.method == "POST":
         text: str | None = request.form.get("affirmation_text")
 
-        if not text:
+        if text is None or text.strip() == "":
             flash("Please type your affirmation", "error")
             return render_template("affirmations/add.html")
 
@@ -79,7 +79,7 @@ def add_affirmation():
         db.session.add(affirmation)
         db.session.commit()
 
-        flash("Your affirmation have been added", "success")
+        flash("Your affirmation has been added", "success")
         return redirect(url_for("affirmations.affirmations"))
 
     return render_template("affirmations/add.html")
@@ -176,28 +176,28 @@ def select_affirmation_category():
     affirmation_id = data.get("affirmationId")
     category_id = data.get("categoryId")
 
-    if not (affirmation_id or category_id):
+    if affirmation_id is None or category_id is None:
         return jsonify({"error": "No affirmation or category ID provided"}), 400
 
     # Check if affirmations_categories row have already existed
     affirmation_category = AffirmationCategory.query.filter_by(
         affirmation_id=affirmation_id, category_id=category_id
-    )
+    ).first()
     # prevent double data
     if affirmation_category:
         return jsonify({"error": "Affirmation category already selected"}), 400
 
-    # Check if affirmation and category exists
+    # Check if affirmation exists
     affirmation = Affirmation.query.get(affirmation_id)
-    if not affirmation:
+    if affirmation is None:
         return jsonify({"error": "Affirmation not found"}), 404
 
-    if category_id not in (0, 1):
-        category = Category.query.filter_by(
-            category_id=category_id, user_id=current_user.user_id
-        )
-        if not category:
-            return jsonify({"error": "Category doesn't exists"}), 400
+    # Check if category exists (allow admin or user category)
+    category = Category.query.filter_by(category_id=category_id).first()
+    if category is None or (
+        not category.is_admin_set and category.user_id != current_user.user_id
+    ):
+        return jsonify({"error": "Category doesn't exist"}), 400
 
     # Add affirmations_categories row
     affirmation_category = AffirmationCategory(
@@ -231,11 +231,13 @@ def add_user_affirmation_with_action_type(action_type):
         )
         .count()
     )
-    print(
-        f"affirmation_count: {affirmation_count}, limit: {ACTION_TYPES_LIMIT_DICT[action_type]}"
-    )
     if affirmation_count >= ACTION_TYPES_LIMIT_DICT[action_type]:
         return jsonify({"error": f"{action_type} already limited"}), 400
+
+    # check if affirmation exists
+    affirmation = Affirmation.query.get(affirmation_id)
+    if affirmation is None:
+        return jsonify({"error": "Affirmation not found"}), 404
 
     # insert users_affirmations
     try:
