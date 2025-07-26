@@ -41,7 +41,7 @@ def index():
         user=current_user,
         all_affirmations=all_affirmations,
         pinned_affirmations=pinned_affirmations,
-        daily_affirmation=globals.daily_affirmation,
+        daily_affirmation=globals.daily_affirmation_text,
     )
 
 

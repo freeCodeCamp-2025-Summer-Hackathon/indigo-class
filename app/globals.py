@@ -1,1 +1,1 @@
-daily_affirmation = ""
+daily_affirmation_text = ""

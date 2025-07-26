@@ -29,7 +29,7 @@ def daily_tasks():
                 continue
 
             # Set daily affirmation
-            globals.daily_affirmation = affirmation.affirmation_text
+            globals.daily_affirmation_text = affirmation.affirmation_text
 
             # Send email
             if not user.is_email_opt_in:
