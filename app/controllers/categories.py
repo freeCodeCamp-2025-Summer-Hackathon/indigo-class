@@ -41,6 +41,12 @@ def list_categories():
             pagination = db.paginate(admin_categories, page=page, per_page=5)
         else:
             pagination = db.paginate(all_categories, page=page, per_page=5)
+    else:
+        # For unauthenticated users, show only admin categories
+        admin_categories = select(Category).where(Category.is_admin_set.is_(True))
+        filter_by = "admin_categories"
+        page = request.args.get("page", 1, type=int)
+        pagination = db.paginate(admin_categories, page=page, per_page=5)
 
     return render_template(
         "categories/list.html",
