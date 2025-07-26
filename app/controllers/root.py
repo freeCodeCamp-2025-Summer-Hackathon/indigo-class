@@ -19,8 +19,10 @@ def index():
     """
     all_affirmations: List[Affirmation] = Affirmation.query.all()
     if current_user.is_authenticated:
+        # Get both user's own categories and admin categories
         all_categories: List[Category] = Category.query.filter(
-            Category.user_id == current_user.user_id
+            (Category.user_id == current_user.user_id)
+            | (Category.is_admin_set.is_(True))
         ).all()
     else:
         all_categories: List[Category] = Category.query.filter(
