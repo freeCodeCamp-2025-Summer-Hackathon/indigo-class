@@ -18,6 +18,14 @@ def index():
     Main landing page.
     """
     all_affirmations: List[Affirmation] = Affirmation.query.all()
+    if current_user.is_authenticated:
+        all_categories: List[Category] = Category.query.filter(
+            Category.user_id == current_user.user_id
+        ).all()
+    else:
+        all_categories: List[Category] = Category.query.filter(
+            Category.is_admin_set.is_(True)
+        ).all()
 
     pinned_affirmations = None
     if current_user.is_authenticated:
@@ -42,6 +50,7 @@ def index():
         all_affirmations=all_affirmations,
         pinned_affirmations=pinned_affirmations,
         daily_affirmation_data=globals.daily_affirmation_data,
+        all_categories=all_categories,
     )
 
 
