@@ -9,22 +9,32 @@ from flask_mail import Mail, Message
 from sqlalchemy import text
 
 from app.models import Affirmation, DailyMailHistory, User, db
+import globals
 
 dotenv.load_dotenv()
 
 mail = Mail()
 scheduler = BackgroundScheduler()
 
-daily_affirmation = ""
-
 
 def daily_tasks():
     with current_app.app_context():
         # Daily email delivery
-        users = User.query.filter_by(is_email_opt_in=True).all()
+        users = User.query.all()
         today = datetime.now().date()
 
         for user in users:
+            affirmation = Affirmation.query.order_by(db.func.random()).first()
+            if not affirmation:
+                continue
+
+            # Set daily affirmation
+            globals.daily_affirmation = affirmation.affirmation_text
+
+            # Send email
+            if not user.is_email_opt_in:
+                continue
+
             # Check if email already sent today
             already_sent = DailyMailHistory.query.filter(
                 DailyMailHistory.user_id == user.user_id,
@@ -35,11 +45,6 @@ def daily_tasks():
             if already_sent:
                 continue
 
-            affirmation = Affirmation.query.order_by(db.func.random()).first()
-            if not affirmation:
-                continue
-
-            # Send email
             msg = Message(
                 subject="Your Daily Affirmation",
                 recipients=[user.email],
@@ -64,12 +69,6 @@ def daily_tasks():
                 print(f"Failed to send email to {user.email}: {e}")
             finally:
                 db.session.commit()
-
-        # Set daily affirmation
-        global daily_affirmation
-        daily_affirmation = Affirmation.query.order_by(db.func.random()).first()
-        if daily_affirmation:
-            daily_affirmation = ""
 
 
 def create_app():
