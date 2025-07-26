@@ -7,7 +7,7 @@ from flask_login import login_required, current_user
 from app.models import User, Affirmation, UserAffirmation, Category, DailyMailHistory
 
 from app import db
-import globals
+from .. import globals
 
 root_bp = Blueprint("root", __name__)
 
@@ -41,7 +41,7 @@ def index():
         user=current_user,
         all_affirmations=all_affirmations,
         pinned_affirmations=pinned_affirmations,
-        daily_affirmation=globals.daily_affirmation_text,
+        daily_affirmation_data=globals.daily_affirmation_data,
     )
 
 

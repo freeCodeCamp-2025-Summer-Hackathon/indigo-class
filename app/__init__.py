@@ -9,7 +9,7 @@ from flask_mail import Mail, Message
 from sqlalchemy import text
 
 from app.models import Affirmation, DailyMailHistory, User, db
-import globals
+from . import globals
 
 dotenv.load_dotenv()
 
@@ -19,7 +19,6 @@ scheduler = BackgroundScheduler()
 
 def daily_tasks():
     with current_app.app_context():
-        # Daily email delivery
         users = User.query.all()
         today = datetime.now().date()
 
@@ -29,9 +28,13 @@ def daily_tasks():
                 continue
 
             # Set daily affirmation
-            globals.daily_affirmation_text = affirmation.affirmation_text
+            globals.daily_affirmation_data = {
+                "id": affirmation.affirmation_id,
+                "content": affirmation.affirmation_text,
+                "category": affirmation.categories[0].category.name,
+            }
 
-            # Send email
+            # Check if user want email
             if not user.is_email_opt_in:
                 continue
 
@@ -45,6 +48,7 @@ def daily_tasks():
             if already_sent:
                 continue
 
+            # Send email
             msg = Message(
                 subject="Your Daily Affirmation",
                 recipients=[user.email],
@@ -128,10 +132,14 @@ def create_app():
         scheduler.start()
 
     # Set daily_affirmations if schedule hasn't triggered
-    if not globals.daily_affirmation_text:
+    if not globals.daily_affirmation_data:
         with app.app_context():
-            daily_affirmation = Affirmation.query.order_by(db.func.random()).first()
-            globals.daily_affirmation_text = daily_affirmation.affirmation_text
+            affirmation = Affirmation.query.order_by(db.func.random()).first()
+            globals.daily_affirmation_data = {
+                "id": affirmation.affirmation_id,
+                "content": affirmation.affirmation_text,
+                "category": affirmation.categories[0].category.name,
+            }
 
     @app.route("/test-daily")
     def test_daily_task():

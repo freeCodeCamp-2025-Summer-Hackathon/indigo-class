@@ -1,1 +1,1 @@
-daily_affirmation_text = ""
+daily_affirmation_data = None
