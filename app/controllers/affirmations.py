@@ -52,26 +52,28 @@ def random_affirmation():
     Get a random affirmation, optionally filtered by category.
     Rate limited to one request per 10 seconds.
     """
+    # ##################### rate-limit-logic ##########################
     # Check rate limit
-    if not current_user.is_authenticated:
-        client_ip = request.remote_addr
-        key = f"random_affirmation:{client_ip}"
-    else:
-        key = f"random_affirmation:{current_user.user_id}"
+    # if not current_user.is_authenticated:
+    #     client_ip = request.remote_addr
+    #     key = f"random_affirmation:{client_ip}"
+    # else:
+    #     key = f"random_affirmation:{current_user.user_id}"
 
-    # Check if key exists in rate limit dict
-    if key in globals.rate_limit_dict:
-        return jsonify({"error": "Please wait 10 seconds for next request"}), 429
+    # # Check if key exists in rate limit dict
+    # if key in globals.rate_limit_dict:
+    #     return jsonify({"error": "Please wait 10 seconds for next request"}), 429
 
-    # Set rate limit
-    globals.rate_limit_dict[key] = True
+    # # Set rate limit
+    # globals.rate_limit_dict[key] = True
 
-    # Remove rate limit after 10 seconds
-    def remove_rate_limit():
-        if key in globals.rate_limit_dict:
-            del globals.rate_limit_dict[key]
+    # # Remove rate limit after 10 seconds
+    # def remove_rate_limit():
+    #     if key in globals.rate_limit_dict:
+    #         del globals.rate_limit_dict[key]
 
-    Timer(10.0, remove_rate_limit).start()
+    # Timer(10.0, remove_rate_limit).start()
+    # ##############################################################
 
     category = request.args.get("category")
     if category and category != "all":
