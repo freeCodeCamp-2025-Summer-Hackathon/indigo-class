@@ -414,3 +414,8 @@ address a {
   width: 30px;
   margin: auto;
 }
+
+.totop__button:focus {
+  outline: 0.15em solid var(--purple-light);
+  outline-offset: 0.15em;
+}
