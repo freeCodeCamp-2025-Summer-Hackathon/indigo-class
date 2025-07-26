@@ -99,7 +99,6 @@ def seed_users():
 
 
 def seed_categories():
-    users = User.query.all()
     default_categories = [
         "Motivation",
         "Gratitude",
@@ -112,16 +111,12 @@ def seed_categories():
         "Sports",
         "Education",
     ]
-    for user in users:
-        for cat_name in default_categories:
-            exists = Category.query.filter_by(
-                user_id=user.user_id, name=cat_name
-            ).first()
-            if not exists:
-                cat = Category(
-                    name=cat_name, user_id=user.user_id, is_admin_set=(user.is_admin())
-                )
-                db.session.add(cat)
+    for cat_name in default_categories:
+        exists = Category.query.filter_by(name=cat_name).first()
+        admin_user = User.query.filter_by(username="admin").first()
+        if not exists:
+            cat = Category(name=cat_name, user_id=admin_user.user_id, is_admin_set=True)
+            db.session.add(cat)
     db.session.commit()
 
 
