@@ -71,3 +71,8 @@ CREATE TABLE user_affirmations (
     created_at TIMESTAMP DEFAULT NOW(),
     CONSTRAINT user_affirmation_uc UNIQUE(user_id, affirmation_id)
 );
+
+
+ALTER TABLE daily_mail_history DROP COLUMN scheduled_for;
+ALTER TABLE daily_mail_history ADD COLUMN success BOOLEAN DEFAULT FALSE;
+ALTER TABLE daily_mail_history ADD COLUMN error_message TEXT;

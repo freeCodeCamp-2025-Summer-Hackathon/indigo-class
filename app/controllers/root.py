@@ -4,9 +4,10 @@ from typing import List
 from flask import Blueprint, render_template, redirect, url_for
 from flask_login import login_required, current_user
 
-from app.models import User, Affirmation, UserAffirmation, Category
+from app.models import User, Affirmation, UserAffirmation, Category, DailyMailHistory
 
 from app import db
+from .. import globals
 
 root_bp = Blueprint("root", __name__)
 
@@ -40,6 +41,7 @@ def index():
         user=current_user,
         all_affirmations=all_affirmations,
         pinned_affirmations=pinned_affirmations,
+        daily_affirmation_data=globals.daily_affirmation_data,
     )
 
 
@@ -110,11 +112,14 @@ def admin_dashboard():
 
     all_users: List[User] = User.query.all()
     all_affirmations: List[Affirmation] = Affirmation.query.all()
-
+    all_categories: List[Category] = Category.query.all()
+    daily_mail_history: List[DailyMailHistory] = DailyMailHistory.query.all()
     return render_template(
         "admin/dashboard.html",
         title="Admin Dashboard",
         user=current_user,
         all_users=all_users,
         all_affirmations=all_affirmations,
+        all_categories=all_categories,
+        daily_mail_history=daily_mail_history,
     )
