@@ -1,12 +1,12 @@
 {% extends "base.html" %} {% block title %} Categories {% endblock %} {% block
 content %}
 
-<h1>Add Affirmation Category</h1>
+<h1>Add New Category</h1>
 
 <form method="POST" action="{{ url_for('categories.add_category') }}">
     <label for="category-name">Category Name:</label>
     <input type="text" name="name" id="category-name" class="form__input">
-    <button type="submit" class="affirm__action">Add</button>
+    <button type="submit" class="affirm__action">Save</button>
 </form>
 
 {% endblock %}
