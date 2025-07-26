@@ -19,11 +19,36 @@ def index():
     """
     all_affirmations: List[Affirmation] = Affirmation.query.all()
     if current_user.is_authenticated:
-        # Get both user's own categories and admin categories
-        all_categories: List[Category] = Category.query.filter(
-            (Category.user_id == current_user.user_id)
-            | (Category.is_admin_set.is_(True))
-        ).all()
+        # Get both user's own categories and admin categories, excluding duplicates
+        # by using distinct() to prevent duplicate categories when admin and user
+        # have categories with the same name
+        from sqlalchemy import distinct
+
+        # First get all category names that the user should see
+        category_names = (
+            db.session.query(distinct(Category.name))
+            .filter(
+                (Category.user_id == current_user.user_id)
+                | (Category.is_admin_set.is_(True))
+            )
+            .order_by(Category.name)
+            .all()
+        )
+
+        # Then get the actual category objects, preferring admin categories over user categories
+        all_categories = []
+        for (name,) in category_names:
+            # Try to get admin category first, then user category
+            category = (
+                Category.query.filter(
+                    Category.name == name, Category.is_admin_set.is_(True)
+                ).first()
+                or Category.query.filter(
+                    Category.name == name, Category.user_id == current_user.user_id
+                ).first()
+            )
+            if category:
+                all_categories.append(category)
     else:
         all_categories: List[Category] = Category.query.filter(
             Category.is_admin_set.is_(True)
