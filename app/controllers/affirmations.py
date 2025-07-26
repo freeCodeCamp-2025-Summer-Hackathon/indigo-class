@@ -37,7 +37,15 @@ def affirmations():
             per_page=MAX_PER_PAGE, page=page_num, error_out=True
         )
 
-    categories = Category.query.all()
+    if current_user.is_authenticated:
+        # Get both user's own categories and admin categories
+        categories = Category.query.filter(
+            (Category.user_id == current_user.user_id)
+            | (Category.is_admin_set.is_(True))
+        ).all()
+    else:
+        # For non-authenticated users, only show admin categories
+        categories = Category.query.filter(Category.is_admin_set.is_(True)).all()
     return render_template(
         "affirmations/index.html",
         all_affirmations=paginated_affirmations,
