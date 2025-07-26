@@ -128,10 +128,10 @@ def create_app():
         scheduler.start()
 
     # Set daily_affirmations if schedule hasn't triggered
-    global daily_affirmation
-    if not daily_affirmation:
+    if not globals.daily_affirmation_text:
         with app.app_context():
             daily_affirmation = Affirmation.query.order_by(db.func.random()).first()
+            globals.daily_affirmation_text = daily_affirmation.affirmation_text
 
     @app.route("/test-daily")
     def test_daily_task():
