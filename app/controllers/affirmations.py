@@ -51,10 +51,12 @@ def random_affirmation():
     Affirmations page.
     """
     random_affirmation: Affirmation = Affirmation.query.order_by(func.random()).first()
+    # Serialize categories as a list of category names
+    category_names = [ac.category.name for ac in random_affirmation.categories]
     return jsonify(
         {
             "affirmation": random_affirmation.affirmation_text,
-            "categories": random_affirmation.categories,
+            "categories": category_names,
         }
     )
 

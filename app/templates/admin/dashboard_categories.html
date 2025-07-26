@@ -1,0 +1,30 @@
+{% extends "base.html" %} {% block title %}{{ title }}{% endblock %} {% block
+content %} {% include "admin/dashboard_head.html" %}
+<div class="dashboard-tab-content" id="tab-categories">
+  <table>
+    <thead>
+      <tr>
+        <th>Category</th>
+        <th>Created At</th>
+        <th>Updated At</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for category in all_categories %}
+      <tr>
+        <td>{{ category.name }}</td>
+        <td>
+          {{ category.created_at.strftime('%Y-%m-%d %H:%M:%S') if
+          category.created_at else '' }}
+        </td>
+        <td>
+          {{ category.updated_at.strftime('%Y-%m-%d %H:%M:%S') if
+          category.updated_at else '' }}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}

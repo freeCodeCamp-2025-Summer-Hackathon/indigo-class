@@ -3,20 +3,21 @@
  * This file imports all other CSS files needed for styling
  */
 /* Importing base styles */
-@import './base/reset.css';
-@import './base/variables.css';
-@import './base/base.css';
+@import "./base/reset.css";
+@import "./base/variables.css";
+@import "./base/base.css";
 /*Importing component styles */
-@import './components/button.css';
-@import './components/form.css';
-@import './components/section.css';
-@import './components/icon-text.css';
-@import './components/affirmation.css';
-@import './components/alerts.css';
+@import "./components/button.css";
+@import "./components/form.css";
+@import "./components/section.css";
+@import "./components/icon-text.css";
+@import "./components/affirmation.css";
+@import "./components/alerts.css";
 /* Importing utility styles */
-@import './utilities/spacing.css';
-@import './utilities/colors.css';
-@import './utilities/alignment.css';
+@import "./utilities/spacing.css";
+@import "./utilities/colors.css";
+@import "./utilities/alignment.css";
 /* Importing page-specific styles */
-@import './pages/home.css';
-@import './pages/user_settings.css';
+@import "./pages/home.css";
+@import "./pages/user_settings.css";
+@import "./pages/admin.css";
