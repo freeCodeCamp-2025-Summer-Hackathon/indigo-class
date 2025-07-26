@@ -129,7 +129,16 @@ def add_affirmation():
         flash("Your affirmation has been added", "success")
         return redirect(url_for("affirmations.affirmations"))
 
-    return render_template("affirmations/add.html")
+    if current_user.is_authenticated:
+        # Get both user's own categories and admin categories
+        categories = Category.query.filter(
+            (Category.user_id == current_user.user_id)
+            | (Category.is_admin_set.is_(True))
+        ).all()
+    else:
+        # For non-authenticated users, only show admin categories
+        categories = Category.query.filter(Category.is_admin_set.is_(True)).all()
+    return render_template("affirmations/add.html", categories=categories)
 
 
 @affirmations_bp.route(
