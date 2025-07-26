@@ -26,6 +26,9 @@
       </div>
       {% endfor %} {% endif %} {% endwith %} {% block content %}{% endblock %}
     </main>
+    {%- include "_footer.html" -%}
+    <button onclick="toTop()" class="totop__button">
+      <img src="{{ url_for('static', filename='images/icon_arrow.svg') }}" alt="To top button" class="totop__icon">
+    </button>
   </body>
-  {%- include "_footer.html" -%}
 </html>
