@@ -57,6 +57,8 @@ function saveAffirmation(affirmationId) {
   });
 }
 
+let randomAffirmationRequestId = 0;
+
 function getRandomAffirmation() {
   const affirmationElement = document.getElementById("random-affirmation");
   const affirmCatElement = document.getElementById("rand-affirm-cat");
@@ -67,29 +69,40 @@ function getRandomAffirmation() {
     const oldAffirmation = affirmationElement.textContent;
     const oldCategories = affirmCatElement.textContent;
 
+    // Increment request id
+    const thisRequestId = ++randomAffirmationRequestId;
+
     fetch(`/affirmations/random?category=${categoryId}`)
       .then((response) => {
         if (!response.ok) {
           if (response.status === 429) {
             throw new Error("Please wait 10 seconds for next request");
           }
+          if (response.status === 404 || response.status === 400) {
+            if (thisRequestId === randomAffirmationRequestId) {
+              affirmationElement.textContent = "No affirmations found";
+              affirmCatElement.textContent = "No affirmations found in this category";
+            }
+            return null;
+          }
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         return response.json();
       })
       .then((data) => {
-        console.log("Affirmation Data:", data);
+        if (!data) return;
+        if (thisRequestId !== randomAffirmationRequestId) return; // Only update if this is the latest request
         if (data.error) {
           throw new Error(data.error);
         }
         affirmationElement.textContent = data.affirmation;
-        // Join categories with commas if it's an array, otherwise use as is
         const categoriesText = Array.isArray(data.categories)
           ? data.categories.join(", ")
           : data.categories;
         affirmCatElement.textContent = categoriesText;
       })
       .catch((error) => {
+        if (thisRequestId !== randomAffirmationRequestId) return;
         console.error("Error fetching random affirmation:", error);
         if (error.message === "Please wait 10 seconds for next request") {
           const errorDiv = document.createElement("div");
