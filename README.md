@@ -112,16 +112,16 @@ indigo-class/
 │   │   ├── categories.py    # Affirmation categories blueprint and routes
 │   │   ├── user.py          # User blueprint and routes
 │   │   └── admin/
-│   │       ├── dashboard.py   # Admin dashboard blueprint and routes
-│   │       └── user.html      # User management blueprint and routes
+│   │       ├── dashboard.py    # Admin dashboard blueprint and routes
+│   │       └── user.html       # User management blueprint and routes
 │   ├── static/              # Static files (CSS, JS, images)
 │   └── templates/           # HTML templates
 │       ├── base.html a      # Base template
 │       ├── _header.html     # Base template's header partial
 │       ├── _footer.html     # Base template's footer partial
 │       ├── home/
-│       │   ├── index.html             # Home page template
-│       │   └── dashboard.html         # User dashboard template
+│       │   ├── index.html       # Home page template
+│       │   └── dashboard.html   # User dashboard template
 │       ├── auth/
 │       │   ├── register.html                 # Account registration template
 │       │   ├── login.html                    # Login template
