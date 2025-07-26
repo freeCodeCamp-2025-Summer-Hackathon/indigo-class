@@ -1,0 +1,31 @@
+{% extends "base.html" %} {% block title %}{{ title }}{% endblock %} {% block
+content %} {% include "admin/dashboard_head.html" %}
+<div class="dashboard-tab-content" id="tab-daily-mail-history">
+  <table>
+    <thead>
+      <tr>
+        <th>User</th>
+        <th>Affirmation</th>
+        <th>Sent Email At</th>
+        <th>Success</th>
+        <th>Error Message</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for history in daily_mail_history %}
+      <tr>
+        <td>{{ history.user.name }}</td>
+        <td>{{ history.affirmation.affirmation_text }}</td>
+        <td>
+          {{ history.sent_email_at.strftime('%Y-%m-%d %H:%M:%S') if
+          history.sent_email_at else '' }}
+        </td>
+        <td>{{ history.success }}</td>
+        <td>{{ history.error_message }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}
