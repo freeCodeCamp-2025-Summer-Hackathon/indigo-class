@@ -5,7 +5,26 @@ content %}
 </div>
 
 {% if current_user.is_authenticated %}
+<section>
+  <h2>User Profile</h2>
+  <h3>{{ user.name }}</h3>
+  <dl class="profile">
+    <dt>Username:</dt>
+    <dd>{{ user.username }}</dd>
+    <dt>Email:</dt>
+    <dd>{{ user.email }}</dd>
+    <dt>Member since:</dt>
+    <dd>{{ user.created_at.strftime('%B %d, %Y')
+    }}</dd>
+    <dt>Email opt-in:</dt>
+    <dd>{{ "Yes" if user.is_email_opt_in else "No" }}</dd>
+  </dl>
+  <a href="{{ url_for('user_settings.user_info') }}" class="form__button btn">Settings</a>
+  <a href="{{ url_for('auth.logout') }}" class="form__button btn">Logout</a>
+</section>
+
 <section class="cta-section bg--white padding--lg">
+  <h2>Affirmations Management</h2>
   <p class="txt-center text--purple-dark">Keep words that matter to you here.</p>
   <a
     class="btn btn--primary btn--block"
@@ -16,6 +35,11 @@ content %}
     class="btn btn--primary btn--block"
     href="{{ url_for('affirmations.add_affirmation') }}"
     >Submit Affirmations</a
+  >
+  <a
+    class="btn btn--primary btn--block"
+    href="{{ url_for('categories.list_categories') }}"
+    >View Affirmation Categories</a
   >
 </section>
 {% endif %} {% endblock %}

@@ -47,8 +47,6 @@ cp .env.example .env
 uv sync
 ```
 
-
-
 ### Seed the database
 > **Note:** This will add some sample data to the database.
 ```bash
@@ -111,8 +109,11 @@ indigo-class/
 │   │   ├── root.py          # Root blueprint and routes
 │   │   ├── auth.py          # Authentication blueprint and routes
 │   │   ├── affirmations.py  # Affirmation blueprint and routes
-│   │   ├── affirmations.py  # Affirmation categories blueprint and routes
-|   |   └── user.py          # User blueprint and routes
+│   │   ├── categories.py    # Affirmation categories blueprint and routes
+│   │   ├── user.py          # User blueprint and routes
+│   │   └── admin/
+│   │       ├── dashboard.py   # Admin dashboard blueprint and routes
+│   │       └── user.html      # User management blueprint and routes
 │   ├── static/              # Static files (CSS, JS, images)
 │   └── templates/           # HTML templates
 │       ├── base.html a      # Base template
@@ -124,9 +125,9 @@ indigo-class/
 │       ├── auth/
 │       │   ├── register.html                 # Account registration template
 │       │   ├── login.html                    # Login template
-│       │   ├── profile.html                  # User profile template
 │       │   ├── reset_password_request.html   # Password reset request template
-│       │   └── new_password.html             # New password input template
+│       │   ├── new_password.html             # New password input template
+│       │   └── user_settings.html            # User settings template
 │       ├── affirmations/
 │       │   ├── index.html   # Affirmation list template
 │       │   ├── add.html     # Affirmation submission template
