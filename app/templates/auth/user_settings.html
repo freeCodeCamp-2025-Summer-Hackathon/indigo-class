@@ -71,12 +71,10 @@
         </form>
     </section>
 
-    <button type="button" class="logout__delete" id="log__out">
-        <a href="{{ url_for('auth.logout') }}" class="log__out__link">Log out</a>
-    </button>
+    <p><a href="{{ url_for('auth.logout') }}" class="log__out__link logout__delete">Log out</a></p>
 
     <button type="button" class="logout__delete" id="delete" data-type="delete">
-        <span>Delete Account</span>
+        Delete Account
     </button>
 </section>
 
