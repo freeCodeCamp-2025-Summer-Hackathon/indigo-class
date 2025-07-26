@@ -14,12 +14,32 @@ content %}
     required
   >
   </textarea>
+  <p><label for="category_id">Select a category:</label></p>
+  <select id="category_id" name="category_id" class="form__input">
+    <option value="">Select a category</option>
+    {% for category in categories %}
+    <option value="{{ category.category_id }}">
+      {{ category.name.replace("-", " ") }}
+    </option>
+    {% endfor %}
+  </select>
+  <p>
+    <a href="{{ url_for('categories.add_category') }}" class=""
+      >Add a new category</a
+    >
+    or
+    <a href="{{ url_for('categories.list_categories') }}" class=""
+      >See all categories</a
+    >
+  </p>
 
   <button type="submit" class="affirm__action">Submit</button>
 </form>
 
 <section class="affirm__section--bottom">
-  <a href="{{ url_for('affirmations.affirmations') }}" class="affirm__action">See all affirmations</a>
+  <a href="{{ url_for('affirmations.affirmations') }}" class="affirm__action"
+    >See all affirmations</a
+  >
 </section>
 
 {% endblock %}
