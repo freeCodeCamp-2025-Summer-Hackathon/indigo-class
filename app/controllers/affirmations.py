@@ -2,8 +2,9 @@ from flask import Blueprint, flash, jsonify, redirect, render_template, request,
 from flask_login import current_user, login_required
 from sqlalchemy import func
 from sqlalchemy.dialects.postgresql import insert
+from threading import Timer
 
-from app import db
+from app import db, globals
 from app.models import (
     Affirmation,
     SavedAffirmation,
@@ -48,9 +49,45 @@ def affirmations():
 @affirmations_bp.route("/affirmations/random", methods=["GET"])
 def random_affirmation():
     """
-    Affirmations page.
+    Get a random affirmation, optionally filtered by category.
+    Rate limited to one request per 10 seconds.
     """
-    random_affirmation: Affirmation = Affirmation.query.order_by(func.random()).first()
+    # Check rate limit
+    if not current_user.is_authenticated:
+        client_ip = request.remote_addr
+        key = f"random_affirmation:{client_ip}"
+    else:
+        key = f"random_affirmation:{current_user.user_id}"
+
+    # Check if key exists in rate limit dict
+    if key in globals.rate_limit_dict:
+        return jsonify({"error": "Please wait 10 seconds for next request"}), 429
+
+    # Set rate limit
+    globals.rate_limit_dict[key] = True
+
+    # Remove rate limit after 10 seconds
+    def remove_rate_limit():
+        if key in globals.rate_limit_dict:
+            del globals.rate_limit_dict[key]
+
+    Timer(10.0, remove_rate_limit).start()
+
+    category = request.args.get("category")
+    if category and category != "all":
+        random_affirmation = (
+            Affirmation.query.join(AffirmationCategory)
+            .join(Category)
+            .filter(Category.category_id == category)
+            .order_by(func.random())
+            .first()
+        )
+    else:
+        random_affirmation = Affirmation.query.order_by(func.random()).first()
+
+    if not random_affirmation:
+        return jsonify({"error": "No affirmations found"}), 404
+
     # Serialize categories as a list of category names
     category_names = [ac.category.name for ac in random_affirmation.categories]
     return jsonify(
