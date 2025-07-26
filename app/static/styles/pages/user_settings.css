@@ -1,275 +1,235 @@
 :root {
-    --modal-bg: rgba(0, 0, 0, 0.6);
-}
-
-.user__setting_font__size{
-    font-size: 1.5rem;
+  --modal-bg: rgba(0, 0, 0, 0.6);
 }
 
 .setting__bg {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    height: 3.5rem;
-    padding: 0.3rem;
-    font-size: 1rem;
-    background-color: var(--purple-outline);
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 3.5rem;
+  padding: 0.3rem;
+  font-size: 1rem;
+  background-color: var(--purple-outline);
 }
 
 .user__setting--user {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.3em;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3em;
+  align-items: center;
+  justify-content: center;
 }
 
 .edit__btn {
-    border: none;
-    aspect-ratio: 1 / 1;
-    border-radius: 50%;
-    background-color: transparent;
+  border: none;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  background-color: transparent;
 }
 
 .edit__icon {
-    height: 2rem;
-    cursor: pointer;
+  height: 2rem;
+  cursor: pointer;
 }
 
 .edit__btn.pic {
-    position: relative;
-    left: 11.5rem;
-    bottom: 3rem;
+  position: relative;
+  left: 11.5rem;
+  bottom: 3rem;
 }
 
 .modal__bg {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: var(--modal-bg);
-    justify-content: center;
-    align-items: center;
-    z-index: 10;
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--modal-bg);
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
 }
 
 .modal__content {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--white);
-    border: 7px solid var(--purple-dark);
-    padding: 0.3rem;
-    border-radius: 10px;
-    width: 90%;
-    max-width: 400px;
-    position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--white);
+  border: 7px solid var(--purple-dark);
+  padding: 0.3rem;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 400px;
+  position: relative;
 }
 
 .modal__content label {
-    margin-bottom: 1rem;
+  margin-bottom: 1rem;
 }
 
 .modal__content input {
-    width: 100%;
-    border: 0.25rem solid var(--purple-light);
-    padding: 0.5rem 0.5rem;
-    border-radius: 10px;
-    box-sizing: border-box;
-    margin-bottom: 1rem;
+  width: 100%;
+  border: 0.25rem solid var(--purple-light);
+  padding: 0.5rem 0.5rem;
+  border-radius: 10px;
+  box-sizing: border-box;
+  margin-bottom: 1rem;
 }
 
 .modal__content .submit {
-        width: 100%;
-        border: none;
-        border-radius: 10px;
-        background-color: var(--purple-dark);
-        color: var(--white);
-        padding: 1rem;
-        margin: 1rem 0 0.5rem;
-        cursor: pointer;
-}
-
-.modal__content .submit:hover {
-    text-decoration: underline;
-}
-
-.modal__content .close {
-    position: absolute;
+    width: 100%;
+    border: none;
+    border-radius: 10px;
+    background-color: var(--purple-dark);
     color: var(--white);
-    background-color: var(--red-important);
-    padding: 0.15rem 0.15rem;
-    border-radius: 8px;
-    top: 0.3rem;
-    right: 0.3rem;
+    padding: 1rem;
+    margin: 1rem 0 0.5rem;
     cursor: pointer;
 }
 
+.modal__content .submit:hover {
+  text-decoration: underline;
+}
+
+.modal__content .close {
+  position: absolute;
+  color: var(--white);
+  background-color: var(--red-important);
+  padding: 0.15rem 0.15rem;
+  border-radius: 8px;
+  top: 0.3rem;
+  right: 0.3rem;
+  cursor: pointer;
+}
+
 .modal__content .close:hover {
-    background-color: var(--red-important-hover);
+  background-color: var(--red-important-hover);
 }
 
 .modal__content .paragraph{
-    text-align: center;
-    margin: 1rem 0;
+  text-align: center;
+  margin: 1rem 0;
 }
 
 .modal__content .cancel{
-    background-color: var(--purple-dark);
-    color: var(--white);
-    width: 98%;
-    padding: 1rem;
+  background-color: var(--purple-dark);
+  color: var(--white);
+  width: 98%;
+  padding: 1rem;
 }
 
 .modal__content .cancel:hover{
-    background-color: var(--purple-light);
-    text-decoration: underline;
+  background-color: var(--purple-light);
+  text-decoration: underline;
 }
 
 
 .profile__pic {
-    margin: 1rem auto;
-    height: 6rem;
-    background-color: var(--purple-outline);
-    border: 5px solid var(--purple-dark);
-    border-radius: 50%;
-}
-
-.content {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    background-color: var(--purple-dark);
-    color: var(--white);
-    font-size: 1rem;
-    width: 100%;
-    padding: 0.2rem;
-    margin-bottom: 1rem;
-}
-
-.input__row {
-    display: flex;
-    align-items: center;
-    margin-bottom: 1rem;
-}
-
-.input__row label {
-    width: 100%;
-}
-
-.form__group {
-    width: 100%;
-}
-
-.form__actions {
-    display:flex;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 1rem;
-    margin-top: 1rem;
+  margin: 1rem auto;
+  height: 6rem;
+  background-color: var(--purple-outline);
+  border: 5px solid var(--purple-dark);
+  border-radius: 50%;
 }
 
 .submit {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    font-weight: bold;
-    background-color: var(--white);
-    color: var(--purple-dark);
-    border: 3px solid var(--white);
-    border-radius: 5px;
-    padding: 0;
-    width: 5rem;
-    height: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-weight: bold;
+  background-color: var(--white);
+  color: var(--purple-dark);
+  border: 3px solid var(--white);
+  border-radius: 5px;
+  padding: 0;
+  width: 5rem;
+  height: 3rem;
 }
 
 .submit:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 .close {
-    color: var(--white);
-    background-color: var(--red-important);
-    font-size: 2rem;
-    border-radius: 8px;
-    padding: 0;
-    width: 2rem;
-    height: 3rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
+  color: var(--white);
+  background-color: var(--red-important);
+  font-size: 2rem;
+  border-radius: 8px;
+  padding: 0;
+  width: 2rem;
+  height: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
 }
 
 .close:hover {
-    background-color: var(--red-important-hover);
+  background-color: var(--red-important-hover);
 }
 
 .daily__affirmation {
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    gap: 1rem;
-    margin: 1em 0;
-    padding: 0 1rem;
-    color: var(--purple-dark);
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 1rem;
+  margin: 1em 0;
+  padding: 0 1rem;
+  color: var(--purple-dark);
 }
 
 .checkbox__wrapper {
-    display: flex;
-    gap: 0.7em;
-    flex-wrap: wrap;
-    align-items: center;
-    margin-bottom: 1rem;
+  display: flex;
+  gap: 0.7em;
+  flex-wrap: wrap;
+  align-items: center;
 }
 
 .check__box {
-    width: 2rem;
-    height: 2rem;
-    appearance: none;
-    border-radius: 4px;
-    background-color: var(--white);
-    cursor: pointer;
-    display: inline-block;
-    position: relative;
+  width: 2rem;
+  height: 2rem;
+  appearance: none;
+  border-radius: 4px;
+  background-color: var(--purple-dark);
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
 }
 
 .checkbox__label {
-    font-size: 1em;
+  font-size: 1em;
 }
 
 .check__box:checked::after {
-    content: "✔";
-    color: var(--purple-dark);
-    font-size: 2rem;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -55%);
+  content: "✔";
+  color: var(--white);
+  font-size: 2rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -55%);
 }
 
 .logout__delete {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    width: 100%;
-    padding: 0.5rem;
-    color: var(--white);
-    font-size: 1rem;
-    background-color: var(--red-important);
-    border: none;
-    border-radius: 10px;
-    margin: 1rem auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+  padding: 0.5rem;
+  color: var(--white);
+  background-color: var(--red-important);
+  border: none;
+  border-radius: 10px;
+  margin: 2em auto;
 }
 
 .logout__delete:hover {
-    background-color: var(--red-important-hover);
-    text-decoration: underline;
+  background-color: var(--red-important-hover);
+  text-decoration: underline;
 }
 
 .log__out__link {
-    color: var(--white);
+  color: var(--white);
 }
