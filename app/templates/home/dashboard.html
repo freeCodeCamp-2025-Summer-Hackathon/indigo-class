@@ -7,8 +7,10 @@ content %}
 {% if current_user.is_authenticated %}
 <h2>User Profile</h2>
 <section class="profile">
-  <img src="{{ url_for('static', filename='images/profile_img.svg') }}" class="profile__pic" alt="User profile picture">
-  <h3>{{ user.name }}</h3>
+  <div class="profile__user">
+    <img src="{{ url_for('static', filename='images/profile_img.svg') }}" class="profile__pic" alt="User profile picture">
+    <h3 class="profile__name">{{ user.name }}</h3>
+  </div>
   <dl>
     <dt>Username:</dt>
     <dd>{{ user.username }}</dd>

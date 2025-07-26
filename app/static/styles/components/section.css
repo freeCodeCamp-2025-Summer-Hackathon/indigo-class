@@ -24,6 +24,17 @@
     gap: 0.5em;
 }
 
+.profile__user {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1em;
+    align-items: center;
+}
+
+.profile__name {
+    font-size: 1.5em;
+}
+
 .profile dt {
     font-weight: 700;
 }
