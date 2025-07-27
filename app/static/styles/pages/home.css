@@ -11,6 +11,18 @@
   text-align: center;
 }
 
+.home__hero h1 {
+  line-height: 1.2;
+  color: var(--purple-dark);
+  font-size: 2.375rem;
+  font-weight: normal;
+}
+
+.home__hero p {
+  font-size: 1.5rem;
+  color: var(--purple-dark);
+}
+
 .home__save-affirms {
   text-align: center;
   background-color: var(--purple-outline);

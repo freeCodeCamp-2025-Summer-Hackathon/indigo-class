@@ -21,6 +21,12 @@
     height: 19px;
 }
 
+.icon-text--bulb .icon-text__icon {
+    background-image: url('../../images/bulb_purple.svg');
+    width: 13px;
+    height: 18px;
+}
+
 .icon-text--checkbox .icon-text__icon {
     background-color: var(--purple-dark);
     background-image: url('../../images/check_white.svg');
