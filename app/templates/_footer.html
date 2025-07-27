@@ -18,8 +18,8 @@
     <a href="{{ url_for('auth.register') }}" class="footer__register--button">Register now</a>
     <p class="login__prompt">Have an account already? <a href="{{ url_for('auth.login') }}">Log in</a></p>
   </section>
-  <section>
-    <a href="{{ url_for('root.index') }}"><img src="{{ url_for('static', filename='images/logo_white.svg') }}" alt="DailyDose logo" class="footer__logo"></a>
+  <section class="footer__top">
+    <a class="footer__logo" href="{{ url_for('root.index') }}"><img src="{{ url_for('static', filename='images/logo_white.svg') }}" alt="DailyDose logo"></a>
   </section>
   <address>Developed by <a href="https://github.com/freeCodeCamp-2025-Summer-Hackathon/indigo-class">indigo-class</a>, team of <a href="https://github.com/freeCodeCamp-2025-Summer-Hackathon">freeCodeCamp 2025 Summer Hackathon</a>.</address>
   {% endif %}

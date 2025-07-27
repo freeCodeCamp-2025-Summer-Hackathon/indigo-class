@@ -109,17 +109,84 @@ def admin_dashboard():
     """
     if not current_user.is_admin():
         return redirect(url_for("root.index"))
-
-    all_users: List[User] = User.query.all()
-    all_affirmations: List[Affirmation] = Affirmation.query.all()
-    all_categories: List[Category] = Category.query.all()
-    daily_mail_history: List[DailyMailHistory] = DailyMailHistory.query.all()
     return render_template(
         "admin/dashboard.html",
         title="Admin Dashboard",
         user=current_user,
+        total_users=User.query.count(),
+        total_affirmations=Affirmation.query.count(),
+        total_categories=Category.query.count(),
+        total_daily_emails=DailyMailHistory.query.count(),
+    )
+
+
+@root_bp.route("/admin/dashboard/users")
+@login_required
+def admin_dashboard_users():
+    """
+    Admin dashboard - requires authentication.
+    """
+    if not current_user.is_admin():
+        return redirect(url_for("root.index"))
+
+    all_users: List[User] = User.query.all()
+    return render_template(
+        "admin/dashboard_users.html",
+        title="Users",
+        user=current_user,
         all_users=all_users,
+    )
+
+
+@root_bp.route("/admin/dashboard/affirmations")
+@login_required
+def admin_dashboard_affirmations():
+    """
+    Admin dashboard - requires authentication.
+    """
+    if not current_user.is_admin():
+        return redirect(url_for("root.index"))
+
+    all_affirmations: List[Affirmation] = Affirmation.query.all()
+    return render_template(
+        "admin/dashboard_affirmations.html",
+        title="Affirmations",
+        user=current_user,
         all_affirmations=all_affirmations,
+    )
+
+
+@root_bp.route("/admin/dashboard/categories")
+@login_required
+def admin_dashboard_categories():
+    """
+    Admin dashboard - requires authentication.
+    """
+    if not current_user.is_admin():
+        return redirect(url_for("root.index"))
+
+    all_categories: List[Category] = Category.query.all()
+    return render_template(
+        "admin/dashboard_categories.html",
+        title="Categories",
+        user=current_user,
         all_categories=all_categories,
+    )
+
+
+@root_bp.route("/admin/dashboard/daily-mail-history")
+@login_required
+def admin_dashboard_daily_mail_history():
+    """
+    Admin dashboard - requires authentication.
+    """
+    if not current_user.is_admin():
+        return redirect(url_for("root.index"))
+
+    daily_mail_history: List[DailyMailHistory] = DailyMailHistory.query.all()
+    return render_template(
+        "admin/dashboard_daily_mail_history.html",
+        title="Daily Mail History",
+        user=current_user,
         daily_mail_history=daily_mail_history,
     )

@@ -82,3 +82,24 @@ function updateActionType(affirmationId, actionType) {
     body: JSON.stringify({ affirmationId })
   })
 }
+
+function showEditCategoryDialog(categoryId, categoryName) {
+  const dialog = document.getElementById("category-edit-dialog");
+  const dialogCategoryName = document.querySelector("#category-edit-dialog #dialog-category-name");
+  const dialogCategoryId = document.querySelector("#category-edit-dialog #dialog-category-id");
+
+  dialogCategoryName.value = categoryName;
+  dialogCategoryId.value = categoryId;
+
+  dialog.showModal();
+}
+
+function showCreateCategoryDialog() {
+  const dialog = document.getElementById("category-create-dialog");
+  dialog.showModal();
+}
+
+function closeDialog(dialogId) {
+  const dialog = document.getElementById(dialogId);
+  dialog.close();
+}

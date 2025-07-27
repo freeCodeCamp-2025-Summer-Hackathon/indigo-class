@@ -1,0 +1,35 @@
+{% extends "base.html" %} {% block title %}{{ title }}{% endblock %} {% block
+content %}
+<div class="dashboard-tab-content" id="tab-affirmations">
+  <table>
+    <thead>
+      <tr>
+        <th>Affirmation</th>
+        <th>Categories</th>
+        <th>Created At</th>
+        <th>Updated At</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for affirmation in all_affirmations %}
+      <tr>
+        <td>{{ affirmation.affirmation_text }}</td>
+        <td>
+          {% for category in affirmation.categories %} {{ category.category.name
+          }} {% endfor %}
+        </td>
+        <td>
+          {{ affirmation.created_at.strftime('%Y-%m-%d %H:%M:%S') if
+          affirmation.created_at else '' }}
+        </td>
+        <td>
+          {{ affirmation.updated_at.strftime('%Y-%m-%d %H:%M:%S') if
+          affirmation.updated_at else '' }}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}
