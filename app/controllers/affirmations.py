@@ -314,7 +314,7 @@ def select_affirmation_category():
     return jsonify({"message": "category selected"}), 200
 
 
-ACTION_TYPES_LIMIT_DICT = {"pin": 3, "favorite": 15}
+ACTION_TYPES_LIMIT_DICT = {"pin": 3, "favorite": 15, "delete": 1}
 
 
 @affirmations_bp.post("/affirmations/action/<action_type>")
@@ -327,7 +327,24 @@ def add_user_affirmation_with_action_type(action_type):
     data = request.get_json()
     affirmation_id = data.get("affirmationId")
 
-    # check if action type already reach limit
+    # check if affirmation exists
+    affirmation = Affirmation.query.get(affirmation_id)
+    if affirmation is None:
+        return jsonify({"error": "Affirmation not found"}), 404
+
+    if action_type == "delete":
+        # For delete, remove the affirmation from user's pins/favorites
+        try:
+            UserAffirmation.query.filter_by(
+                user_id=current_user.user_id, affirmation_id=affirmation_id
+            ).delete()
+            db.session.commit()
+            return jsonify({"message": "Affirmation actions removed"}), 200
+        except Exception as e:
+            db.session.rollback()
+            return jsonify({"error": f"Error removing affirmation: {str(e)}"}), 500
+
+    # For other actions, check if limit reached
     affirmation_count = (
         db.session.query(UserAffirmation)
         .filter(
@@ -338,11 +355,6 @@ def add_user_affirmation_with_action_type(action_type):
     )
     if affirmation_count >= ACTION_TYPES_LIMIT_DICT[action_type]:
         return jsonify({"error": f"{action_type} already limited"}), 400
-
-    # check if affirmation exists
-    affirmation = Affirmation.query.get(affirmation_id)
-    if affirmation is None:
-        return jsonify({"error": "Affirmation not found"}), 404
 
     # insert users_affirmations
     try:
@@ -362,9 +374,4 @@ def add_user_affirmation_with_action_type(action_type):
         db.session.rollback()
         return jsonify({"error": "an error occurred: {}".format(e)}), 500
 
-    # refresh page
-    request_referrer = request.referrer
-    if not request_referrer:
-        return redirect(url_for("root.index"))
-
-    return redirect(request_referrer)
+    return jsonify({"message": f"Affirmation {action_type}d successfully"}), 200
