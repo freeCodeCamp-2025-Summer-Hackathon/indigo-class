@@ -137,6 +137,19 @@ function updateActionType(affirmationId, actionType) {
     },
     body: JSON.stringify({ affirmationId })
   })
+    .then(response => response.json())
+    .then(data => {
+      if (data.error) {
+        console.error("Error:", data.error);
+        return;
+      }
+
+      // Refresh the page to show updated state
+      window.location.reload();
+    })
+    .catch(error => {
+      console.error("Error updating action:", error);
+    });
 }
 
 function showEditCategoryDialog(categoryId, categoryName) {
