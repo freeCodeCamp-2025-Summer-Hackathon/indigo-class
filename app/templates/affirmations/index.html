@@ -54,7 +54,19 @@ content %}
             {{ category.category.name }}
           {% endfor %}
         </figcaption>
+        {% if current_user.is_authenticated %}
+          {% if affirmation.affirmation_id in pinned_affirmation_ids %}
+            <button class="btn btn--primary pin-btn" onclick="handleAffirmationUnpin('{{ affirmation.affirmation_id }}')">
+              <span>Unpin</span><i class="fas fa-thumbtack"></i>
+            </button>
+          {% else %}
+            <button class="btn btn--secondary pin-btn" onclick="handleAffirmationPin('{{ affirmation.affirmation_id }}')">
+              <span>Pin</span><i class="fas fa-thumbtack"></i>
+            </button>
+          {% endif %}
+        {% endif %}
       </figure>
+     
     </div>
     {% endfor %}
   </div>
