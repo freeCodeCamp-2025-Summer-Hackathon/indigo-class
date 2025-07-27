@@ -83,3 +83,30 @@
 .form__checkbox:checked::after {
   display: block;
 }
+
+.form__select {
+  border-radius: var(--radius-md);
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+  position: relative;
+}
+
+.form__select label {
+  background-color: var(--purple-dark);
+  color: white;
+  font-size: 0.875rem;
+  line-height: 37px;
+  height: 37px;
+  width: 114px;
+  text-align: center;
+}
+
+.form__select select {
+  border: none;
+  border: 3px solid var(--purple-outline);
+  border-left-width: 0;
+  padding-left: 10px;
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  flex-grow: 1;
+}

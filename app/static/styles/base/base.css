@@ -30,10 +30,10 @@ body {
   min-height: 100vh;
   margin: 3.5rem 0 0 0;
   background-color: var(--body-bg-clr);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+}
+
+main {
+  margin-inline: auto;
 }
 
 hr {
