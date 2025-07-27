@@ -35,12 +35,13 @@
     font-size: 1.5em;
 }
 
-.profile dt {
+.profile__details dt {
     font-weight: 700;
+    margin-top: 1em;
 }
 
-.profile dd {
-    margin-left: 2em;
+.profile__details dd {
+    font-size: 1.3em;
 }
 
 .category {

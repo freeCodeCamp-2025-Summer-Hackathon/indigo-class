@@ -5,17 +5,20 @@ content %}
 </div>
 
 {% if current_user.is_authenticated %}
-<h2>User Profile</h2>
-<section class="profile">
+<section class="profile padding--lg"">
+  <h2>User Profile</h2>
   <div class="profile__user">
     <img src="{{ url_for('static', filename='images/profile_img.svg') }}" class="profile__pic" alt="User profile picture">
-    <h3 class="profile__name">{{ user.name }}</h3>
+    <dl class="profile__details">
+      <dt>Username:</dt>
+      <dd>{{ user.username }}</dd>
+    </dl>
   </div>
-  <dl>
-    <dt>Username:</dt>
-    <dd>{{ user.username }}</dd>
+  <dl class="profile__details">
     <dt>Email:</dt>
     <dd>{{ user.email }}</dd>
+    <dt>Name:</dt>
+    <dd>{{ user.name }}</dd>
     <dt>Member since:</dt>
     <dd>{{ user.created_at.strftime('%B %d, %Y')
     }}</dd>
@@ -23,7 +26,6 @@ content %}
     <dd>{{ "Yes" if user.is_email_opt_in else "No" }}</dd>
   </dl>
   <a href="{{ url_for('user_settings.user_info') }}" class="form__button btn">Settings</a>
-  <a href="{{ url_for('auth.logout') }}" class="form__button btn">Logout</a>
 </section>
 
 <section class="cta-section bg--white padding--lg">
