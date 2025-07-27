@@ -56,7 +56,12 @@ content %}
   <div class="affirms__wrapper">
     {% for affirmation in pinned_affirmations %}
     <div class="affirm">
-      <button class="btn btn--danger delete-pin">&times;</button>
+      <button
+        class="btn btn--danger delete-pin"
+        onclick="updateActionType('{{ affirmation.affirmation_id }}', 'delete')"
+      >
+        &times;
+      </button>
       <figure class="affirm__wrapper">
         <blockquote class="affirm__quote">
           {{ affirmation.affirmation_text }}
