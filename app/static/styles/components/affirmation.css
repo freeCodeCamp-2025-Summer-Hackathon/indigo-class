@@ -104,8 +104,9 @@ form .affirm__edit {
   margin: 0;
 }
 
-.pagination ul li {
+.pagination ul li a {
 	border-radius: 50%;
+  color: var(--purple-dark);
 	display: inline-block;
 	width: 18px;
 	height: 18px;
@@ -116,20 +117,7 @@ form .affirm__edit {
 	font-weight: bold;
 }
 
-.pagination ul li.active {
+.pagination ul li.active a {
 	background-color: var(--purple-dark);
 	color: white;
-}
-
-.category {
-  display: grid;
-  gap: 0.5em;
-}
-
-.category__name {
-  text-align: center;
-  font-size: 1.5rem;
-  border: 0.1em solid var(--purple-light);
-  border-radius: 0.3em;
-  background-color: var(--white);
 }

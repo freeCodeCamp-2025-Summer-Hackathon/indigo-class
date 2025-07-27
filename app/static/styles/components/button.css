@@ -24,6 +24,11 @@ button {
   background-color: var(--purple-light);
 }
 
+.btn--secondary {
+  background-color: var(--purple-light);
+  color: #fff;
+}
+
 .btn--dashed {
   background-color: #fff;
   border: 3px dashed var(--purple-dark);

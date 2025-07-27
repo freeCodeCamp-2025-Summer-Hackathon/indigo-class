@@ -1,0 +1,54 @@
+dialog {
+	margin: auto;
+	position: relative;
+	border: 3px solid var(--purple-dark);
+	border-radius: 19px;
+}
+
+::backdrop {
+    background-color: var(--body-bg-clr);
+}
+
+.dialog__close-btn {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	line-height: 16px;
+	padding-inline: 10px;
+}
+
+.dialog__title {
+	font-size: 1.25rem;
+	font-weight: bold;
+}
+
+.dialog__content {
+    padding-block: var(--space-md);
+}
+
+.dialog__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.dialog__form label {
+  font-size: 1.25rem;
+  font-weight: bold;
+  line-height: 1;
+}
+
+.dialog__form input[type="text"] {
+  border: 2px solid var(--purple-light);
+  border-radius: var(--radius-sm);
+  color: var(--purple-dark);
+  padding: var(--space-sm);
+}
+
+.dialog__form-tip {
+  font-size: 0.8125rem;
+  color: var(--purple-light);
+  line-height: 1;
+  display: block;
+  text-align: right;
+}

@@ -15,7 +15,7 @@
     />
     <script src="{{ url_for('static', filename='scripts/index.js') }}"></script>
   </head>
-  <body>
+  <body class="{% if current_user.is_authenticated and current_user.is_admin %}is-admin{% endif %}">
     {%- include "_header.html" -%}
     <main>
       {% with messages = get_flashed_messages(with_categories=true) %} {% if
