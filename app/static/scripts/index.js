@@ -18,6 +18,29 @@ function navAdminDesktopLogOut() {
   }
 }
 
+// Function to show flash messages
+function showFlashMessage(message, category = 'error') {
+  const alertDiv = document.createElement('div');
+  alertDiv.className = `alert alert-${category}`;
+  alertDiv.innerHTML = `
+    <p>${message}</p>
+    <button class="alert__btn" type="button" onclick="this.parentElement.remove()" aria-label="Close alert">✕</button>
+  `;
+
+  // Insert at the beginning of main content
+  const main = document.querySelector('main');
+  if (main) {
+    main.insertBefore(alertDiv, main.firstChild);
+  }
+
+  // Auto-remove after 5 seconds
+  setTimeout(() => {
+    if (alertDiv.parentElement) {
+      alertDiv.remove();
+    }
+  }, 5000);
+}
+
 // To top button
 document.addEventListener("DOMContentLoaded", function () {
   const scrollToTopBtn = document.querySelector(".totop__button");
@@ -363,6 +386,63 @@ function handleAffirmationDelete(affirmationId) {
         alert('An error occurred while deleting the affirmation.');
       });
   }
+}
+
+function handleAffirmationPin(affirmationId) {
+  fetch(`/affirmations/action/pin`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ affirmationId })
+  })
+    .then(response => response.json())
+    .then(data => {
+      if (data.error) {
+        // Show flash message for pin limit
+        if (data.error.includes('pin already limited')) {
+          showFlashMessage('You have reached the maximum limit of 3 pinned affirmations. Please unpin another affirmation first.', 'error');
+        } else {
+          showFlashMessage('Error: ' + data.error, 'error');
+        }
+        return;
+      }
+      // Show success message and refresh the page
+      showFlashMessage('Affirmation pinned successfully!', 'success');
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      showFlashMessage('An error occurred while pinning the affirmation.', 'error');
+    });
+}
+
+function handleAffirmationUnpin(affirmationId) {
+  fetch(`/affirmations/action/delete`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ affirmationId })
+  })
+    .then(response => response.json())
+    .then(data => {
+      if (data.error) {
+        showFlashMessage('Error: ' + data.error, 'error');
+        return;
+      }
+      // Show success message and refresh the page
+      showFlashMessage('Affirmation unpinned successfully!', 'success');
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      showFlashMessage('An error occurred while unpinning the affirmation.', 'error');
+    });
 }
 
 function handleAffirmationDialogSubmit(event) {
