@@ -39,42 +39,37 @@ def affirmations():
         )
 
     if current_user.is_authenticated:
-        # Get both user's own categories and admin categories, excluding duplicates
-        from sqlalchemy import distinct
-
-        # First get all category names that the user should see
-        category_names = (
-            db.session.query(distinct(Category.name))
-            .filter(
-                (Category.user_id == current_user.user_id)
-                | (Category.is_admin_set.is_(True))
-            )
-            .order_by(Category.name)
-            .all()
-        )
-
-        # Then get the actual category objects, preferring admin categories over user categories
-        categories = []
-        for (name,) in category_names:
-            # Try to get admin category first, then user category
-            category = (
-                Category.query.filter(
-                    Category.name == name, Category.is_admin_set.is_(True)
-                ).first()
-                or Category.query.filter(
-                    Category.name == name, Category.user_id == current_user.user_id
-                ).first()
-            )
-            if category:
-                categories.append(category)
+        if current_user.is_admin():
+            # Admin can see all categories
+            categories = Category.query.all()
+            admin_categories = Category.query.filter(
+                Category.is_admin_set.is_(True)
+            ).all()
+            user_categories = Category.query.filter(
+                Category.is_admin_set.is_(False)
+            ).all()
+        else:
+            # Regular users can only see their own categories
+            categories = Category.query.filter(
+                Category.user_id == current_user.user_id
+            ).all()
+            admin_categories = []
+            user_categories = Category.query.filter(
+                Category.user_id == current_user.user_id
+            ).all()
     else:
         # For non-authenticated users, only show admin categories
         categories = Category.query.filter(Category.is_admin_set.is_(True)).all()
+        admin_categories = Category.query.filter(Category.is_admin_set.is_(True)).all()
+        user_categories = []
+
     return render_template(
         "affirmations/index.html",
         all_affirmations=paginated_affirmations,
         user=current_user,
         categories=categories,
+        admin_categories=admin_categories,
+        user_categories=user_categories,
     )
 
 
@@ -142,13 +137,22 @@ def add_affirmation():
         return redirect(url_for("root.index"))
 
     if request.method == "POST":
-        text: str | None = request.form.get("affirmation_text")
-        category_id_str = request.form.get("category_id")
-        category_id = (
-            int(category_id_str) if category_id_str and category_id_str != "" else None
-        )
+        # Handle both form data and JSON
+        if request.is_json:
+            text = request.json.get("affirmation_text")
+            category_ids = request.json.get("category_ids", [])
+        else:
+            text = request.form.get("affirmation_text")
+            category_id_str = request.form.get("category_id")
+            category_ids = (
+                [int(category_id_str)]
+                if category_id_str and category_id_str != ""
+                else []
+            )
 
         if text is None or text.strip() == "":
+            if request.is_json:
+                return jsonify({"error": "Please type your affirmation"}), 400
             flash("Please type your affirmation", "error")
             return render_template("affirmations/add.html")
 
@@ -161,23 +165,45 @@ def add_affirmation():
         db.session.add(affirmation)
         db.session.flush()  # Flush to get the affirmation ID
 
-        # Add category if provided
-        if category_id:
-            category = Category.query.get(category_id)
-            if not category:
-                flash("Category not found", "error")
-                db.session.rollback()
-                return render_template("affirmations/add.html")
+        # Add categories if provided
+        if category_ids:
+            for category_id in category_ids:
+                try:
+                    category_id_int = int(category_id)
+                    category = Category.query.get(category_id_int)
+                    if not category:
+                        if request.is_json:
+                            return (
+                                jsonify(
+                                    {
+                                        "error": f"Category with ID {category_id} not found"
+                                    }
+                                ),
+                                404,
+                            )
+                        flash(f"Category with ID {category_id} not found", "error")
+                        db.session.rollback()
+                        return render_template("affirmations/add.html")
 
-            # Create the relationship through AffirmationCategory
-            affirmation_category = AffirmationCategory(
-                affirmation_id=affirmation.affirmation_id,
-                category_id=category.category_id,
-            )
-            db.session.add(affirmation_category)
+                    # Create the relationship through AffirmationCategory
+                    affirmation_category = AffirmationCategory(
+                        affirmation_id=affirmation.affirmation_id,
+                        category_id=category.category_id,
+                    )
+                    db.session.add(affirmation_category)
+                except (ValueError, TypeError):
+                    if request.is_json:
+                        return (
+                            jsonify({"error": f"Invalid category ID: {category_id}"}),
+                            400,
+                        )
+                    flash(f"Invalid category ID: {category_id}", "error")
+                    return render_template("affirmations/add.html")
 
         db.session.commit()
 
+        if request.is_json:
+            return jsonify({"message": "Your affirmation has been added"}), 200
         flash("Your affirmation has been added", "success")
         return redirect(url_for("affirmations.affirmations"))
 
@@ -197,18 +223,80 @@ def add_affirmation():
 def edit_affirmation(affirmation_id):
     affirmation = Affirmation.query.get_or_404(affirmation_id)
     if affirmation.user_id != current_user.user_id:
+        if request.is_json:
+            return jsonify({"error": "Can not edit others affirmation"}), 403
         flash("Can not edit others affirmation", "error")
         return redirect(url_for("affirmations.affirmations"))
 
     if request.method == "POST":
-        textInput: str | None = request.form.get("affirmation_text")
+        # Handle both form data and JSON
+        if request.is_json:
+            textInput = request.json.get("affirmation_text")
+            category_ids = request.json.get("category_ids", [])
+        else:
+            textInput = request.form.get("affirmation_text")
+            category_id_str = request.form.get("category_id")
+            category_ids = (
+                [int(category_id_str)]
+                if category_id_str and category_id_str != ""
+                else []
+            )
 
         if not textInput:
+            if request.is_json:
+                return jsonify({"error": "Affirmation text is required"}), 400
             return render_template("affirmations/edit.html", affirmation=affirmation)
 
+        # Update affirmation text
         affirmation.affirmation_text = textInput
+
+        # Handle category changes
+        if request.is_json:
+            try:
+                # Remove existing category relationships
+                AffirmationCategory.query.filter_by(
+                    affirmation_id=affirmation.affirmation_id
+                ).delete()
+
+                # Add new category relationships if provided
+                if category_ids:
+                    for category_id in category_ids:
+                        category_id_int = int(category_id)
+                        category = Category.query.get(category_id_int)
+                        if not category:
+                            if request.is_json:
+                                return (
+                                    jsonify(
+                                        {
+                                            "error": f"Category with ID {category_id} not found"
+                                        }
+                                    ),
+                                    404,
+                                )
+                            flash(f"Category with ID {category_id} not found", "error")
+                            db.session.rollback()
+                            return render_template(
+                                "affirmations/edit.html", affirmation=affirmation
+                            )
+
+                        # Create new relationship
+                        affirmation_category = AffirmationCategory(
+                            affirmation_id=affirmation.affirmation_id,
+                            category_id=category.category_id,
+                        )
+                        db.session.add(affirmation_category)
+            except (ValueError, TypeError) as e:
+                if request.is_json:
+                    return jsonify({"error": f"Invalid category ID: {e}"}), 400
+                flash(f"Invalid category ID: {e}", "error")
+                return render_template(
+                    "affirmations/edit.html", affirmation=affirmation
+                )
+
         db.session.commit()
 
+        if request.is_json:
+            return jsonify({"message": "Affirmation updated"}), 200
         flash("Affirmation updated", "success")
         return redirect(url_for("affirmations.affirmations"))
 
@@ -222,8 +310,16 @@ def delete_affirmation(affirmation_id):
     if affirmation.user_id == current_user.user_id:
         db.session.delete(affirmation)
         db.session.commit()
+        if request.is_json:
+            return jsonify({"message": "Affirmation deleted"}), 200
         flash("Affirmation deleted", "success")
+    else:
+        if request.is_json:
+            return jsonify({"error": "Can not delete others affirmation"}), 403
+        flash("Can not delete others affirmation", "error")
 
+    if request.is_json:
+        return jsonify({"message": "Affirmation deleted"}), 200
     return redirect(url_for("affirmations.affirmations"))
 
 
