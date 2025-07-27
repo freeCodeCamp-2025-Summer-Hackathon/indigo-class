@@ -155,6 +155,11 @@ function showCreateCategoryDialog() {
   dialog.showModal();
 }
 
+function showAffirmationDialog() {
+  const dialog = document.getElementById("affirmation-dialog");
+  dialog.showModal();
+}
+
 function closeDialog(dialogId) {
   const dialog = document.getElementById(dialogId);
   dialog.close();
