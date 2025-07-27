@@ -87,11 +87,6 @@
         >Dashboard</a
       >
       <a
-        href="{{ url_for('auth.profile') }}"
-        class="nav__menu--button{% if request.path == url_for('auth.profile') %} active{% endif %}"
-        >User Profile</a
-      >
-      <a
         href="{{ url_for('user_settings.user_info') }}"
         class="nav__menu--button{% if request.path == url_for('auth.profile') %} active{% endif %}"
         >Settings</a

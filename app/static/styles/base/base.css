@@ -36,6 +36,10 @@ main {
   margin-inline: auto;
 }
 
+body:not(.is-admin) > main {
+  max-width: 30rem;
+}
+
 hr {
 	border-color: var(--purple-dark);
 }
