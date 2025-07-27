@@ -5,7 +5,31 @@ content %}
 </div>
 
 {% if current_user.is_authenticated %}
-<section class="cta-section bg--white padding--lg">
+<section class="profile"">
+  <h2>User Profile</h2>
+  <div class="profile__user">
+    <img src="{{ url_for('static', filename='images/profile_img.svg') }}" class="profile__pic" alt="User profile picture">
+    <dl class="profile__details">
+      <dt>Username:</dt>
+      <dd>{{ user.username }}</dd>
+    </dl>
+  </div>
+  <dl class="profile__details">
+    <dt>Email:</dt>
+    <dd>{{ user.email }}</dd>
+    <dt>Name:</dt>
+    <dd>{{ user.name }}</dd>
+    <dt>Member since:</dt>
+    <dd>{{ user.created_at.strftime('%B %d, %Y')
+    }}</dd>
+    <dt>Email opt-in:</dt>
+    <dd>{{ "Yes" if user.is_email_opt_in else "No" }}</dd>
+  </dl>
+  <a href="{{ url_for('user_settings.user_info') }}" class="form__button btn">Settings</a>
+</section>
+
+<section class="cta-section bg--purple-outline padding--lg">
+  <h2>Affirmations Management</h2>
   <p class="txt-center text--purple-dark">Keep words that matter to you here.</p>
   <a
     class="btn btn--primary btn--block"
@@ -17,61 +41,10 @@ content %}
     href="{{ url_for('affirmations.add_affirmation') }}"
     >Submit Affirmations</a
   >
-</section>
-
-<section class="collections">
-  <div class="collections__header">
-    <div class="icon-text icon-text--collections">
-      <span class="icon-text__icon"></span>
-      <span class="icon-text__label">Default Categories</span>
-    </div>
-
-    <div class="collections__header__actions"></div>
-  </div>
-  <div class="collections__cats">
-    <ul class="collections__cats__list">
-      {% for category in admin_categories %}
-        <li>{{ category.name }}</li>
-      {% endfor %}
-    </ul>
-  </div>
-  <div class="pagination">
-    <button class="btn btn--primary opacity--50">&lt;</button>
-    <ul>
-      <li class="active">1</li>
-      <li>2</li>
-      <li>3</li>
-    </ul>
-    <button class="btn btn--primary">&gt;</button>
-  </div>
-  <hr class="margin-top--md">
-  <div class="collections__header">
-    <div class="icon-text icon-text--collections">
-      <span class="icon-text__icon"></span>
-      <span class="icon-text__label">Custom Categories</span>
-    </div>
-
-    <div class="collections__header__actions">
-      <a class="btn btn--primary collections__header__actions--edit" href="#"></a>
-    </div>
-  </div>
-  <div class="collections__cats">
-    <ul class="collections__cats__list">
-      {% for category in user_categories %}
-        {% if not category.is_admin_set %}
-          <li>{{ category.name }}</li>
-        {% endif %}
-      {% endfor %}
-    </ul>
-  </div>
-  <div class="pagination">
-    <button class="btn btn--primary opacity--50">&lt;</button>
-    <ul>
-      <li class="active">1</li>
-      <li>2</li>
-      <li>3</li>
-    </ul>
-    <button class="btn btn--primary">&gt;</button>
-  </div>
+  <a
+    class="btn btn--primary btn--block"
+    href="{{ url_for('categories.list_categories') }}"
+    >View Affirmation Categories</a
+  >
 </section>
 {% endif %} {% endblock %}

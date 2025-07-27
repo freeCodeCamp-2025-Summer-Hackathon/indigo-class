@@ -18,13 +18,34 @@ function navAdminDesktopLogOut() {
   }
 }
 
-// Force menu to be visible in admin desktop sidebar when resizing
-
-
 // To top button
+document.addEventListener("DOMContentLoaded", function () {
+  const scrollToTopBtn = document.querySelector(".totop__button");
+
+  // Show/hide button on scroll
+  window.addEventListener("scroll", function () {
+    scrollToTopBtn.style.display = window.scrollY > 50 ? "block" : "none";
+  });
+
+  // Load initial random affirmation
+  const affirmationElement = document.getElementById("random-affirmation");
+  if (affirmationElement) {
+    getRandomAffirmation();
+  }
+
+  // Add change event listener to category select
+  const categorySelect = document.getElementById("category-select");
+  if (categorySelect) {
+    categorySelect.addEventListener("change", function () {
+      getRandomAffirmation();
+    });
+  }
+});
+
+// Scroll to top on click
 function toTop() {
   window.scrollTo(0, 0);
-}
+};
 
 function saveAffirmation(affirmationId) {
   fetch(`/affirmations/save`, {
@@ -36,22 +57,64 @@ function saveAffirmation(affirmationId) {
   });
 }
 
+let randomAffirmationRequestId = 0;
 
 function getRandomAffirmation() {
   const affirmationElement = document.getElementById("random-affirmation");
   const affirmCatElement = document.getElementById("rand-affirm-cat");
+  const categorySelect = document.getElementById("category-select");
+
   if (affirmationElement) {
-    affirmationElement.textContent = "Loading...";
-    fetch("/affirmations/random")
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Affirmation Data:", data);
-        const affirmation = data.affirmation;
-        affirmationElement.textContent = affirmation;
-        affirmCatElement.textContent = affirmation.categories;
+    const categoryId = categorySelect ? categorySelect.value : "all";
+    const oldAffirmation = affirmationElement.textContent;
+    const oldCategories = affirmCatElement.textContent;
+
+    // Increment request id
+    const thisRequestId = ++randomAffirmationRequestId;
+
+    fetch(`/affirmations/random?category=${categoryId}`)
+      .then((response) => {
+        if (!response.ok) {
+          if (response.status === 429) {
+            throw new Error("Please wait 10 seconds for next request");
+          }
+          if (response.status === 404 || response.status === 400) {
+            if (thisRequestId === randomAffirmationRequestId) {
+              affirmationElement.textContent = "No affirmations found";
+              affirmCatElement.textContent = "No affirmations found in this category";
+            }
+            return null;
+          }
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
       })
-      .catch(() => {
-        affirmationElement.textContent = "Failed to load affirmation.";
+      .then((data) => {
+        if (!data) return;
+        if (thisRequestId !== randomAffirmationRequestId) return; // Only update if this is the latest request
+        if (data.error) {
+          throw new Error(data.error);
+        }
+        affirmationElement.textContent = data.affirmation;
+        const categoriesText = Array.isArray(data.categories)
+          ? data.categories.join(", ")
+          : data.categories;
+        affirmCatElement.textContent = categoriesText;
+      })
+      .catch((error) => {
+        if (thisRequestId !== randomAffirmationRequestId) return;
+        console.error("Error fetching random affirmation:", error);
+        if (error.message === "Please wait 10 seconds for next request") {
+          const errorDiv = document.createElement("div");
+          errorDiv.textContent = error.message;
+          errorDiv.style.color = "red";
+          errorDiv.style.fontSize = "0.8em";
+          affirmationElement.parentNode.insertBefore(errorDiv, affirmationElement.nextSibling);
+          setTimeout(() => errorDiv.remove(), 1000);
+        } else {
+          affirmationElement.textContent = oldAffirmation;
+        }
+        affirmCatElement.textContent = oldCategories;
       });
   }
 }
@@ -74,4 +137,30 @@ function updateActionType(affirmationId, actionType) {
     },
     body: JSON.stringify({ affirmationId })
   })
+}
+
+function showEditCategoryDialog(categoryId, categoryName) {
+  const dialog = document.getElementById("category-edit-dialog");
+  const dialogCategoryName = document.querySelector("#category-edit-dialog #dialog-category-name");
+  const dialogCategoryId = document.querySelector("#category-edit-dialog #dialog-category-id");
+
+  dialogCategoryName.value = categoryName;
+  dialogCategoryId.value = categoryId;
+
+  dialog.showModal();
+}
+
+function showCreateCategoryDialog() {
+  const dialog = document.getElementById("category-create-dialog");
+  dialog.showModal();
+}
+
+function showAffirmationDialog() {
+  const dialog = document.getElementById("affirmation-dialog");
+  dialog.showModal();
+}
+
+function closeDialog(dialogId) {
+  const dialog = document.getElementById(dialogId);
+  dialog.close();
 }

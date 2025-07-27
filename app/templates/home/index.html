@@ -14,44 +14,42 @@ content %}
 <section class="home__section home__affirms">
   <h2>Today's Affirmation</h2>
   <div class="affirms__wrapper">
-    {% for affirmation in all_affirmations[:3] %}
     <div class="affirm">
       <figure class="affirm__wrapper">
         <blockquote class="affirm__quote">
-          {{ affirmation.affirmation_text }}
+          {{ daily_affirmation_data.content }}
         </blockquote>
         <figcaption class="affirm__cats">
-          {% for category in affirmation.categories %} {{ category.category.name
-          }} {% endfor %}
+          {{ daily_affirmation_data.category }}
         </figcaption>
       </figure>
       <div class="affirm__btn--wrapper">
+        <!-- button to pin -->
         <button
           class="affirm__btn"
           aria-label="Pin"
-          onclick="updateActionType('{{ affirmation.affirmation_id }}', 'pin')"
+          onclick="updateActionType('{{ daily_affirmation_data.id }}', 'pin')"
         >
           +
         </button>
         <p>Save this affirmation</p>
       </div>
     </div>
-    {% endfor %}
   </div>
 
   <a class="affirm__action" href="{{ url_for('root.dashboard') }}"
     >Go to User Dashboard</a
   >
   {% if current_user.is_admin() %}
-  <a class="affirm__action" href="{{ url_for('root.admin_dashboard') }}">Go to Admin Dashboard</a>
+  <a class="affirm__action" href="{{ url_for('root.admin_dashboard') }}"
+    >Go to Admin Dashboard</a
+  >
   {% endif %}
   <a class="affirm__action" href="#affirmation-generator"
     >Affirmation Generator</a
   >
 </section>
-{% endif %}
-
-{% if current_user.is_authenticated %}
+{% endif %} {% if current_user.is_authenticated %}
 <section class="home__section">
   <h2>Pinned Affirmations</h2>
   <div class="affirms__wrapper">
@@ -74,14 +72,22 @@ content %}
 
 <section class="home__section" id="affirmation-generator">
   <h2>Affirmation Generator</h2>
+  <div class="form__select">
+    <label for="category-select">Filter by:</label>
+    <select id="category-select">
+      <option value="all">All</option>
+      {% for category in all_categories %}
+      <option value="{{ category.category_id }}">{{ category.name }}</option>
+      {% endfor %}
+    </select>
+  </div>
   {% for affirmation in all_affirmations[:1] %}
-  <figure class="affirm__wrapper">
+  <figure class="affirm__wrapper margin-top--md">
     <blockquote class="affirm__quote" id="random-affirmation">
       {{ affirmation.affirmation_text }}
     </blockquote>
     <figcaption class="affirm__cats" id="rand-affirm-cat">
-      {% for category in affirmation.categories %}
-        {{ category.category.name }}
+      {% for category in affirmation.categories %} {{ category.category.name }}
       {% endfor %}
     </figcaption>
   </figure>

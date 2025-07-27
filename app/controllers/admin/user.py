@@ -127,6 +127,8 @@ def edit_user(user_id: int):
         "admin/user/edit.html",
         user=user,
         form_data={
+            "first_name": split_name(user.name)[0],
+            "last_name": split_name(user.name)[1],
             "name": user.name,
             "username": user.username,
             "email": user.email,

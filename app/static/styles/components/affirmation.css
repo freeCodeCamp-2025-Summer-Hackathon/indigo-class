@@ -5,6 +5,44 @@
   color: var(--purple-dark);
 }
 
+.affirm {
+  position: relative;
+}
+
+
+.affirm .pin-affirmation,
+.affirm .delete-pin,
+.affirm .edit-pin {
+	line-height: 1px;
+	padding: 15px 10px;
+}
+
+.affirm .delete-pin {
+	position: absolute;
+	top: 15px;
+	right: 15px;
+}
+
+.affirm .delete-pin + .edit-pin {
+	position: absolute;
+	top: 15px;
+	right: 57px;
+	font-size: 1rem;
+	display: flex;
+	padding: 7px;
+	line-height: 1;
+}
+
+.affirm .edit-pin i {
+	display: inline-block;
+	width: 13px;
+	height: 14px;
+	background-image: url(../../images/pen_white.svg);
+	background-position: center center;
+	background-repeat: no-repeat;
+	margin-left: 10px;
+}
+
 .affirm__section--top {
   margin-bottom: 3rem;
   padding: 0.8rem;
@@ -23,15 +61,14 @@
 }
 
 .affirm__quote {
-  height: 150px;
-  padding: 1em 0;
-
+  padding: var(--space-md) 0;
   text-align: center;
   font-size: 1.5em;
   color: var(--purple-dark);
 }
 
 .affirm__cats {
+  color: var(--purple-dark);
   font-size: 0.9em;
 }
 
@@ -121,47 +158,42 @@ form .affirm__edit {
   justify-content: center;
   align-items: center;
   gap: 11px;
-  margin-top: 1rem;
 }
 
-.page {
-  padding: 0.5rem;
-
-  font-size: 1rem;
-  color: var(--white);
-  background-color: var(--purple-dark);
+.pagination .btn {
+  margin: 0;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border-radius: 10px;
 }
 
-.page.prev,
-.page.next {
-  padding: 0.5em;
-
-  font-size: 1rem;
-  font-weight: bold;
-  color: var(--white);
-  background-color: var(--purple-dark);
-  text-decoration: none;
+.pagination ul {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
-.page.current {
-  font-size: 1.2rem;
-  background-color: var(--purple-light);
+.pagination ul li a {
+	border-radius: 50%;
+  color: var(--purple-dark);
+	display: inline-block;
+	width: 18px;
+	height: 18px;
+	font-size: 13px;
+	text-align: center;
+	align-content: center;
+	color: var(--purple-dark);
+	font-weight: bold;
 }
 
-.category {
-  display: grid;
-  gap: 0.5em;
+.pagination ul li.active a {
+	background-color: var(--purple-dark);
+	color: white;
 }
-
-.category__name {
-  text-align: center;
-  font-size: 1.5rem;
-
-  border: 0.1em solid var(--purple-light);
-  border-radius: 0.3em;
-  background-color: var(--white);
-}
-
 
 .edit__wrapper {
   display: flex;

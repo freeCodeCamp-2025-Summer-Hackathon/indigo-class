@@ -1,46 +1,105 @@
-<header class="header 
-  {% if current_user.is_authenticated and current_user.is_admin %}
-    header__admin
-  {% endif %}
-">
+<header
+  class="header"
+>
   <nav class="nav">
-    <a class="nav__logo" href="{{ url_for('root.index') }}"><img src="{{ url_for('static', filename='images/logo_white.svg') }}" alt="DailyDose logo"></a>
+    <a class="nav__logo" href="{{ url_for('root.index') }}"
+      ><img
+        src="{{ url_for('static', filename='images/logo_white.svg') }}"
+        alt="DailyDose logo"
+    /></a>
     {% if current_user.is_authenticated and current_user.is_admin() %}
     <div class="nav__menu">
       <button onclick="navDropdown()" class="nav__name">Admin</button>
       <button onclick="navDropdown()" class="nav__img--button">
-        <img src="{{ url_for('static', filename='images/profile_img.svg') }}" alt="User profile" class="nav__img">
+        <img
+          src="{{ url_for('static', filename='images/profile_img.svg') }}"
+          alt="User profile"
+          class="nav__img"
+        />
       </button>
-      <a href="{{ url_for('auth.logout') }}" id="nav__sidebar--logout" class="logout">Logout</a>
+      <a
+        href="{{ url_for('auth.logout') }}"
+        id="nav__sidebar--logout"
+        class="logout"
+        >Logout</a
+      >
       <button onclick="navAdminDesktopLogOut()" class="nav__sidebar--button">
-        <img src="{{ url_for('static', filename='images/menu_sidebar.svg') }}" alt="Sidebar menu" class="nav__img nav__sidebar--img">
+        <img
+          src="{{ url_for('static', filename='images/menu_sidebar.svg') }}"
+          alt="Sidebar menu"
+          class="nav__img nav__sidebar--img"
+        />
       </button>
     </div>
     <nav id="nav__dropdown">
-      <a href="{{ url_for('root.admin_dashboard') }}" class="nav__menu--button{% if request.path == url_for('root.admin_dashboard') %} active{% endif %}">Dashboard</a>
-      <a href="#" class="nav__menu--button{% if request.path == url_for('root.admin_dashboard') %} active{% endif %}">Users</a>
-      <a href="#" class="nav__menu--button{% if request.path == url_for('root.admin_dashboard') %} active{% endif %}">Affirmations</a>
-      <a href="#" class="nav__menu--button{% if request.path == url_for('root.admin_dashboard') %} active{% endif %}">Categories</a>
-      <a href="{{ url_for('auth.logout') }}" class="nav__menu--button logout">Logout</a>
+      <a
+        href="{{ url_for('root.admin_dashboard') }}"
+        class="nav__menu--button{% if request.path == url_for('root.admin_dashboard') %} active{% endif %}"
+        >Dashboard</a
+      >
+      <a
+        href="{{ url_for('root.admin_dashboard_users') }}"
+        class="nav__menu--button{% if request.path == url_for('root.admin_dashboard_users') %} active{% endif %}"
+        >Users</a
+      >
+      <a
+        href="{{ url_for('root.admin_dashboard_affirmations') }}"
+        class="nav__menu--button{% if request.path == url_for('root.admin_dashboard_affirmations') %} active{% endif %}"
+        >Affirmations</a
+      >
+      <a
+        href="{{ url_for('root.admin_dashboard_categories') }}"
+        class="nav__menu--button{% if request.path == url_for('root.admin_dashboard_categories') %} active{% endif %}"
+        >Categories</a
+      >
+      <a
+        href="{{ url_for('root.admin_dashboard_daily_mail_history') }}"
+        class="nav__menu--button{% if request.path == url_for('root.admin_dashboard_daily_mail_history') %} active{% endif %}"
+        >Daily Mail History</a
+      >
+      <a href="{{ url_for('auth.logout') }}" class="nav__menu--button logout"
+        >Logout</a
+      >
     </nav>
     {% elif current_user.is_authenticated %}
     <div class="nav__menu">
-      <button onclick="navDropdown()" class="nav__name">{{ current_user.username }}</button>
+      <button onclick="navDropdown()" class="nav__name">
+        {{ current_user.username }}
+      </button>
       <button onclick="navDropdown()">
-        <img src="{{ url_for('static', filename='images/profile_img.svg') }}" alt="User profile" class="nav__img">
+        <img
+          src="{{ url_for('static', filename='images/profile_img.svg') }}"
+          alt="User profile"
+          class="nav__img"
+        />
       </button>
     </div>
     <!-- {# Navigation links (hidden by default) #} -->
     <nav id="nav__dropdown">
-      <a href="{{ url_for('root.index') }}" class="nav__menu--button{% if request.path == url_for('root.index') %} active{% endif %}">Home</a>
-      <a href="{{ url_for('root.dashboard') }}" class="nav__menu--button{% if request.path == url_for('root.dashboard') %} active{% endif %}">Dashboard</a>
-      <a href="{{ url_for('auth.profile') }}" class="nav__menu--button{% if request.path == url_for('auth.profile') %} active{% endif %}">User Profile</a>
-      <a href="{{ url_for('user_settings.user_info') }}" class="nav__menu--button{% if request.path == url_for('auth.profile') %} active{% endif %}">Settings</a>
-      <a href="{{ url_for('auth.logout') }}" class="nav__menu--button logout">Logout</a>
+      <a
+        href="{{ url_for('root.index') }}"
+        class="nav__menu--button{% if request.path == url_for('root.index') %} active{% endif %}"
+        >Home</a
+      >
+      <a
+        href="{{ url_for('root.dashboard') }}"
+        class="nav__menu--button{% if request.path == url_for('root.dashboard') %} active{% endif %}"
+        >Dashboard</a
+      >
+      <a
+        href="{{ url_for('user_settings.user_info') }}"
+        class="nav__menu--button{% if request.path == url_for('auth.profile') %} active{% endif %}"
+        >Settings</a
+      >
+      <a href="{{ url_for('auth.logout') }}" class="nav__menu--button logout"
+        >Logout</a
+      >
     </nav>
     {% elif request.path == url_for('auth.login') %}
     <div class="nav__menu">
-      <a href="{{ url_for('auth.register') }}" class="nav__menu--button">Register</a>
+      <a href="{{ url_for('auth.register') }}" class="nav__menu--button"
+        >Register</a
+      >
     </div>
     {% elif request.path == url_for('auth.register') %}
     <div class="nav__menu">
@@ -49,7 +108,9 @@
     {% else %}
     <div class="nav__menu">
       <a href="{{ url_for('auth.login') }}" class="nav__menu--button">Login</a>
-      <a href="{{ url_for('auth.register') }}" class="nav__menu--button">Register</a>
+      <a href="{{ url_for('auth.register') }}" class="nav__menu--button"
+        >Register</a
+      >
     </div>
     {% endif %}
   </nav>

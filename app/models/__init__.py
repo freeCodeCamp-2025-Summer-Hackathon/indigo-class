@@ -91,7 +91,10 @@ class Category(db.Model):
         onupdate=datetime.now(timezone.utc),
     )
 
-    affirmations = relationship("AffirmationCategory", back_populates="category")
+    # Cascade delete ensures related AffirmationCategory rows are deleted when a Category is deleted
+    affirmations = relationship(
+        "AffirmationCategory", back_populates="category", cascade="all, delete-orphan"
+    )
     user = relationship("User", back_populates="categories")
 
 
@@ -112,8 +115,13 @@ class Affirmation(db.Model):
         onupdate=datetime.now(timezone.utc),
     )
 
+    # Cascade delete ensures related AffirmationCategory rows are deleted when an Affirmation is deleted
     user = relationship("User", back_populates="affirmations")
-    categories = relationship("AffirmationCategory", back_populates="affirmation")
+    categories = relationship(
+        "AffirmationCategory",
+        back_populates="affirmation",
+        cascade="all, delete-orphan",
+    )
     daily_history = relationship("DailyMailHistory", back_populates="affirmation")
     saved_affirmations = relationship("SavedAffirmation", back_populates="affirmation")
     user_affirmations = relationship("UserAffirmation", back_populates="affirmation")
@@ -156,7 +164,8 @@ class DailyMailHistory(db.Model):
         nullable=False,
     )
     sent_email_at = Column(DateTime)
-    scheduled_for = Column(DateTime)
+    success = Column(Boolean, default=False)
+    error_message = Column(Text)
 
     user = relationship("User", back_populates="daily_mail_history")
     affirmation = relationship("Affirmation", back_populates="daily_history")

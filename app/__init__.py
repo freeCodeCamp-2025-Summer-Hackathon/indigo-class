@@ -1,18 +1,104 @@
 from datetime import datetime
 import os
 
-from flask import Flask, jsonify
+from apscheduler.schedulers.background import BackgroundScheduler
+import dotenv
+from flask import Flask, current_app, jsonify
 from flask_login import LoginManager
-from flask_mail import Mail
+from flask_mail import Mail, Message
 from sqlalchemy import text
 
-from app.models import User, db
-
-import dotenv
+from app.models import Affirmation, DailyMailHistory, User, db
+from app.globals import daily_affirmation_data, rate_limit_dict
 
 dotenv.load_dotenv()
 
 mail = Mail()
+scheduler = BackgroundScheduler()
+
+
+def reset_daily_affirmation():
+    """Reset the daily affirmation data at the start of each day."""
+    global daily_affirmation_data, daily_affirmation_date
+    daily_affirmation_data = None
+    daily_affirmation_date = None
+
+
+def daily_tasks():
+    with current_app.app_context():
+        # Reset daily affirmation data at the start of each day
+        reset_daily_affirmation()
+
+        users = User.query.all()
+        today = datetime.now().date()
+
+        # Get a single daily affirmation for all users (consistent throughout the day)
+        daily_affirmation = Affirmation.query.order_by(db.func.random()).first()
+        if not daily_affirmation:
+            print("No affirmations found in database")
+            return
+
+        # Update the global daily affirmation data
+        global daily_affirmation_data, daily_affirmation_date
+        try:
+            category_name = (
+                daily_affirmation.categories[0].category.name
+                if daily_affirmation.categories
+                else "General"
+            )
+        except (IndexError, AttributeError):
+            category_name = "General"
+
+        daily_affirmation_data = {
+            "id": daily_affirmation.affirmation_id,
+            "content": daily_affirmation.affirmation_text,
+            "category": category_name,
+        }
+        daily_affirmation_date = today
+
+        print(f"Daily affirmation set: {daily_affirmation_data['content'][:50]}...")
+
+        for user in users:
+            # Check if user wants email
+            if not user.is_email_opt_in:
+                continue
+
+            # Check if email already sent today
+            already_sent = DailyMailHistory.query.filter(
+                DailyMailHistory.user_id == user.user_id,
+                db.func.date(DailyMailHistory.sent_email_at) == today,
+                DailyMailHistory.success,
+            ).first()
+
+            if already_sent:
+                continue
+
+            # Send email
+            msg = Message(
+                subject="Your Daily Affirmation",
+                recipients=[user.email],
+                body=f"Hello {user.name},\n\nYour affirmation for today:\n\n{daily_affirmation.affirmation_text}\n\nHave a great day!",
+            )
+            history = DailyMailHistory(
+                user_id=user.user_id,
+                affirmation_id=daily_affirmation.affirmation_id,  # Use the daily affirmation
+                sent_email_at=datetime.now(),
+                success=False,  # Assume failure by default
+                error_message=None,
+            )
+            db.session.add(history)
+            db.session.flush()  # Ensures history gets an ID if needed
+
+            try:
+                mail.connect()
+                mail.send(msg)
+                history.success = True
+                print(f"Email sent successfully to {user.email}")
+            except Exception as e:
+                history.error_message = str(e)
+                print(f"Failed to send email to {user.email}: {e}")
+            finally:
+                db.session.commit()
 
 
 def create_app():
@@ -56,6 +142,7 @@ def create_app():
     from .controllers.affirmations import affirmations_bp
     from .controllers.categories import categories_bp
     from .controllers.user_settings import usersettings_bp
+    from .controllers.admin.dashboard import dashboard_bp
 
     app.register_blueprint(root_bp)
     app.register_blueprint(auth_bp)
@@ -63,6 +150,76 @@ def create_app():
     app.register_blueprint(affirmations_bp)
     app.register_blueprint(categories_bp)
     app.register_blueprint(usersettings_bp)
+    app.register_blueprint(dashboard_bp)
+
+    # Start scheduler only if not already running
+    if not scheduler.running:
+        scheduler.add_job(daily_tasks, "cron", hour=7, minute=0)  # 7:00 AM daily
+        scheduler.start()
+
+    @app.route("/test-daily")
+    def test_daily_task():
+        """Test endpoint to manually trigger daily tasks."""
+        try:
+            daily_tasks()
+            return (
+                jsonify(
+                    {
+                        "message": "Daily tasks executed successfully",
+                        "daily_affirmation": daily_affirmation_data,
+                    }
+                ),
+                200,
+            )
+        except Exception as e:
+            return (
+                jsonify({"message": "Error executing daily tasks", "error": str(e)}),
+                500,
+            )
+
+    @app.route("/reset-daily-affirmation")
+    def reset_daily_affirmation_route():
+        """Test endpoint to manually reset daily affirmation."""
+        try:
+            reset_daily_affirmation()
+            return (
+                jsonify(
+                    {
+                        "message": "Daily affirmation reset successfully",
+                        "daily_affirmation": daily_affirmation_data,
+                    }
+                ),
+                200,
+            )
+        except Exception as e:
+            return (
+                jsonify(
+                    {"message": "Error resetting daily affirmation", "error": str(e)}
+                ),
+                500,
+            )
+
+    @app.route("/daily-affirmation-status")
+    def daily_affirmation_status():
+        """View current daily affirmation status."""
+        from app.globals import daily_affirmation_date
+
+        return (
+            jsonify(
+                {
+                    "daily_affirmation": daily_affirmation_data,
+                    "daily_affirmation_date": (
+                        daily_affirmation_date.isoformat()
+                        if daily_affirmation_date
+                        else None
+                    ),
+                    "current_date": datetime.now().date().isoformat(),
+                    "scheduler_running": scheduler.running,
+                    "scheduler_jobs": [str(job) for job in scheduler.get_jobs()],
+                }
+            ),
+            200,
+        )
 
     @app.route("/health")
     def health_check():

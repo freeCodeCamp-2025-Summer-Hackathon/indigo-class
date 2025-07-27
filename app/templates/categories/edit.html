@@ -7,7 +7,7 @@ content %}
     <input type="hidden" name="page" value="{{ page }}">
     <p><label for="category-name">Category Name:</label></p>
     <input type="text" name="name" id="category-name" class="form__input">
-    <button type="submit" class="affirm__edit">Edit</button>
+    <button type="submit" class="affirm__edit">Save</button>
 </form>
-
+<a class="affirm__delete" href="{{ url_for('categories.delete_category', category_id=category.category_id) }}">Delete</a>
 {% endblock %}

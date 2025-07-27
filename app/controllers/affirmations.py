@@ -2,8 +2,9 @@ from flask import Blueprint, flash, jsonify, redirect, render_template, request,
 from flask_login import current_user, login_required
 from sqlalchemy import func
 from sqlalchemy.dialects.postgresql import insert
+from threading import Timer
 
-from app import db
+from app import db, globals
 from app.models import (
     Affirmation,
     SavedAffirmation,
@@ -29,6 +30,7 @@ def affirmations():
             Affirmation.query.join(AffirmationCategory)
             .join(Category)
             .filter(Category.name == category)
+            .distinct(Affirmation.affirmation_id)
             .paginate(per_page=MAX_PER_PAGE, page=page_num, error_out=True)
         )
     else:
@@ -36,7 +38,38 @@ def affirmations():
             per_page=MAX_PER_PAGE, page=page_num, error_out=True
         )
 
-    categories = Category.query.all()
+    if current_user.is_authenticated:
+        # Get both user's own categories and admin categories, excluding duplicates
+        from sqlalchemy import distinct
+
+        # First get all category names that the user should see
+        category_names = (
+            db.session.query(distinct(Category.name))
+            .filter(
+                (Category.user_id == current_user.user_id)
+                | (Category.is_admin_set.is_(True))
+            )
+            .order_by(Category.name)
+            .all()
+        )
+
+        # Then get the actual category objects, preferring admin categories over user categories
+        categories = []
+        for (name,) in category_names:
+            # Try to get admin category first, then user category
+            category = (
+                Category.query.filter(
+                    Category.name == name, Category.is_admin_set.is_(True)
+                ).first()
+                or Category.query.filter(
+                    Category.name == name, Category.user_id == current_user.user_id
+                ).first()
+            )
+            if category:
+                categories.append(category)
+    else:
+        # For non-authenticated users, only show admin categories
+        categories = Category.query.filter(Category.is_admin_set.is_(True)).all()
     return render_template(
         "affirmations/index.html",
         all_affirmations=paginated_affirmations,
@@ -48,13 +81,53 @@ def affirmations():
 @affirmations_bp.route("/affirmations/random", methods=["GET"])
 def random_affirmation():
     """
-    Affirmations page.
+    Get a random affirmation, optionally filtered by category.
+    Rate limited to one request per 10 seconds.
     """
-    random_affirmation: Affirmation = Affirmation.query.order_by(func.random()).first()
+    # ##################### rate-limit-logic ##########################
+    # Check rate limit
+    # if not current_user.is_authenticated:
+    #     client_ip = request.remote_addr
+    #     key = f"random_affirmation:{client_ip}"
+    # else:
+    #     key = f"random_affirmation:{current_user.user_id}"
+
+    # # Check if key exists in rate limit dict
+    # if key in globals.rate_limit_dict:
+    #     return jsonify({"error": "Please wait 10 seconds for next request"}), 429
+
+    # # Set rate limit
+    # globals.rate_limit_dict[key] = True
+
+    # # Remove rate limit after 10 seconds
+    # def remove_rate_limit():
+    #     if key in globals.rate_limit_dict:
+    #         del globals.rate_limit_dict[key]
+
+    # Timer(10.0, remove_rate_limit).start()
+    # ##############################################################
+
+    category = request.args.get("category")
+    if category and category != "all":
+        random_affirmation = (
+            Affirmation.query.join(AffirmationCategory)
+            .join(Category)
+            .filter(Category.category_id == category)
+            .order_by(func.random())
+            .first()
+        )
+    else:
+        random_affirmation = Affirmation.query.order_by(func.random()).first()
+
+    if not random_affirmation:
+        return jsonify({"error": "No affirmations found"}), 404
+
+    # Serialize categories as a list of category names
+    category_names = [ac.category.name for ac in random_affirmation.categories]
     return jsonify(
         {
             "affirmation": random_affirmation.affirmation_text,
-            "categories": random_affirmation.categories,
+            "categories": category_names,
         }
     )
 
@@ -65,22 +138,56 @@ def add_affirmation():
     """
     Add an affirmation
     """
+    if not current_user.is_authenticated:
+        return redirect(url_for("root.index"))
+
     if request.method == "POST":
         text: str | None = request.form.get("affirmation_text")
+        category_id_str = request.form.get("category_id")
+        category_id = (
+            int(category_id_str) if category_id_str and category_id_str != "" else None
+        )
 
-        if not text:
+        if text is None or text.strip() == "":
             flash("Please type your affirmation", "error")
             return render_template("affirmations/add.html")
 
-        affirmation = Affirmation(affirmation_text=text, user_id=current_user.user_id)
+        # Create the affirmation first
+        affirmation = Affirmation(
+            affirmation_text=text,
+            user_id=current_user.user_id,
+        )
 
         db.session.add(affirmation)
+        db.session.flush()  # Flush to get the affirmation ID
+
+        # Add category if provided
+        if category_id:
+            category = Category.query.get(category_id)
+            if not category:
+                flash("Category not found", "error")
+                db.session.rollback()
+                return render_template("affirmations/add.html")
+
+            # Create the relationship through AffirmationCategory
+            affirmation_category = AffirmationCategory(
+                affirmation_id=affirmation.affirmation_id,
+                category_id=category.category_id,
+            )
+            db.session.add(affirmation_category)
+
         db.session.commit()
 
-        flash("Your affirmation have been added", "success")
+        flash("Your affirmation has been added", "success")
         return redirect(url_for("affirmations.affirmations"))
 
-    return render_template("affirmations/add.html")
+        # Get categories based on user role
+    if current_user.is_admin():
+        categories = Category.query.all()
+    else:
+        categories = Category.query.filter_by(user_id=current_user.user_id).all()
+
+    return render_template("affirmations/add.html", categories=categories)
 
 
 @affirmations_bp.route(
@@ -174,28 +281,28 @@ def select_affirmation_category():
     affirmation_id = data.get("affirmationId")
     category_id = data.get("categoryId")
 
-    if not (affirmation_id or category_id):
+    if affirmation_id is None or category_id is None:
         return jsonify({"error": "No affirmation or category ID provided"}), 400
 
     # Check if affirmations_categories row have already existed
     affirmation_category = AffirmationCategory.query.filter_by(
         affirmation_id=affirmation_id, category_id=category_id
-    )
+    ).first()
     # prevent double data
     if affirmation_category:
         return jsonify({"error": "Affirmation category already selected"}), 400
 
-    # Check if affirmation and category exists
+    # Check if affirmation exists
     affirmation = Affirmation.query.get(affirmation_id)
-    if not affirmation:
+    if affirmation is None:
         return jsonify({"error": "Affirmation not found"}), 404
 
-    if category_id not in (0, 1):
-        category = Category.query.filter_by(
-            category_id=category_id, user_id=current_user.user_id
-        )
-        if not category:
-            return jsonify({"error": "Category doesn't exists"}), 400
+    # Check if category exists (allow admin or user category)
+    category = Category.query.filter_by(category_id=category_id).first()
+    if category is None or (
+        not category.is_admin_set and category.user_id != current_user.user_id
+    ):
+        return jsonify({"error": "Category doesn't exist"}), 400
 
     # Add affirmations_categories row
     affirmation_category = AffirmationCategory(
@@ -229,11 +336,13 @@ def add_user_affirmation_with_action_type(action_type):
         )
         .count()
     )
-    print(
-        f"affirmation_count: {affirmation_count}, limit: {ACTION_TYPES_LIMIT_DICT[action_type]}"
-    )
     if affirmation_count >= ACTION_TYPES_LIMIT_DICT[action_type]:
         return jsonify({"error": f"{action_type} already limited"}), 400
+
+    # check if affirmation exists
+    affirmation = Affirmation.query.get(affirmation_id)
+    if affirmation is None:
+        return jsonify({"error": "Affirmation not found"}), 404
 
     # insert users_affirmations
     try:
