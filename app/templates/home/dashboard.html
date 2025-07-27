@@ -42,10 +42,38 @@ content %}
     href="{{ url_for('categories.list_categories') }}"
     >View Affirmation Categories</a
   >
-  <a
-    class="btn btn--primary btn--block"
-    href="{{ url_for('affirmations.add_affirmation') }}"
-    >Submit Affirmations</a
-  >
+  <button class="btn btn--primary btn--block" onclick="showAffirmationDialog();">Submit Affirmations</button>
 </section>
+
+<dialog id="affirmation-dialog">
+    <button class="dialog__close-btn btn btn--danger" onclick="closeDialog('affirmation-dialog')">&times;</button>
+    <span class="dialog__title">Affirmation</span>
+    <div class="dialog__content">
+        <form class="dialog__form" method="dialog">
+            <input type="hidden" id="dialog-affirmation-id" name="affirmation_id">
+            <label for="dialog-affirmation-text">Text</label>
+            <textarea name="affirmation_text" id="dialog-affirmation-text" required></textarea>
+            <label for="dialog-assign-category">Assign Category</label>
+            <select name="categories-assigne" id="dialog-assign-category">
+              <option value="">Select Category</option>
+              {% for category in categories %}
+                <option value="{{ category.name }}">{{ category.name }}</option>
+              {% endfor %}
+            </select>
+            <div class="margin--sm">
+              <ul class="dialog-categories-added">
+                <li>
+                  <span>Self-care</span>
+                  <button type="button" class="btn btn--danger">&times;</button>
+                </li>
+                <li>
+                  <span>Emotion</span>
+                  <button type="button" class="btn btn--danger">&times;</button>
+                </li>
+              </ul>
+            </div>
+            <button class="btn btn--block btn--primary">Save</button>
+        </form>
+    </div>
+</dialog>
 {% endif %} {% endblock %}
