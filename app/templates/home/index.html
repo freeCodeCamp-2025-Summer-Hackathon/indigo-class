@@ -72,14 +72,17 @@ content %}
 
 <section class="home__section" id="affirmation-generator">
   <h2>Affirmation Generator</h2>
-  <select id="category-select">
-    <option value="all">All</option>
-    {% for category in all_categories %}
-    <option value="{{ category.category_id }}">{{ category.name }}</option>
-    {% endfor %}
-  </select>
+  <div class="form__select">
+    <label for="category-select">Filter by:</label>
+    <select id="category-select">
+      <option value="all">All</option>
+      {% for category in all_categories %}
+      <option value="{{ category.category_id }}">{{ category.name }}</option>
+      {% endfor %}
+    </select>
+  </div>
   {% for affirmation in all_affirmations[:1] %}
-  <figure class="affirm__wrapper">
+  <figure class="affirm__wrapper margin-top--md">
     <blockquote class="affirm__quote" id="random-affirmation">
       {{ affirmation.affirmation_text }}
     </blockquote>
