@@ -173,74 +173,80 @@ a.nav__menu--button.active {
   background-color: var(--red-important-hover);
 }
 
-.header__admin .nav__sidebar--button {
+.is-admin .header .nav__sidebar--button {
   visibility: hidden;
   display: none;
 }
 
-.header__admin #nav__sidebar--logout {
+.is-admin .header #nav__sidebar--logout {
   visibility: hidden;
   display: none;
 }
 
 /* Desktop: admin header/menu differs from user header/menu */
 @media (min-width: 1000px) {
-  .header__admin {
-    width: 20%;
-    height: 100%;
+  body.is-admin {
+    display: grid;
+    grid-template-columns: 288px 1fr;
+    gap: var(--space-lg);
+    margin: 0;
+  }
+
+  .is-admin .header {
+    height: 100vh;
     position: fixed;
-    top: 0;
-    left: 0;
     background-color: var(--purple-dark);
-    z-index: 10;
+    width: 288px;
   }
 
-  .header__admin .nav {
-    justify-content: center;
-    height: inherit;
-    background-color: inherit;
-    font-size: 0.8rem;
+  .is-admin .header + main {
+    grid-column-start: 2;
   }
 
-  .header__admin .nav__logo {
-    top: 1.5rem;
-    padding: 0 10px;
-    z-index: 10;
+  .is-admin .header .nav {
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    padding: 0;
   }
 
-  .header__admin .nav__logo img {
+  .is-admin .header .nav__logo {
+    position: initial;
+    padding: var(--space-lg);
+  }
+
+  .is-admin .header .nav__logo img {
     width: 9rem;
   }
 
-  .header__admin .nav__menu {
-    width: inherit;
-    padding: 1rem 0;
-    bottom: 0;
+  .is-admin .header .nav__menu {
+    position: initial;
+    padding: var(--space-md) 0;
     border-top: var(--purple-light) 1px solid;
-    z-index: 10;
+    order: 3;
+    width: 100%;
   }
 
-  .header__admin .nav__name {
+  .is-admin .header .nav__name {
+    order: 2;
+  }
+
+  .is-admin .header .nav__img--button {
+    padding-left: var(--space-lg);
     order: 1;
   }
 
-  .header__admin .nav__img--button {
-    padding-left: 2.5vw;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .header__admin #nav__dropdown {
-    visibility: visible;
-    top: 20%;
-    width: inherit;
-    max-width: inherit;
-    height: 75vh;
+  .is-admin .header #nav__dropdown {
+    position: relative;
+    order: 2;
     text-align: left;
+    visibility: visible;
+    width: 100%;
+    max-width: 100%;
+    top: -50px;
   }
 
-  .header__admin #nav__dropdown > .nav__menu--button {
+  .is-admin .header #nav__dropdown > .nav__menu--button {
     border: none;
     font-size: 1rem;
     padding-left: 3vw;
@@ -248,45 +254,40 @@ a.nav__menu--button.active {
     height: 4rem;
   }
   
-  .header__admin #nav__dropdown > .nav__menu--button:hover {
+  .is-admin .header #nav__dropdown > .nav__menu--button:hover {
     background-color: var(--purple-light);
     text-decoration: none;
   }
 
-  .header__admin #nav__dropdown > a.nav__menu--button.active {
+  .is-admin .header #nav__dropdown > a.nav__menu--button.active {
     background-color: var(--purple-light);
     font-weight: bold;
   }
 
-  .header__admin #nav__dropdown .logout {
+  .is-admin .header #nav__dropdown .logout {
     display: none;
   }
 
-  .header__admin .nav__sidebar--button {
+  .is-admin .header .nav__sidebar--button {
     visibility: visible;
     display: inline-block;
     position: absolute;
-    padding-left: 13vw;
-    width: inherit;
-    padding: 1rem 0;
-    z-index: 11;
+    right: var(--space-lg);
   }
 
-  .header__admin .nav__sidebar--img {
-    visibility: hidden;
-    left: 15vw;
+  .is-admin .header .nav__sidebar--img {
+    visibility: visible;
+    position: initial;
   }
 
-  @media (min-width: 1000px) {
-    .header__admin .nav__sidebar--img {
-      visibility: visible;
-    }
+  .is-admin .header .nav__sidebar--img {
+    visibility: visible;
   }
 
-  .header__admin #nav__sidebar--logout {
+  .is-admin .header #nav__sidebar--logout {
     position: absolute;
     display: inline-block;
-    left: 20vw;
+    left: 288px;
     z-index: 11;
     text-decoration: none;
     color: white;
