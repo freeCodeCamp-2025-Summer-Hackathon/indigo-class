@@ -36,8 +36,14 @@ content %}
     {% for affirmation in all_affirmations %}
     <div class="affirm">
       {% if current_user.is_admin() or affirmation.user_id == user.user_id %}
-        <button class="btn btn--danger delete-pin">&times;</button>
-        <button class="btn btn--primary edit-pin" onclick="showAffirmationDialog();"><span>Edit</span><i></i></button>
+        <button class="btn btn--danger delete-pin" onclick="handleAffirmationDelete('{{ affirmation.affirmation_id }}')">&times;</button>
+        <button class="btn btn--primary edit-pin" 
+                data-affirmation-id="{{ affirmation.affirmation_id }}" 
+                data-affirmation-text="{{ affirmation.affirmation_text }}"
+                data-categories="{{ affirmation.categories|map(attribute='category.category_id')|list|tojson }}"
+                onclick="showEditAffirmationDialog(this.dataset.affirmationId, this.dataset.affirmationText, this.dataset.categories);">
+          <span>Edit</span><i></i>
+        </button>
       {% endif %}
       <figure class="affirm__wrapper">
         <blockquote class="affirm__quote">
@@ -81,30 +87,32 @@ content %}
     <button class="dialog__close-btn btn btn--danger" onclick="closeDialog('affirmation-dialog')">&times;</button>
     <span class="dialog__title">Affirmation</span>
     <div class="dialog__content">
-        <form class="dialog__form" method="dialog">
+        <form class="dialog__form" onsubmit="handleAffirmationDialogSubmit(event)">
             <input type="hidden" id="dialog-affirmation-id" name="affirmation_id">
             <label for="dialog-affirmation-text">Text</label>
             <textarea name="affirmation_text" id="dialog-affirmation-text" required></textarea>
-            <label for="dialog-assign-category">Assign Category</label>
+            <label for="dialog-assign-category">Assign Categories</label>
             <select name="categories-assigne" id="dialog-assign-category">
               <option value="">Select Category</option>
-              {% for category in categories %}
-                <option value="{{ category.name }}">{{ category.name }}</option>
-              {% endfor %}
+              {% if current_user.is_admin() %}
+                <!-- Admin sees all categories -->
+                {% for category in categories %}
+                  <option value="{{ category.category_id }}">{{ category.name }}</option>
+                {% endfor %}
+              {% else %}
+                <!-- Regular users see only their own categories -->
+                {% for category in user_categories %}
+                  <option value="{{ category.category_id }}">{{ category.name }}</option>
+                {% endfor %}
+              {% endif %}
             </select>
+            <button type="button" class="btn btn--secondary" onclick="addCategoryToAffirmation()">Add Category</button>
             <div class="margin--sm">
-              <ul class="dialog-categories-added">
-                <li>
-                  <span>Self-care</span>
-                  <button type="button" class="btn btn--danger">&times;</button>
-                </li>
-                <li>
-                  <span>Emotion</span>
-                  <button type="button" class="btn btn--danger">&times;</button>
-                </li>
+              <ul id="dialog-categories-added" class="dialog-categories-added">
+                <!-- Categories will be added here dynamically -->
               </ul>
             </div>
-            <button class="btn btn--block btn--primary">Save</button>
+            <button type="submit" class="btn btn--block btn--primary">Save</button>
         </form>
     </div>
 </dialog>
@@ -113,12 +121,12 @@ content %}
     <button class="dialog__close-btn btn btn--danger" onclick="closeDialog('category-create-dialog')">&times;</button>
     <span class="dialog__title">New Category</span>
     <div class="dialog__content">
-        <form class="dialog__form" method="dialog">
+        <form class="dialog__form" onsubmit="handleCategoryDialogSubmit(event)">
             <input type="hidden" id="dialog-category-id" name="category_id">
             <label for="dialog-category-name">Name</label>
             <input type="text" id="dialog-category-name" name="category_name" maxlength="20" required>
             <span class="dialog__form-tip">Character limit: 20</span>
-            <button class="btn btn--block btn--primary">Save</button>
+            <button type="submit" class="btn btn--block btn--primary">Save</button>
         </form>
     </div>
 </dialog>
