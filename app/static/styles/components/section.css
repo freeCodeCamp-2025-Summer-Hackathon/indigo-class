@@ -22,6 +22,10 @@
     margin: 1em 0;
     display: grid;
     gap: 0.5em;
+    background-color: var(--white);
+    border: 0.2em solid var(--purple-outline);
+    border-radius: 1em;
+    padding: 1em;
 }
 
 .profile__user {

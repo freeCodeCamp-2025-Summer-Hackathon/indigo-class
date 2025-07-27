@@ -5,7 +5,7 @@ content %}
 </div>
 
 {% if current_user.is_authenticated %}
-<section class="profile padding--lg"">
+<section class="profile"">
   <h2>User Profile</h2>
   <div class="profile__user">
     <img src="{{ url_for('static', filename='images/profile_img.svg') }}" class="profile__pic" alt="User profile picture">
@@ -28,7 +28,7 @@ content %}
   <a href="{{ url_for('user_settings.user_info') }}" class="form__button btn">Settings</a>
 </section>
 
-<section class="cta-section bg--white padding--lg">
+<section class="cta-section bg--purple-outline padding--lg">
   <h2>Affirmations Management</h2>
   <p class="txt-center text--purple-dark">Keep words that matter to you here.</p>
   <a
