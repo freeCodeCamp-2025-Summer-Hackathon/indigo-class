@@ -50,9 +50,7 @@ def affirmations():
             ).all()
         else:
             # Regular users can only see their own categories
-            categories = Category.query.filter(
-                Category.user_id == current_user.user_id
-            ).all()
+            categories = Category.query.filter().all()
             admin_categories = []
             user_categories = Category.query.filter(
                 Category.user_id == current_user.user_id
@@ -63,6 +61,21 @@ def affirmations():
         admin_categories = Category.query.filter(Category.is_admin_set.is_(True)).all()
         user_categories = []
 
+    # Get user's pinned affirmations if authenticated
+    pinned_affirmation_ids = set()
+    if current_user.is_authenticated:
+        pinned_affirmations = (
+            db.session.query(UserAffirmation.affirmation_id)
+            .filter(
+                UserAffirmation.user_id == current_user.user_id,
+                UserAffirmation.action_type == "pin",
+            )
+            .all()
+        )
+        pinned_affirmation_ids = {
+            affirmation_id for (affirmation_id,) in pinned_affirmations
+        }
+
     return render_template(
         "affirmations/index.html",
         all_affirmations=paginated_affirmations,
@@ -70,6 +83,7 @@ def affirmations():
         categories=categories,
         admin_categories=admin_categories,
         user_categories=user_categories,
+        pinned_affirmation_ids=pinned_affirmation_ids,
     )
 
 
@@ -450,7 +464,17 @@ def add_user_affirmation_with_action_type(action_type):
         .count()
     )
     if affirmation_count >= ACTION_TYPES_LIMIT_DICT[action_type]:
-        return jsonify({"error": f"{action_type} already limited"}), 400
+        if action_type == "pin":
+            return (
+                jsonify(
+                    {
+                        "error": "You have reached the maximum limit of 3 pinned affirmations. Please unpin another affirmation first."
+                    }
+                ),
+                400,
+            )
+        else:
+            return jsonify({"error": f"{action_type} already limited"}), 400
 
     # insert users_affirmations
     try:
