@@ -163,6 +163,90 @@ function showEditCategoryDialog(categoryId, categoryName) {
   dialog.showModal();
 }
 
+// Global variable to store selected categories
+let selectedCategories = [];
+
+function addCategoryToAffirmation() {
+  const categorySelect = document.getElementById('dialog-assign-category');
+  const categoryId = categorySelect.value;
+  const categoryName = categorySelect.options[categorySelect.selectedIndex].text;
+
+  if (!categoryId) {
+    alert('Please select a category first.');
+    return;
+  }
+
+  // Check if category is already added
+  if (selectedCategories.some(cat => cat.id === categoryId)) {
+    alert('This category is already added.');
+    return;
+  }
+
+  // Add to selected categories
+  selectedCategories.push({ id: categoryId, name: categoryName });
+
+  // Update the display
+  updateCategoriesDisplay();
+
+  // Reset select
+  categorySelect.value = '';
+}
+
+function removeCategoryFromAffirmation(categoryId) {
+  selectedCategories = selectedCategories.filter(cat => cat.id !== categoryId);
+  updateCategoriesDisplay();
+}
+
+function updateCategoriesDisplay() {
+  const categoriesList = document.getElementById('dialog-categories-added');
+  categoriesList.innerHTML = '';
+
+  selectedCategories.forEach(category => {
+    const li = document.createElement('li');
+    li.innerHTML = `
+      <span>${category.name}</span>
+      <button type="button" class="btn btn--danger" onclick="removeCategoryFromAffirmation('${category.id}')">&times;</button>
+    `;
+    categoriesList.appendChild(li);
+  });
+}
+
+function showEditAffirmationDialog(affirmationId, affirmationText, categoriesJson) {
+  const dialog = document.getElementById("affirmation-dialog");
+  const dialogAffirmationId = document.querySelector("#affirmation-dialog #dialog-affirmation-id");
+  const dialogAffirmationText = document.querySelector("#affirmation-dialog #dialog-affirmation-text");
+
+  dialogAffirmationId.value = affirmationId;
+  dialogAffirmationText.value = affirmationText;
+
+  // Reset selected categories
+  selectedCategories = [];
+
+  // Parse and set current categories if editing
+  if (categoriesJson && categoriesJson !== "[]") {
+    try {
+      const categoryIds = JSON.parse(categoriesJson);
+      // We need to get the category names from the select options
+      const categorySelect = document.getElementById('dialog-assign-category');
+      categoryIds.forEach(catId => {
+        for (let option of categorySelect.options) {
+          if (option.value === catId.toString()) {
+            selectedCategories.push({ id: catId.toString(), name: option.text });
+            break;
+          }
+        }
+      });
+    } catch (e) {
+      console.error('Error parsing categories:', e);
+    }
+  }
+
+  // Update the display
+  updateCategoriesDisplay();
+
+  dialog.showModal();
+}
+
 function showCreateCategoryDialog() {
   const dialog = document.getElementById("category-create-dialog");
   dialog.showModal();
@@ -170,10 +254,176 @@ function showCreateCategoryDialog() {
 
 function showAffirmationDialog() {
   const dialog = document.getElementById("affirmation-dialog");
+  // Reset selected categories for new affirmation
+  selectedCategories = [];
+  updateCategoriesDisplay();
   dialog.showModal();
 }
 
 function closeDialog(dialogId) {
   const dialog = document.getElementById(dialogId);
   dialog.close();
+}
+
+function handleCategoryDialogSubmit(event) {
+  event.preventDefault();
+  const form = event.target;
+  const formData = new FormData(form);
+  const categoryId = formData.get('category_id');
+  const categoryName = formData.get('category_name');
+
+  if (categoryId) {
+    // Edit existing category
+    fetch(`/categories/edit/${categoryId}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ name: categoryName })
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.error) {
+          alert('Error: ' + data.error);
+          return;
+        }
+        window.location.reload();
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred while updating the category.');
+      });
+  } else {
+    // Create new category
+    fetch('/categories/add', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ name: categoryName })
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.error) {
+          alert('Error: ' + data.error);
+          return;
+        }
+        window.location.reload();
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred while creating the category.');
+      });
+  }
+
+  closeDialog(form.closest('dialog').id);
+}
+
+function handleCategoryDelete(categoryId) {
+  if (confirm('Are you sure you want to delete this category?')) {
+    fetch(`/categories/delete/${categoryId}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.error) {
+          alert('Error: ' + data.error);
+          return;
+        }
+        window.location.reload();
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred while deleting the category.');
+      });
+  }
+}
+
+function handleAffirmationDelete(affirmationId) {
+  if (confirm('Are you sure you want to delete this affirmation?')) {
+    fetch(`/affirmations/delete/${affirmationId}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.error) {
+          alert('Error: ' + data.error);
+          return;
+        }
+        window.location.reload();
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred while deleting the affirmation.');
+      });
+  }
+}
+
+function handleAffirmationDialogSubmit(event) {
+  event.preventDefault();
+  const form = event.target;
+  const formData = new FormData(form);
+  const affirmationId = formData.get('affirmation_id');
+  const affirmationText = formData.get('affirmation_text');
+
+  // Get selected category IDs
+  const selectedCategoryIds = selectedCategories.map(cat => cat.id);
+
+  if (affirmationId) {
+    // Edit existing affirmation
+    fetch(`/affirmations/edit/${affirmationId}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        affirmation_text: affirmationText,
+        category_ids: selectedCategoryIds
+      })
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.error) {
+          alert('Error: ' + data.error);
+          return;
+        }
+        window.location.reload();
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred while updating the affirmation.');
+      });
+  } else {
+    // Create new affirmation
+    fetch('/affirmations/add', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        affirmation_text: affirmationText,
+        category_ids: selectedCategoryIds
+      })
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.error) {
+          alert('Error: ' + data.error);
+          return;
+        }
+        window.location.reload();
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred while creating the affirmation.');
+      });
+  }
+
+  closeDialog(form.closest('dialog').id);
 }
