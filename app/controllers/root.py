@@ -152,16 +152,23 @@ def dashboard():
         .all()
     )
 
-    # get user's categories
-    user_categories = (
-        db.session.query(Category)
-        .filter(Category.user_id == current_user.user_id)
-        .all()
-    )
-
-    admin_categories = (
-        db.session.query(Category).filter(Category.is_admin_set.is_(True)).all()
-    )
+    # get user's categories based on permissions
+    if current_user.is_admin():
+        # Admin can see all categories
+        categories = Category.query.all()
+        user_categories = Category.query.filter(
+            Category.user_id == current_user.user_id
+        ).all()
+        admin_categories = Category.query.filter(Category.is_admin_set.is_(True)).all()
+    else:
+        # Regular users can only see their own categories
+        categories = Category.query.filter(
+            Category.user_id == current_user.user_id
+        ).all()
+        user_categories = Category.query.filter(
+            Category.user_id == current_user.user_id
+        ).all()
+        admin_categories = []
 
     return render_template(
         "home/dashboard.html",
@@ -169,6 +176,7 @@ def dashboard():
         user=current_user,
         pinned_affirmations=pinned_affirmations,
         favorite_affirmations=favorite_affirmations,
+        categories=categories,
         user_categories=user_categories,
         admin_categories=admin_categories,
     )
