@@ -24,13 +24,23 @@ content %}
         </figcaption>
       </figure>
       <div class="padding--sm">
+        {% if daily_affirmation_pinned %}
+        <button
+          class="btn btn--primary pin-affirmation"
+          aria-label="Unpin"
+          onclick="handleAffirmationUnpin('{{ daily_affirmation_data.id }}')"
+        >
+          &minus;
+        </button>
+        {% else %}
         <button
           class="btn btn--primary pin-affirmation"
           aria-label="Pin"
-          onclick="updateActionType('{{ daily_affirmation_data.id }}', 'pin')"
+          onclick="handleAffirmationPin('{{ daily_affirmation_data.id }}')"
         >
           &plus;
         </button>
+        {% endif %}
       </div>
     </div>
   </div>
@@ -58,7 +68,7 @@ content %}
     <div class="affirm">
       <button
         class="btn btn--danger delete-pin"
-        onclick="updateActionType('{{ affirmation.affirmation_id }}', 'delete')"
+        onclick="handleAffirmationUnpin('{{ affirmation.affirmation_id }}')"
       >
         &times;
       </button>
@@ -102,14 +112,15 @@ content %}
     </figcaption>
   </figure>
   <div class="padding--sm">
-  <button
-    class="btn btn--primary pin-affirmation"
-    aria-label="Pin"
-    onclick="updateActionType('{{ affirmation.id }}', 'pin')"
-  >
-    &plus;
-  </button>
-</div>
+    <button
+      class="btn btn--primary pin-affirmation"
+      aria-label="Pin"
+      onclick="handleAffirmationPin('{{ affirmation.affirmation_id }}')"
+      data-affirmation-id="{{ affirmation.affirmation_id }}"
+    >
+      &plus;
+    </button>
+  </div>
   {% endfor %}
   <button class="btn btn--block btn--primary" onclick="getRandomAffirmation()">
     Get Affirmation
