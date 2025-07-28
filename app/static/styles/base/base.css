@@ -424,3 +424,7 @@ address a {
   outline: 0.15em solid var(--purple-light);
   outline-offset: 0.15em;
 }
+
+.dashboard-tab-content {
+  margin-top: 50px;
+}
