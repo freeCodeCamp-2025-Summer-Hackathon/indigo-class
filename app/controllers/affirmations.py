@@ -135,6 +135,7 @@ def random_affirmation():
     category_names = [ac.category.name for ac in random_affirmation.categories]
     return jsonify(
         {
+            "affirmation_id": random_affirmation.affirmation_id,
             "affirmation": random_affirmation.affirmation_text,
             "categories": category_names,
         }

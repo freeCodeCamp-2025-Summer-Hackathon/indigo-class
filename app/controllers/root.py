@@ -106,6 +106,20 @@ def index():
             print(f"Error getting daily affirmation: {e}")
             pass
 
+    # Check if daily affirmation is pinned by current user
+    daily_affirmation_pinned = False
+    if current_user.is_authenticated and daily_affirmation_data:
+        daily_affirmation_pinned = (
+            db.session.query(UserAffirmation)
+            .filter(
+                UserAffirmation.user_id == current_user.user_id,
+                UserAffirmation.affirmation_id == daily_affirmation_data["id"],
+                UserAffirmation.action_type == "pin",
+            )
+            .first()
+            is not None
+        )
+
     return render_template(
         "home/index.html",
         title="DailyDose",
@@ -114,6 +128,7 @@ def index():
         all_affirmations=all_affirmations,
         pinned_affirmations=pinned_affirmations,
         daily_affirmation_data=daily_affirmation_data,
+        daily_affirmation_pinned=daily_affirmation_pinned,
         all_categories=all_categories,
     )
 
