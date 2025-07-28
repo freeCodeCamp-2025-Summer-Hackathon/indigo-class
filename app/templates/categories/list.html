@@ -79,7 +79,7 @@ content %}
     <span class="dialog__title">New Category</span>
     <div class="dialog__content">
         <form class="dialog__form" onsubmit="handleCategoryDialogSubmit(event)">
-            <input type="hidden" id="dialog-category-id" name="category_id">
+            <input type="hidden" id="dialog-category-id-create" name="category_id">
             <label for="dialog-category-name">Name</label>
             <input type="text" id="dialog-category-name" name="category_name" maxlength="20" required>
             <span class="dialog__form-tip">Character limit: 20</span>
@@ -93,12 +93,12 @@ content %}
     <span class="dialog__title">Edit Category</span>
     <div class="dialog__content">
         <form class="dialog__form" onsubmit="handleCategoryDialogSubmit(event)">
-            <input type="hidden" id="dialog-category-id" name="category_id">
+            <input type="hidden" id="dialog-category-id-edit" name="category_id">
             <label for="dialog-category-name">Name</label>
             <input type="text" id="dialog-category-name" name="category_name" maxlength="20" required>
             <span class="dialog__form-tip">Character limit: 20</span>
             <button type="submit" class="btn btn--block btn--primary">Save</button>
-            <button type="button" class="btn btn--block btn--danger" onclick="handleCategoryDelete(document.getElementById('dialog-category-id').value)">Delete</button>
+            <button type="button" class="btn btn--block btn--danger" onclick="handleCategoryDelete(document.getElementById('dialog-category-id-edit').value)">Delete</button>
         </form>
     </div>
 </dialog>
