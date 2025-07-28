@@ -101,6 +101,15 @@ content %}
       {% endfor %}
     </figcaption>
   </figure>
+  <div class="padding--sm">
+  <button
+    class="btn btn--primary pin-affirmation"
+    aria-label="Pin"
+    onclick="updateActionType('{{ affirmation.id }}', 'pin')"
+  >
+    &plus;
+  </button>
+</div>
   {% endfor %}
   <button class="btn btn--block btn--primary" onclick="getRandomAffirmation()">
     Get Affirmation
