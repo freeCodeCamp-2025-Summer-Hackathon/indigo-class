@@ -1,18 +1,106 @@
 {% extends "base.html" %} {% block title %} Categories {% endblock %} {% block
 content %}
 
-<h1>Affirmation Categories</h1>
+<div class="page-header">
+  <h1 class="page-header__title">User Dashboard</h1>
+</div>
 
-<section class="affirms__wrapper">
-    {% for category in categories %}
-    <div class="category">
-        <p class="category__name">{{ category.name }}</p>
-        <div class="category__btns">
-            <a class="affirm__edit" href="{{ url_for('categories.edit_category', category_id=category.category_id )}}">Edit</a>
-            <a class="affirm__delete" href="{{ url_for('categories.delete_category', category_id=category.category_id )}}">Delete</a>
+<section class="padding--md">
+    <form method="GET" action="{{ url_for('categories.list_categories') }}">
+        <div class="form__select">
+            <label for="filter">Filter by</label>
+            <select name="filter" id="category-filter" onchange="this.form.submit()">
+                <option value="all_categories" 
+                    {% if filter_by == 'all_categories'%} 
+                    selected
+                    {% endif %}>All Categories
+                </option>
+                <option value="admin_categories" 
+                    {% if filter_by == 'admin_categories'%} 
+                    selected
+                    {% endif %}>Default Categories
+                </option>
+                <option value="user_categories" 
+                    {% if filter_by == 'user_categories'%} 
+                    selected
+                    {% endif %}>Custom Categories
+                </option>
+            </select>
         </div>
-    <div>
-    {% endfor %}
+    </form>
 </section>
+
+<section class="padding--md">
+    <ul class="category">
+        {% for category in categories %}
+            <li class="categor__item">
+                {%if category.is_admin_set %}
+                    <button onclick="alert('This is a default category and cannot be edited.');">
+                        <span class="category__name">{{ category.name }}</span>
+                    </button>
+                {% else %}
+                    <button onclick="showEditCategoryDialog('{{ category.category_id }}', '{{ category.name }}');">
+                        <span class="category__name">{{ category.name }}</span>
+                        <i class="category__icon--edit"></i>
+                    </button>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+</section>
+
+<section class="padding--md">
+    <div class="pagination">
+        {% if pagination.has_prev %}
+            <a class="btn btn--primary" href="{{ url_for('categories.list_categories', page=pagination.prev_num, per_page=pagination.per_page, filter=filter_by) }}">&lt;</a>
+        {% else %}
+            <button class="btn btn--primary opacity--50">&lt;</button>
+        {% endif %}
+        <ul>
+            {% for page_num in range(1, pagination.pages + 1) %}
+                <li class="{% if page_num == pagination.page %}active{% endif %}">
+                    <a href="{{ url_for('categories.list_categories', page=page_num, per_page=pagination.per_page, filter=filter_by) }}"> {{ page_num }} </a>
+                </li>
+            {% endfor %} 
+        </ul>
+        {% if pagination.has_next %}
+            <a class="btn btn--primary" href="{{ url_for('categories.list_categories', page=pagination.next_num, per_page=pagination.per_page, filter=filter_by) }}">&gt;</a>
+        {% endif %}
+    </div>
+</section>
+
+<section class="cta-section padding--md bg--purple-outline">
+    <button class="btn btn--block btn--primary" onclick="showCreateCategoryDialog();">Create New Category</button>
+    <a href="/dashboard" class="btn btn--block btn--secondary">Back</a>
+</section>
+
+<dialog id="category-create-dialog">
+    <button class="dialog__close-btn btn btn--danger" onclick="closeDialog('category-create-dialog')">&times;</button>
+    <span class="dialog__title">New Category</span>
+    <div class="dialog__content">
+        <form class="dialog__form" onsubmit="handleCategoryDialogSubmit(event)">
+            <input type="hidden" id="dialog-category-id" name="category_id">
+            <label for="dialog-category-name">Name</label>
+            <input type="text" id="dialog-category-name" name="category_name" maxlength="20" required>
+            <span class="dialog__form-tip">Character limit: 20</span>
+            <button type="submit" class="btn btn--block btn--primary">Save</button>
+        </form>
+    </div>
+</dialog>
+
+<dialog id="category-edit-dialog">
+    <button class="dialog__close-btn btn btn--danger" onclick="closeDialog('category-edit-dialog')">&times;</button>
+    <span class="dialog__title">Edit Category</span>
+    <div class="dialog__content">
+        <form class="dialog__form" onsubmit="handleCategoryDialogSubmit(event)">
+            <input type="hidden" id="dialog-category-id" name="category_id">
+            <label for="dialog-category-name">Name</label>
+            <input type="text" id="dialog-category-name" name="category_name" maxlength="20" required>
+            <span class="dialog__form-tip">Character limit: 20</span>
+            <button type="submit" class="btn btn--block btn--primary">Save</button>
+            <button type="button" class="btn btn--block btn--danger" onclick="handleCategoryDelete(document.getElementById('dialog-category-id').value)">Delete</button>
+        </form>
+    </div>
+</dialog>
 
 {% endblock %}

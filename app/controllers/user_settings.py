@@ -22,6 +22,7 @@ def user_info():
         "username": user.username,
         "firstname": first_name,
         "lastname": last_name,
+        "created_at": user.created_at,
     }
     return render_template(
         "auth/user_settings.html", user_summary=user_summary
@@ -77,9 +78,14 @@ def update_profile():
     # If there's a password change, it'll logout the user
     if "password" in request.form:
         password = request.form.get("password")
+        password2 = request.form.get("password2")
 
-        if not password:
-            flash("Password is required.", "error")
+        if not password or not password2:
+            flash("Please fill out both password fields.", "error")
+            return redirect(url_for("user_settings.user_info"))
+
+        if password != password2:
+            flash("Passwords do not match.", "error")
             return redirect(url_for("user_settings.user_info"))
 
         password_hash: str = bcrypt.hashpw(

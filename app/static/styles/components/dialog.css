@@ -1,0 +1,79 @@
+dialog {
+	margin: auto;
+	position: relative;
+	border: 3px solid var(--purple-dark);
+	border-radius: 19px;
+}
+
+::backdrop {
+    background-color: rgba(240, 234, 244, 0.9);
+}
+
+.dialog__close-btn {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	line-height: 16px;
+	padding-inline: 10px;
+}
+
+.dialog__title {
+	font-size: 1.25rem;
+	font-weight: bold;
+}
+
+.dialog__content {
+    padding-block: var(--space-md);
+}
+
+.dialog__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.dialog__form label {
+  font-size: 1.25rem;
+  font-weight: bold;
+  line-height: 1;
+}
+
+.dialog__form input[type="text"],
+.dialog__form textarea,
+.dialog__form select {
+  border: 2px solid var(--purple-light);
+  border-radius: var(--radius-sm);
+  color: var(--purple-dark);
+  padding: var(--space-sm);
+}
+
+.dialog__form-tip {
+  font-size: 0.8125rem;
+  color: var(--purple-light);
+  line-height: 1;
+  display: block;
+  text-align: right;
+}
+
+.dialog-categories-added {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+.dialog-categories-added li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 3px solid var(--purple-outline);
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  color: var(--purple-dark);
+  padding: var(--space-sm);
+}
+.dialog-categories-added li .btn {
+  line-height: 1px;
+  padding: 12px 6px;
+}

@@ -5,7 +5,32 @@ content %}
 </div>
 
 {% if current_user.is_authenticated %}
-<section class="cta-section bg--white padding--lg">
+<section class="padding--lg">
+  <div class="profile"">
+    <h2>User Profile</h2>
+    <div class="profile__user">
+      <img src="{{ url_for('static', filename='images/profile_img.svg') }}" class="profile__pic" alt="User profile picture">
+      <dl class="profile__details">
+        <dt>Username:</dt>
+        <dd>{{ user.username }}</dd>
+      </dl>
+    </div>
+    <dl class="profile__details">
+      <dt>Email:</dt>
+      <dd>{{ user.email }}</dd>
+      <dt>Name:</dt>
+      <dd>{{ user.name }}</dd>
+      <dt>Member since:</dt>
+      <dd>{{ user.created_at.strftime('%B %d, %Y')
+      }}</dd>
+      <dt>Email opt-in:</dt>
+      <dd>{{ "Yes" if user.is_email_opt_in else "No" }}</dd>
+    </dl>
+    <a href="{{ url_for('user_settings.user_info') }}" class="form__button btn">Settings</a>
+  </div>
+</section>
+
+<section class="cta-section bg--purple-outline padding--lg">
   <p class="txt-center text--purple-dark">Keep words that matter to you here.</p>
   <a
     class="btn btn--primary btn--block"
@@ -14,64 +39,43 @@ content %}
   >
   <a
     class="btn btn--primary btn--block"
-    href="{{ url_for('affirmations.add_affirmation') }}"
-    >Submit Affirmations</a
+    href="{{ url_for('categories.list_categories') }}"
+    >View Affirmation Categories</a
   >
+  <button class="btn btn--primary btn--block" onclick="showAffirmationDialog();">Submit Affirmations</button>
 </section>
 
-<section class="collections">
-  <div class="collections__header">
-    <div class="icon-text icon-text--collections">
-      <span class="icon-text__icon"></span>
-      <span class="icon-text__label">Default Categories</span>
+<dialog id="affirmation-dialog">
+    <button class="dialog__close-btn btn btn--danger" onclick="closeDialog('affirmation-dialog')">&times;</button>
+    <span class="dialog__title">Affirmation</span>
+    <div class="dialog__content">
+        <form class="dialog__form" onsubmit="handleAffirmationDialogSubmit(event)">
+            <input type="hidden" id="dialog-affirmation-id" name="affirmation_id">
+            <label for="dialog-affirmation-text">Text</label>
+            <textarea name="affirmation_text" id="dialog-affirmation-text" required></textarea>
+            <label for="dialog-assign-category">Assign Categories</label>
+            <select name="categories-assigne" id="dialog-assign-category">
+              <option value="">Select Category</option>
+              {% if current_user.is_admin() %}
+                <!-- Admin sees all categories -->
+                {% for category in categories %}
+                  <option value="{{ category.category_id }}">{{ category.name }}</option>
+                {% endfor %}
+              {% else %}
+                <!-- Regular users see only their own categories -->
+                {% for category in user_categories %}
+                  <option value="{{ category.category_id }}">{{ category.name }}</option>
+                {% endfor %}
+              {% endif %}
+            </select>
+            <button type="button" class="btn btn--secondary" onclick="addCategoryToAffirmation()">Add Category</button>
+            <div class="margin--sm">
+              <ul id="dialog-categories-added" class="dialog-categories-added">
+                <!-- Categories will be added here dynamically -->
+              </ul>
+            </div>
+            <button type="submit" class="btn btn--block btn--primary">Save</button>
+        </form>
     </div>
-
-    <div class="collections__header__actions"></div>
-  </div>
-  <div class="collections__cats">
-    <ul class="collections__cats__list">
-      {% for category in admin_categories %}
-        <li>{{ category.name }}</li>
-      {% endfor %}
-    </ul>
-  </div>
-  <div class="pagination">
-    <button class="btn btn--primary opacity--50">&lt;</button>
-    <ul>
-      <li class="active">1</li>
-      <li>2</li>
-      <li>3</li>
-    </ul>
-    <button class="btn btn--primary">&gt;</button>
-  </div>
-  <hr class="margin-top--md">
-  <div class="collections__header">
-    <div class="icon-text icon-text--collections">
-      <span class="icon-text__icon"></span>
-      <span class="icon-text__label">Custom Categories</span>
-    </div>
-
-    <div class="collections__header__actions">
-      <a class="btn btn--primary collections__header__actions--edit" href="#"></a>
-    </div>
-  </div>
-  <div class="collections__cats">
-    <ul class="collections__cats__list">
-      {% for category in user_categories %}
-        {% if not category.is_admin_set %}
-          <li>{{ category.name }}</li>
-        {% endif %}
-      {% endfor %}
-    </ul>
-  </div>
-  <div class="pagination">
-    <button class="btn btn--primary opacity--50">&lt;</button>
-    <ul>
-      <li class="active">1</li>
-      <li>2</li>
-      <li>3</li>
-    </ul>
-    <button class="btn btn--primary">&gt;</button>
-  </div>
-</section>
+</dialog>
 {% endif %} {% endblock %}

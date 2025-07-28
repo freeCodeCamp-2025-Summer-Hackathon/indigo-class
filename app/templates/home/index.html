@@ -4,33 +4,64 @@ content %}
 <section class="home__section home__hero">
   {% if current_user.is_authenticated %}
   <h1>Welcome Back, {{ current_user.name }}!</h1>
-  <p>You are logged in as: {{ current_user.username }}</p>
-  <a class="affirm__action" href="{{ url_for('root.dashboard') }}"
-    >Go to User Dashboard</a
-  >
-  <a class="affirm__action" href="{{ url_for('auth.profile') }}"
-    >View Profile</a
-  >
-
-  {% if current_user.is_admin() %}
-  <a class="affirm__action" href="{{ url_for('root.admin_dashboard') }}">Go to Admin Dashboard</a>
-  {% endif %}
+  <p>Today is 5 July 2025</p>
   {% else %}
-  
-  <h1>Welcome to DailyDose</h1>
-  <h2>Your Personal Affirmation Journey</h2>
-  <p>
-    Join DailyDose to start your daily affirmation practice and transform your
-    mindset.
-  </p>
+  <h1>Welcome</h1>
   {% endif %}
 </section>
 
-<section class="home__section home__affirms">
-  <h2>Today's Affirmation</h2>
+{% if current_user.is_authenticated %}
+<section class="cta-section padding--md bg--white">
+  <h2 class="txt-center">Today's Affirmation</h2>
   <div class="affirms__wrapper">
-    {% for affirmation in all_affirmations[:3] %}
     <div class="affirm">
+      <figure class="affirm__wrapper">
+        <blockquote class="affirm__quote">
+          {{ daily_affirmation_data.content }}
+        </blockquote>
+        <figcaption class="affirm__cats">
+          {{ daily_affirmation_data.category }}
+        </figcaption>
+      </figure>
+      <div class="padding--sm">
+        <button
+          class="btn btn--primary pin-affirmation"
+          aria-label="Pin"
+          onclick="updateActionType('{{ daily_affirmation_data.id }}', 'pin')"
+        >
+          &plus;
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <a class="btn btn--primary" href="{{ url_for('root.dashboard') }}"
+    >Go to User Dashboard</a
+  >
+  {% if current_user.is_admin() %}
+  <a class="btn btn--primary" href="{{ url_for('root.admin_dashboard') }}"
+    >Go to Admin Dashboard</a
+  >
+  {% endif %}
+  <a class="btn btn--primary" href="#affirmation-generator"
+    >Affirmation Generator</a
+  >
+</section>
+{% endif %} {% if current_user.is_authenticated %}
+<section class="home__section">
+  <div class="icon-text icon-text--pinned">
+    <i class="icon-text__icon"></i>
+    <span class="icon-text__label">Pinned Affirmations</span>
+  </div>
+  <div class="affirms__wrapper">
+    {% for affirmation in pinned_affirmations %}
+    <div class="affirm">
+      <button
+        class="btn btn--danger delete-pin"
+        onclick="updateActionType('{{ affirmation.affirmation_id }}', 'delete')"
+      >
+        &times;
+      </button>
       <figure class="affirm__wrapper">
         <blockquote class="affirm__quote">
           {{ affirmation.affirmation_text }}
@@ -40,54 +71,39 @@ content %}
           }} {% endfor %}
         </figcaption>
       </figure>
-      <div class="affirm__btn--wrapper">
-        {% if current_user.is_authenticated %}
-        <button
-          class="affirm__btn"
-          aria-label="Pin"
-          onclick="updateActionType('{{ affirmation.affirmation_id }}', 'pin')"
-        >
-          +
-        </button>
-        {% endif %}
-        <p>
-          {% if current_user.is_authenticated %} Save this affirmation {% else
-          %}
-          <a href="{{ url_for('auth.login') }}">Log in</a> to save this
-          affirmation {% endif %}
-        </p>
-      </div>
     </div>
     {% endfor %}
   </div>
 </section>
+{% endif %}
 
-<section class="home__save-affirms">
-  {% if current_user.is_authenticated %}
-  <div class="home__section">
-    <h2>Keep words that matter to you here.</h2>
-    <a class="affirm__action" href="{{ url_for('affirmations.affirmations') }}"
-      >View Affirmations</a
-    >
-    <a
-      class="affirm__action"
-      href="{{ url_for('affirmations.add_affirmation') }}"
-      >Add Affirmation</a
-    >
+<section id="affirmation-generator" class="cta-section padding--md bg--white">
+  <div class="icon-text icon-text--bulb">
+    <i class="icon-text__icon"></i>
+    <span class="icon-text__label">Affirmation Generator</span>
   </div>
-  {% endif %}
-  <div class="home__section">
-    {% for affirmation in all_affirmations[:1] %}
-    <figure class="affirm__wrapper">
-      <blockquote class="affirm__quote" id="random-affirmation">
-        {{ affirmation.affirmation_text }}
-      </blockquote>
-      <figcaption class="affirm__cats">Self Worth</figcaption>
-    </figure>
-    {% endfor %}
-    <button class="affirm__action" onclick="getRandomAffirmation()">
-      Get Affirmation
-    </button>
+  <div class="form__select">
+    <label for="category-select">Filter by:</label>
+    <select id="category-select">
+      <option value="all">All</option>
+      {% for category in all_categories %}
+      <option value="{{ category.category_id }}">{{ category.name }}</option>
+      {% endfor %}
+    </select>
   </div>
+  {% for affirmation in all_affirmations[:1] %}
+  <figure class="affirm__wrapper margin-top--md">
+    <blockquote class="affirm__quote" id="random-affirmation">
+      {{ affirmation.affirmation_text }}
+    </blockquote>
+    <figcaption class="affirm__cats" id="rand-affirm-cat">
+      {% for category in affirmation.categories %} {{ category.category.name }}
+      {% endfor %}
+    </figcaption>
+  </figure>
+  {% endfor %}
+  <button class="btn btn--block btn--primary" onclick="getRandomAffirmation()">
+    Get Affirmation
+  </button>
 </section>
 {% endblock %}

@@ -1,51 +1,110 @@
+.para {
+  margin: 1rem;
+
+  text-align: center;
+  color: var(--purple-dark);
+}
+
+.affirm {
+  position: relative;
+}
+
+
+.affirm .pin-affirmation,
+.affirm .delete-pin,
+.affirm .edit-pin {
+	line-height: 1px;
+	padding: 15px 10px;
+}
+
+.affirm .delete-pin {
+	position: absolute;
+	top: 15px;
+	right: 15px;
+}
+
+.affirm .delete-pin + .edit-pin {
+	position: absolute;
+	top: 15px;
+	right: 57px;
+	font-size: 1rem;
+	display: flex;
+	padding: 7px;
+	line-height: 1;
+}
+
+.affirm .edit-pin i {
+	display: inline-block;
+	width: 13px;
+	height: 14px;
+	background-image: url(../../images/pen_white.svg);
+	background-position: center center;
+	background-repeat: no-repeat;
+	margin-left: 10px;
+}
+
+.affirm__section--top {
+  margin-bottom: 3rem;
+  padding: 0.8rem;
+}
+
 .affirms__wrapper {
   display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(min(100%/1, max(15rem, 100%/4)), 1fr));
-	gap: 2em 1em;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%/1, max(15rem, 100%/4)), 1fr));
+  gap: 2em 1em;
 }
 
 .affirm__wrapper {
-  border-image: url(../../images/quote-box.png) 30 66 30 66 fill / 30px 66px 30px 66px;
   padding: 30px;
+
+  border-image: url(../../images/quote-box.png) 30 66 30 66 fill / 30px 66px 30px 66px;
 }
 
 .affirm__quote {
+  padding: var(--space-md) 0;
   text-align: center;
   font-size: 1.5em;
-  padding: 1em 0;
   color: var(--purple-dark);
 }
 
 .affirm__cats {
+  color: var(--purple-dark);
   font-size: 0.9em;
 }
 
 .affirm__btn--wrapper {
   display: flex;
+  justify-content: flex-end;
+  align-items: center;
   flex-wrap: wrap;
   gap: 0.5em;
-  align-items: center;
+
   padding-inline: 10px;
 }
 
 .affirm__btn {
+  padding: 0.25em 0.5em;
+
   background-color: var(--save-btn-clr);
   color: var(--white);
+
   border: none;
   border-radius: 0.3em;
-  padding: 0.25em 0.5em;
 }
 
+
 .affirm__action {
+  display: block;
+  width: 100%;
+  padding: 1em;
+
   text-align: center;
   text-decoration: none;
-  display: block;
-  padding: 1em;
-  background-color: var(--purple-dark);
   color: var(--white);
+
+  background-color: var(--purple-dark);
   border: none;
   border-radius: 0.75em;
-  width: 100%;
 }
 
 * + .affirm__action,
@@ -59,26 +118,40 @@ form .affirm__edit {
 
 .affirm__edit,
 .affirm__delete {
+  display: inline-block;
+  padding: 0.5em 0.7em;
+
+  font-size: 0.9em;
+  text-decoration: none;
+  color: var(--white);
+
   border: none;
   border-radius: 0.4em;
-  padding: 0.5em 0.7em;
-  font-size: 0.9em;
-  color: var(--white);
-  text-decoration: none;
-  display: inline-block;
 }
 
 .affirm__edit {
-  background-color: var(--edit-btn-clr);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
+  padding: 0.5rem 0.7rem; /* fixed unit typo */
+
+  background-color: var(--purple-dark);
 }
 
 .affirm__delete {
-  background-color: var(--delete-btn-clr);
+  background-color: var(--red-important);
 }
 
-.affirm__section--bottom {
-  margin-top: 3em;
+.affirm__delete:hover {
+  background-color: var(--red-important-hover);
 }
+
+.white__pen {
+  height: 0.8rem;
+  margin-left: 0.3em;
+  vertical-align: middle;
+}
+
 
 .pagination {
   display: flex;
@@ -104,8 +177,9 @@ form .affirm__edit {
   margin: 0;
 }
 
-.pagination ul li {
+.pagination ul li a {
 	border-radius: 50%;
+  color: var(--purple-dark);
 	display: inline-block;
 	width: 18px;
 	height: 18px;
@@ -116,20 +190,92 @@ form .affirm__edit {
 	font-weight: bold;
 }
 
-.pagination ul li.active {
+.pagination ul li.active a {
 	background-color: var(--purple-dark);
 	color: white;
 }
 
-.category {
-  display: grid;
-  gap: 0.5em;
+.edit__wrapper {
+  display: flex;
+  flex-direction: column;
+  padding: 0.3rem;
+
+  border: 0.3rem solid var(--purple-dark);
+  border-radius: 5px;
 }
 
-.category__name {
-  text-align: center;
+.affirm__close {
+  display: inline-block;
+  align-self: flex-end;
+  padding: 0.2rem 0.5rem;
+  margin: 0.3rem 0.3rem;
+  cursor: pointer;
+
   font-size: 1.5rem;
-  border: 0.1em solid var(--purple-light);
-  border-radius: 0.3em;
-  background-color: var(--white);
+  color: var(--white);
+  background-color: var(--red-important);
+  border-radius: 5px;
+}
+
+.affirm__close:hover {
+  background-color: var(--red-important-hover);
+}
+
+.affirm__submit__edit {
+  display: block;
+  align-self: center;
+  margin: 0.5rem auto;
+  padding: 0.3rem 0.5rem;
+
+  font-size: 1.5rem;
+  color: var(--white);
+  background-color: var(--purple-dark);
+  border-radius: 10px;
+}
+
+.affirm__submit__edit:hover {
+  background-color: var(--purple-light);
+  text-decoration: underline;
+}
+
+.affirm__text {
+  font-weight: 700;
+  font-size: 1.25rem;
+}
+
+.user__affirm {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  padding: 0.3rem;
+  margin-top: 1em;
+  margin-bottom: 1rem;
+
+  font-size: 1rem;
+  color: var(--purple-dark);
+
+  border: 1px solid var(--purple-light);
+  border-radius: 6px;
+
+  resize: vertical;
+}
+
+
+.toggle__dropdown {
+  background-color: var(--purple-dark);
+  color: var(--white);
+  width: 100%;
+  font-size: 1rem;
+  padding: 0.3rem;
+  margin: 1rem 0;
+}
+
+.dropdown__triangle {
+  display: inline-block;
+  margin-left: 0.5em;
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 10px solid var(--white);
 }
