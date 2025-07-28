@@ -20,9 +20,7 @@ def list_categories():
             admin_categories = select(Category).where(Category.is_admin_set.is_(True))
         else:
             # Regular users can only see their own categories
-            all_categories = select(Category).where(
-                Category.user_id == current_user.user_id
-            )
+            all_categories = select(Category)
             user_categories = select(Category).where(
                 Category.user_id == current_user.user_id
             )
@@ -46,6 +44,7 @@ def list_categories():
         user_categories = select(Category).where(
             Category.user_id == 0
         )  # Empty query for unauthenticated users
+        all_categories = select(Category)  # Empty query for unauthenticated users
 
     return render_template(
         "categories/list.html",
@@ -54,6 +53,7 @@ def list_categories():
         filter_by=filter_by,
         user_categories=user_categories,
         admin_categories=admin_categories,
+        all_categories=all_categories,
     )
 
 
@@ -127,7 +127,13 @@ def edit_category(category_id):
     # pass page to return the user to the page where he/she did the action
     page = request.args.get("page") or request.form.get("page", 1)
 
-    if category.user_id != current_user.user_id or category.is_admin_set:
+    if category.is_admin_set:
+        if request.is_json:
+            return jsonify({"error": "You cannot edit admin categories."}), 403
+        flash("You cannot edit admin categories.", "danger")
+        return redirect(url_for("categories.list_categories", page=page))
+
+    if category.user_id != current_user.user_id:
         if request.is_json:
             return jsonify({"error": "You can only edit your own categories."}), 403
         flash("You can only edit your own categories.", "danger")
@@ -172,31 +178,56 @@ def edit_category(category_id):
 @categories_bp.route("/categories/delete/<int:category_id>", methods=["GET", "POST"])
 @login_required
 def delete_category(category_id):
-    category = Category.query.get_or_404(category_id)
-    # pass page to return the user to the page where he/she did the action
-    page = request.args.get("page") or request.form.get("page", 1)
+    try:
+        category = Category.query.get_or_404(category_id)
+        # pass page to return the user to the page where he/she did the action
+        page = request.args.get("page") or request.form.get("page", 1)
 
-    # prevent deletion if its a global(admin set) category
-    if category.is_admin_set:
+        # prevent deletion if its a global(admin set) category
+        if category.is_admin_set:
+            if request.is_json:
+                return (
+                    jsonify({"error": "You cannot delete categories made by admins."}),
+                    403,
+                )
+            flash("You cannot delete categories made by admins.")
+            return redirect(url_for("categories.list_categories", page=page))
+
+        # prevents deletion if the current user doesn't own the category
+        if category.user_id != current_user.user_id:
+            if request.is_json:
+                return (
+                    jsonify({"error": "You can only delete your own categories."}),
+                    403,
+                )
+            flash("You can only delete your own categories.", "error")
+            return redirect(url_for("categories.list_categories", page=page))
+
+        # Store category name for logging
+        category_name = category.name
+
+        db.session.delete(category)
+        db.session.commit()
+
         if request.is_json:
             return (
-                jsonify({"error": "You cannot delete categories made by admins."}),
-                403,
+                jsonify(
+                    {"message": f"Category '{category_name}' is successfully deleted"}
+                ),
+                200,
             )
-        flash("You cannot delete categories made by admins.")
+        flash(f"Category '{category_name}' is successfully deleted", "success")
         return redirect(url_for("categories.list_categories", page=page))
-
-    # prevents deletion if the current user doesn't own the category
-    if category.user_id != current_user.user_id:
+    except Exception as e:
+        db.session.rollback()
         if request.is_json:
-            return jsonify({"error": "You can only delete your own categories."}), 403
-        flash("You can only delete your own categories.", "error")
+            return (
+                jsonify(
+                    {
+                        "error": f"An error occurred while deleting the category: {str(e)}"
+                    }
+                ),
+                500,
+            )
+        flash(f"An error occurred while deleting the category: {str(e)}", "error")
         return redirect(url_for("categories.list_categories", page=page))
-
-    db.session.delete(category)
-    db.session.commit()
-
-    if request.is_json:
-        return jsonify({"message": "Category is successfully deleted"}), 200
-    flash("Category is successfully deleted", "success")
-    return redirect(url_for("categories.list_categories", page=page))
