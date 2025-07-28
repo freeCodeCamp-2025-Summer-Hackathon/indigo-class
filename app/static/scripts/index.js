@@ -194,7 +194,7 @@ function updateActionType(affirmationId, actionType) {
 function showEditCategoryDialog(categoryId, categoryName) {
   const dialog = document.getElementById("category-edit-dialog");
   const dialogCategoryName = document.querySelector("#category-edit-dialog #dialog-category-name");
-  const dialogCategoryId = document.querySelector("#category-edit-dialog #dialog-category-id");
+  const dialogCategoryId = document.querySelector("#category-edit-dialog #dialog-category-id-edit");
 
   dialogCategoryName.value = categoryName;
   dialogCategoryId.value = categoryId;
@@ -323,14 +323,17 @@ function handleCategoryDialogSubmit(event) {
       .then(response => response.json())
       .then(data => {
         if (data.error) {
-          alert('Error: ' + data.error);
+          showFlashMessage('Error: ' + data.error, 'error');
           return;
         }
-        window.location.reload();
+        showFlashMessage('Category updated successfully!', 'success');
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
       })
       .catch(error => {
         console.error('Error:', error);
-        alert('An error occurred while updating the category.');
+        showFlashMessage('An error occurred while updating the category.', 'error');
       });
   } else {
     // Create new category
@@ -344,14 +347,17 @@ function handleCategoryDialogSubmit(event) {
       .then(response => response.json())
       .then(data => {
         if (data.error) {
-          alert('Error: ' + data.error);
+          showFlashMessage('Error: ' + data.error, 'error');
           return;
         }
-        window.location.reload();
+        showFlashMessage('Category created successfully!', 'success');
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
       })
       .catch(error => {
         console.error('Error:', error);
-        alert('An error occurred while creating the category.');
+        showFlashMessage('An error occurred while creating the category.', 'error');
       });
   }
 
@@ -369,14 +375,17 @@ function handleCategoryDelete(categoryId) {
       .then(response => response.json())
       .then(data => {
         if (data.error) {
-          alert('Error: ' + data.error);
+          showFlashMessage('Error: ' + data.error, 'error');
           return;
         }
-        window.location.reload();
+        showFlashMessage('Category deleted successfully!', 'success');
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
       })
       .catch(error => {
         console.error('Error:', error);
-        alert('An error occurred while deleting the category.');
+        showFlashMessage('An error occurred while deleting the category.', 'error');
       });
   }
 }
