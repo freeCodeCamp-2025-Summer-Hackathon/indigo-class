@@ -2,9 +2,28 @@
   display: flex;
   flex-wrap: wrap;
   gap: 1.5em;
+  margin: 10vh 0;
+  @media (max-width: 1000px) {
+    margin: 5rem;
+  }
 }
 
 .stat-card {
   flex: 1;
   min-width: 200px;
+  max-height: 200px;
+  width: 10%;
+  padding: 2rem 1rem;
+  background-color: var(--purple-light);
+  color: white;
+  text-align: center;
+}
+
+.stat-card:nth-of-type(even) {
+  background-color: var(--purple-lighter);
+}
+
+.stat-card p {
+  font-size: 3rem;
+  font-weight: bold;
 }
