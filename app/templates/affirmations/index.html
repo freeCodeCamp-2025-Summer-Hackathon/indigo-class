@@ -1,90 +1,145 @@
 {% extends "base.html" %} {% block title %} Affirmations {% endblock %} {% block
 content %}
-<h1>Affirmations</h1>
+<div class="page-header">
+  <h1 class="page-header__title">Your Affirmations</h1>
+</div>
 
-<section>
-  <!-- dummy page navigation -->
-  <nav>
-    {% if all_affirmations.has_prev %}
-    <a
-      href="{{ url_for('affirmations.affirmations', page=all_affirmations.prev_num, category=request.args.get('category')) }}"
-      >Previous</a
-    >
-    {% endif %} {% for p_num in all_affirmations.iter_pages() %} {% if p_num %}
-    {% if p_num == all_affirmations.page %}
-    <strong>{{ p_num }}</strong>
-    {% else %}
-    <a
-      href="{{ url_for('affirmations.affirmations', page=p_num, category=request.args.get('category')) }}"
-      >{{ p_num }}</a
-    >
-    {% endif %} {% else %} ... {% endif %} {% endfor %} {% if
-    all_affirmations.has_next %}
-    <a
-      href="{{ url_for('affirmations.affirmations', page=all_affirmations.next_num, category=request.args.get('category')) }}"
-      >Next</a
-    >
-    {% endif %}
-  </nav>
-  <hr />
-  <!-- dummy category filtering -->
+<section class="cta-section padding--md bg--white">
+  <p class="cta-section__header">Keep words that matter to you here.</p>
+  <button class="btn btn--primary btn--block" onclick="showAffirmationDialog();">Submit an Affirmation</button>
+  <button class="btn btn--block btn--primary" onclick="showCreateCategoryDialog();">Add an Affirmation Category</button>
+</section>
+
+<section class="padding--md">
   <form action="{{ url_for('affirmations.affirmations') }}" method="get">
-    <input type="hidden" name="page" value=1>
-
-    <label for="category_select">Select Category:</label>
-    <select name="category" id="category_select" onchange="this.form.submit()">
-      <option value="">All Categories</option>
-      {% for category in categories %}
-      <option value="{{ category.name }}"
-        {% if request.args.get('category') == category.name %}selected{% endif %}
-      >
-        {{ category.name }}
-      </option>
-      {% endfor %}
-    </select>
-    <noscript><button type="submit">Apply Filter</button></noscript>
+    <div class="form__select">
+        <input type="hidden" name="page" value=1>
+        <label for="category_select">Filter by</label>
+        <select name="category" id="category_select" onchange="this.form.submit()">
+          <option value="">All Categories</option>
+          {% for category in categories %}
+          <option value="{{ category.name }}"
+            {% if request.args.get('category') == category.name %}selected{% endif %}
+          >
+            {{ category.name }}
+          </option>
+          {% endfor %}
+        </select>
+        <noscript><button type="submit">Apply Filter</button></noscript>
+    </div>
   </form>
 </section>
 
-{% if all_affirmations.total > 0 %}
-<section class="affirms__wrapper">
-  {% for affirmation in all_affirmations %}
-  <div class="affirm">
-    <figure class="affirm__wrapper">
-      <blockquote class="affirm__quote">
-        {{ affirmation.affirmation_text }}
-      </blockquote>
-      <figcaption class="affirm__cats">
-        {% for category in affirmation.categories %} 
-        {{ category.category.name }}
-        {% endfor %}
-      </figcaption>
-    </figure>
-    {% if current_user.is_admin() or affirmation.user_id == current_user.user_id %}
-    <div class="affirm__btn--wrapper">
-      <a
-        href="{{ url_for('affirmations.edit_affirmation', affirmation_id=affirmation.affirmation_id)}}"
-        class="affirm__edit"
-        >Edit
-      </a>
-      <form
-        method="POST"
-        action="{{ url_for('affirmations.delete_affirmation', affirmation_id=affirmation.affirmation_id) }}"
-      >
-        <button class="affirm__delete" type="submit">Delete</button>
-      </form>
+<section class="padding--md">
+  {% if all_affirmations.total > 0 %}
+  <div class="affirms__wrapper">
+    {% for affirmation in all_affirmations %}
+    <div class="affirm">
+      {% if current_user.is_admin() or affirmation.user_id == user.user_id %}
+        <button class="btn btn--danger delete-pin" onclick="handleAffirmationDelete('{{ affirmation.affirmation_id }}')">&times;</button>
+        <button class="btn btn--primary edit-pin" 
+                data-affirmation-id="{{ affirmation.affirmation_id }}" 
+                data-affirmation-text="{{ affirmation.affirmation_text }}"
+                data-categories="{{ affirmation.categories|map(attribute='category.category_id')|list|tojson }}"
+                onclick="showEditAffirmationDialog(this.dataset.affirmationId, this.dataset.affirmationText, this.dataset.categories);">
+          <span>Edit</span><i></i>
+        </button>
+      {% endif %}
+      <figure class="affirm__wrapper">
+        <blockquote class="affirm__quote">
+          {{ affirmation.affirmation_text }}
+        </blockquote>
+        <figcaption class="affirm__cats">
+          {% for category in affirmation.categories %}
+            {{ category.category.name }}
+          {% endfor %}
+        </figcaption>
+        {% if current_user.is_authenticated %}
+          {% if affirmation.affirmation_id in pinned_affirmation_ids %}
+            <button class="btn btn--primary pin-btn" onclick="handleAffirmationUnpin('{{ affirmation.affirmation_id }}')">
+              <span>Unpin</span><i class="fas fa-thumbtack"></i>
+            </button>
+          {% else %}
+            <button class="btn btn--secondary pin-btn" onclick="handleAffirmationPin('{{ affirmation.affirmation_id }}')">
+              <span>Pin</span><i class="fas fa-thumbtack"></i>
+            </button>
+          {% endif %}
+        {% endif %}
+      </figure>
+     
     </div>
-    {% endif %}
+    {% endfor %}
   </div>
-  {% endfor %}
+  {% else %}
+  <p>No affirmations found.</p>
+  {% endif %}
 </section>
-{% else %}
-<p>No affirmations found.</p>
-{% endif %}
 
-<section class="affirm__section--bottom">
-  <a href="{{ url_for('affirmations.add_affirmation') }}" class="affirm__action"
-    >Add affirmation</a
-  >
+<section class="padding--md">
+  <div class="pagination">
+    <button class="btn btn--primary opacity--50">&lt;</button> 
+    <ul>
+      <li class="active">
+          <a href="#"> 1 </a>
+      </li>
+
+      <li class="">
+          <a href="#"> 2 </a>
+      </li>
+
+      <li class="">
+          <a href="#"> 3 </a>
+      </li>
+    </ul>
+    <a class="btn btn--primary" href="#">&gt;</a>
+  </div>
 </section>
+
+<dialog id="affirmation-dialog">
+    <button class="dialog__close-btn btn btn--danger" onclick="closeDialog('affirmation-dialog')">&times;</button>
+    <span class="dialog__title">Affirmation</span>
+    <div class="dialog__content">
+        <form class="dialog__form" onsubmit="handleAffirmationDialogSubmit(event)">
+            <input type="hidden" id="dialog-affirmation-id" name="affirmation_id">
+            <label for="dialog-affirmation-text">Text</label>
+            <textarea name="affirmation_text" id="dialog-affirmation-text" required></textarea>
+            <label for="dialog-assign-category">Assign Categories</label>
+            <select name="categories-assigne" id="dialog-assign-category">
+              <option value="">Select Category</option>
+              {% if current_user.is_admin() %}
+                <!-- Admin sees all categories -->
+                {% for category in categories %}
+                  <option value="{{ category.category_id }}">{{ category.name }}</option>
+                {% endfor %}
+              {% else %}
+                <!-- Regular users see only their own categories -->
+                {% for category in user_categories %}
+                  <option value="{{ category.category_id }}">{{ category.name }}</option>
+                {% endfor %}
+              {% endif %}
+            </select>
+            <button type="button" class="btn btn--secondary" onclick="addCategoryToAffirmation()">Add Category</button>
+            <div class="margin--sm">
+              <ul id="dialog-categories-added" class="dialog-categories-added">
+                <!-- Categories will be added here dynamically -->
+              </ul>
+            </div>
+            <button type="submit" class="btn btn--block btn--primary">Save</button>
+        </form>
+    </div>
+</dialog>
+
+<dialog id="category-create-dialog">
+    <button class="dialog__close-btn btn btn--danger" onclick="closeDialog('category-create-dialog')">&times;</button>
+    <span class="dialog__title">New Category</span>
+    <div class="dialog__content">
+        <form class="dialog__form" onsubmit="handleCategoryDialogSubmit(event)">
+            <input type="hidden" id="dialog-category-id" name="category_id">
+            <label for="dialog-category-name">Name</label>
+            <input type="text" id="dialog-category-name" name="category_name" maxlength="20" required>
+            <span class="dialog__form-tip">Character limit: 20</span>
+            <button type="submit" class="btn btn--block btn--primary">Save</button>
+        </form>
+    </div>
+</dialog>
 {% endblock %}

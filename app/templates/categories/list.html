@@ -8,7 +8,7 @@ content %}
 <section class="padding--md">
     <form method="GET" action="{{ url_for('categories.list_categories') }}">
         <div class="form__select">
-            <label for="filter"> Filter by:</label>
+            <label for="filter">Filter by</label>
             <select name="filter" id="category-filter" onchange="this.form.submit()">
                 <option value="all_categories" 
                     {% if filter_by == 'all_categories'%} 
@@ -69,21 +69,21 @@ content %}
     </div>
 </section>
 
-<section class="cta-section bg--purple-outline">
+<section class="cta-section padding--md bg--purple-outline">
     <button class="btn btn--block btn--primary" onclick="showCreateCategoryDialog();">Create New Category</button>
-    <button class="btn btn--block btn--secondary" onclick="window.history.back();">Back</button>
+    <a href="/dashboard" class="btn btn--block btn--secondary">Back</a>
 </section>
 
 <dialog id="category-create-dialog">
     <button class="dialog__close-btn btn btn--danger" onclick="closeDialog('category-create-dialog')">&times;</button>
     <span class="dialog__title">New Category</span>
     <div class="dialog__content">
-        <form class="dialog__form" method="dialog">
+        <form class="dialog__form" onsubmit="handleCategoryDialogSubmit(event)">
             <input type="hidden" id="dialog-category-id" name="category_id">
             <label for="dialog-category-name">Name</label>
             <input type="text" id="dialog-category-name" name="category_name" maxlength="20" required>
             <span class="dialog__form-tip">Character limit: 20</span>
-            <button class="btn btn--block btn--primary">Save</button>
+            <button type="submit" class="btn btn--block btn--primary">Save</button>
         </form>
     </div>
 </dialog>
@@ -92,13 +92,13 @@ content %}
     <button class="dialog__close-btn btn btn--danger" onclick="closeDialog('category-edit-dialog')">&times;</button>
     <span class="dialog__title">Edit Category</span>
     <div class="dialog__content">
-        <form class="dialog__form" method="dialog">
+        <form class="dialog__form" onsubmit="handleCategoryDialogSubmit(event)">
             <input type="hidden" id="dialog-category-id" name="category_id">
             <label for="dialog-category-name">Name</label>
             <input type="text" id="dialog-category-name" name="category_name" maxlength="20" required>
             <span class="dialog__form-tip">Character limit: 20</span>
-            <button class="btn btn--block btn--primary">Save</button>
-            <button class="btn btn--block btn--danger">Delete</button>
+            <button type="submit" class="btn btn--block btn--primary">Save</button>
+            <button type="button" class="btn btn--block btn--danger" onclick="handleCategoryDelete(document.getElementById('dialog-category-id').value)">Delete</button>
         </form>
     </div>
 </dialog>

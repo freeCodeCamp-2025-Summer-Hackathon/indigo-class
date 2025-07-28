@@ -47,7 +47,7 @@ hr {
 .page-title {
   padding: 0.5em 0;
   font-size: 2.25rem;
-  font-weight: 400;
+  font-weight: normal;
   text-align: center;
   color: #4d317a;
 }
@@ -58,7 +58,13 @@ h1 {
 }
 
 h2 {
+  font-size: 1.813rem;
+  font-weight: normal;
   color: var(--purple-dark);
+}
+
+.text-bg {
+    background-color: var(--purple-outline);
 }
 
 /* Mobile-first design - minimum 300px screen width */

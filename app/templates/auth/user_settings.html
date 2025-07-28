@@ -1,76 +1,79 @@
 {% extends "base.html" %} {% block title %}User Settings{% endblock %}  
 
 {% block content %}
-<h1 class="setting__bg">User Settings</h1>
-
-<section class="user__setting--user">
-  <h2 class="display__name">{{ user_summary.firstname }}</h2>
-  <button data-type="change__dname" class="edit__btn">
-    <img src="{{ url_for('static', filename='images/edit_icon.svg') }}" class="edit__icon name" alt="Edit username">
-  </button>
-</section>
-
-<div class="modal__bg">
-  <div class="modal__content">
-  </div>
+<div class="page-header">
+  <h1 class="page-header__title">User Settings</h1>
 </div>
 
-<section class="user__setting__profile-pic">
-  <img src="{{ url_for('static', filename='images/profile_img.svg') }}" class="profile__pic pic__settings" alt="User profile picture">
-  <button class="edit__btn pic" data-type="change__pic">
-    <img src="{{ url_for('static', filename='images/edit_icon.svg') }}" class="edit__icon"  alt="Change user profile picture">
-  </button>
+<section class="padding--md">
+    <div class="user__setting--user">
+    <h2 class="display__name">{{ user_summary.firstname }}</h2>
+    <button data-type="change__dname" class="edit__btn">
+      <img src="{{ url_for('static', filename='images/edit_icon.svg') }}" class="edit__icon name" alt="Edit username">
+    </button>
+  </div>
+
+  <div class="modal__bg">
+    <div class="modal__content">
+    </div>
+  </div>
+
+  <div class="user__setting__profile-pic">
+    <img src="{{ url_for('static', filename='images/profile_img.svg') }}" class="profile__pic pic__settings" alt="User profile picture">
+    <button class="edit__btn pic" data-type="change__pic">
+      <img src="{{ url_for('static', filename='images/edit_icon.svg') }}" class="edit__icon"  alt="Change user profile picture">
+    </button>
+  </div>
+
+  <form class="form" method="POST" action="{{ url_for('user_settings.update_profile') }}">
+    <div class="form__group">
+      <label for="change__username" class="form__label">New Username:</label>
+      <input type="text" class="form__input" id="change__username" name="username" placeholder="NewUser" required>
+    </div>
+
+    <div class="form__group">
+      <label for="change__fname" class="form__label">New First Name:</label>
+      <input type="text" class="form__input" id="change__fname" name="first_name" placeholder="Chloe" required>
+    </div>
+
+    <div class="form__group">
+      <label for="change__lname" class="form__label">New Last Name:</label>
+      <input type="text" class="form__input" id="change__lname" name="last_name" placeholder="Smith" required>
+    </div>
+
+    <div class="form__group">
+      <label for="change__email" class="form__label">New Email:</label>
+      <input type="email" class="form__input" id="change__email" name="email" placeholder="chloe@coolemail.com" required>
+    </div>
+
+    <div class="checkbox__wrapper">
+      <input type="checkbox" class="check__box" id="receive__email">
+      <label for="receive__email" class="checkbox__label">Receive daily affirmation in email</label>
+    </div>
+
+    <div class="form__group">
+      <label for="change__password" class="form__label">Current Password:</label>
+      <input type="password" class="form__input" id="change__password" name="password" placeholder="***************" required>
+    </div>
+
+    <div class="form__group">
+      <label for="new__password" class="form__label">New Password:</label>
+      <input type="password" class="form__input" id="new__password" name="new__password" required>
+    </div>
+
+    <div class="form__group">
+      <label for="confirm__password" class="form__label">Confirm New Password:</label>
+      <input type="password" class="form__input" id="confirm__password" name="confirm__password" required>
+    </div>
+
+    <button type="submit" class="btn btn--block btn--primary">Submit</button>
+  </form>
 </section>
 
-<form class="form" method="POST" action="{{ url_for('user_settings.update_profile') }}">
-  <div class="form__group">
-    <label for="change__username" class="form__label">New Username:</label>
-    <input type="text" class="form__input" id="change__username" name="username" placeholder="NewUser" required>
-  </div>
-
-  <div class="form__group">
-    <label for="change__fname" class="form__label">New First Name:</label>
-    <input type="text" class="form__input" id="change__fname" name="first_name" placeholder="Chloe" required>
-  </div>
-
-  <div class="form__group">
-    <label for="change__lname" class="form__label">New Last Name:</label>
-    <input type="text" class="form__input" id="change__lname" name="last_name" placeholder="Smith" required>
-  </div>
-
-  <div class="form__group">
-    <label for="change__email" class="form__label">New Email:</label>
-    <input type="email" class="form__input" id="change__email" name="email" placeholder="chloe@coolemail.com" required>
-  </div>
-
-  <div class="checkbox__wrapper">
-    <input type="checkbox" class="check__box" id="receive__email">
-    <label for="receive__email" class="checkbox__label">Receive daily affirmation in email</label>
-  </div>
-
-  <div class="form__group">
-    <label for="change__password" class="form__label">Current Password:</label>
-    <input type="password" class="form__input" id="change__password" name="password" placeholder="***************" required>
-  </div>
-
-  <div class="form__group">
-    <label for="new__password" class="form__label">New Password:</label>
-    <input type="password" class="form__input" id="new__password" name="new__password" required>
-  </div>
-
-  <div class="form__group">
-    <label for="confirm__password" class="form__label">Confirm New Password:</label>
-    <input type="password" class="form__input" id="confirm__password" name="confirm__password" required>
-  </div>
-
-  <button type="submit" class="form__button btn">Submit</button>
-</form>
-
-<p><a href="{{ url_for('auth.logout') }}" class="log__out__link logout__delete">Log out</a></p>
-
-<button type="button" class="logout__delete" id="delete" data-type="delete">
-  Delete Account
-</button>
+<section class="cta-section padding--md">
+  <a href="{{ url_for('auth.logout') }}" class="btn btn--block btn--danger">Log out</a>
+  <button type="button" class="btn btn--block btn--danger" id="delete" data-type="delete">Delete Account</button>
+</section>
 
 <script>
   const urls = {
